@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Color Picker Example</string>
+
+    <!-- Settings Activity Title -->
+    <string name="title_activity_settings">Settings</string>
+
+    <!--  Color Picker  -->
+    <string name="text_color_picker_preference">Color Picker Preference</string>
+    <string name="text_select_color">Tap to change the color</string>
+    <string name="value_default_color">#FFD82323</string>
+
+</resources>
