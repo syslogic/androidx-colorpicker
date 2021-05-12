@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--  Color Picker  -->
+    <!-- Color Picker -->
     <string name="text_press_color_to_apply">Press color to apply</string>
+    <string name="text_color_picker_dialog">Color Picker</string>
 
 </resources>
