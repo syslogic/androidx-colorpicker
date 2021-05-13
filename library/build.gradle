@@ -42,18 +42,4 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
 }
 
-group = "io.syslogic"
-version = versionName
-
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = "io.syslogic"
-                artifactId = "androidx-colorpicker"
-                version = versionName
-            }
-        }
-    }
-}
+apply from: "${project.rootDir}/publish.gradle"
