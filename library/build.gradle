@@ -51,7 +51,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
                 groupId = "io.syslogic"
-                artifactId = "colorpicker"
+                artifactId = "androidx-colorpicker"
                 version = versionName
             }
         }
