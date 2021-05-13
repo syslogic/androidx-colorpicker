@@ -6,8 +6,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 30
         compileSdkVersion 30
-        versionCode 1
-        versionName "1.0.0"
+        versionName rootProject.ext.get("versionName")
+        versionCode rootProject.ext.get("versionCode")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "${project.rootDir}/proguard/consumer.pro"
         setProperty("archivesBaseName", "colorpicker_" + versionName)
