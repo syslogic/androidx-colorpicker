@@ -1,16 +1,16 @@
 // Module :library
 apply plugin: "com.android.library"
-// apply plugin: "com.github.dcendents.android-maven"
 
 android {
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 14
         targetSdkVersion 30
         compileSdkVersion 30
         versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "${project.rootDir}/proguard/consumer.pro"
+        setProperty("archivesBaseName", "colorpicker_" + versionName)
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -39,14 +39,3 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
 }
-/*
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            groupId "io.syslogic.colorpicker"
-            artifactId "colorpicker"
-            version "1.0.0"
-        }
-    }
-}
-*/
