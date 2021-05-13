@@ -9,16 +9,20 @@ task javadoc(type: Javadoc) {
             }
         }
     }
-    title = "io.syslogic.colorpicker ${versionName} API"
-    configurations.implementation.setCanBeResolved(true)
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.implementation
-    classpath += fileTree(dir: "$buildDir/tmp/aarsToJars/")
-    destinationDir = file("${project.buildDir}/outputs/javadoc/")
     failOnError false
-    exclude '**/BuildConfig.java'
-    exclude '**/R.java'
+    configurations.implementation.setCanBeResolved(true)
+    title = "colorpicker ${versionName} API"
+    source = android.sourceSets.main.java.srcDirs
+    classpath = files(new File("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"))
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += fileTree(dir: "$buildDir/tmp/aarsToJars/")
+    classpath += configurations.implementation
+    destinationDir = file("${project.buildDir}/outputs/javadoc/")
+    options.linkSource true
+    options.links("https://docs.oracle.com/javase/8/docs/api/")
+    options.links("https://developer.android.com/reference/")
+    exclude "**/BuildConfig.java"
+    exclude "**/R.java"
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
