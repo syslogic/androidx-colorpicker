@@ -12,7 +12,7 @@ android {
         versionCode rootProject.ext.get("versionCode")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "${project.rootDir}/proguard/consumer.pro"
-        setProperty("archivesBaseName", "colorpicker_" + versionName)
+        setProperty("archivesBaseName", "colorpicker")
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -42,6 +42,9 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
 }
 
+group = "io.syslogic"
+version = versionName
+
 afterEvaluate {
     publishing {
         publications {
@@ -49,7 +52,7 @@ afterEvaluate {
                 from components.release
                 groupId = "io.syslogic"
                 artifactId = "colorpicker"
-                version = "1.0.0"
+                version = versionName
             }
         }
     }
