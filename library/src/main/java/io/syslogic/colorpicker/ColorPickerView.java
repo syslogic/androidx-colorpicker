@@ -710,14 +710,15 @@ public class ColorPickerView extends View {
      * @param text Text that should be shown.
     **/
     public void setAlphaSliderText(String text) {
-        mAlphaSliderText = text;
+        this.mAlphaSliderText = text;
         invalidate();
     }
 
     /**
      * Get the current value of the text that will be shown in the alpha slider.
+     * @return Text that is being shown.
     **/
     public String getAlphaSliderText() {
-        return mAlphaSliderText;
+        return this.mAlphaSliderText;
     }
 }

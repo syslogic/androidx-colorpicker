@@ -31,7 +31,6 @@ public class ColorPickerPanelView extends View {
 
     private AlphaPatternDrawable mAlphaPattern;
 
-
     public ColorPickerPanelView(Context context) {
         this(context, null);
     }
