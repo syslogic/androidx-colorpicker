@@ -1,7 +1,6 @@
 // Module :library
 apply plugin: "com.android.library"
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+// apply plugin: "com.github.dcendents.android-maven"
 
 android {
     defaultConfig {
@@ -40,25 +39,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
 }
-
-bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-    configurations = ['archives']
-    pkg {
-        repo = 'maven'
-        name = 'colorpicker'
-        userOrg = user
-        licenses = ['MIT']
-        vcsUrl = 'https://github.com/syslogic/androidx-colorpicker.git'
-        version {
-            name = '1.0.0'
-            desc = 'AndroidX ColorPicker'
-            vcsTag = '1.0.0'
-        }
-    }
-}
-
+/*
 install {
     repositories.mavenInstaller {
         pom.project {
@@ -68,3 +49,4 @@ install {
         }
     }
 }
+*/
