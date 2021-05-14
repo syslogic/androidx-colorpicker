@@ -3,24 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="io.syslogic.demo.colorpicker">
-
     <application
         android:label="@string/app_name"
         android:theme="@style/Theme.ColorPicker"
         android:allowBackup="false"
         android:supportsRtl="true"
         tools:ignore="MissingApplicationIcon">
-
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
-
 </manifest>

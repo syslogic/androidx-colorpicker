@@ -8,6 +8,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 30
         compileSdkVersion 30
+        buildToolsVersion "30.0.3"
         versionName rootProject.ext.get("versionName")
         versionCode rootProject.ext.get("versionCode")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

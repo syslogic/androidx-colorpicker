@@ -2,9 +2,7 @@
 <resources>
 
     <string name="app_name">Color Picker Example</string>
-
-    <!-- Settings Activity Title -->
-    <string name="title_activity_settings">Settings</string>
+    <string name="button_preferences">Preferences</string>
 
     <!--  Color Picker  -->
     <string name="text_color_picker_preference">Color Picker Preference</string>
