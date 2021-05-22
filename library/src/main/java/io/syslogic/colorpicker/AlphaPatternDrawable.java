@@ -72,7 +72,7 @@ public class AlphaPatternDrawable extends Drawable {
     /**
      * This will generate a bitmap with the pattern as big as the rectangle we were allow to draw on.
      * We do this to cache the bitmap so we don't need to recreate it each time draw() is called since it takes a few milliseconds.
-    **/
+     */
     private void generatePatternBitmap() {
         if (getBounds().width() <= 0 || getBounds().height() <= 0) {return;}
         mBitmap = Bitmap.createBitmap(getBounds().width(), getBounds().height(), Config.ARGB_8888);

@@ -77,7 +77,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
      * accept hex string and resources reference string (eg. @color/someColor) as defaultValue.
      * @param a
      * @param index
-    **/
+     */
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
         int colorInt;
@@ -159,7 +159,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     /**
      * toggle Alpha Slider visibility (by default it's disabled)
      * @param value
-    **/
+     */
     public void setAlphaSliderEnabled(boolean value) {
         this.mAlphaSliderEnabled = value;
     }
@@ -167,7 +167,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     /**
      * toggle Hex Value visibility (by default it's disabled)
      * @param value
-    **/
+     */
     public void setHexValueEnabled(boolean value) {
         this.mHexValueEnabled = value;
     }
@@ -175,7 +175,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     /**
      * for custom purposes. Not used by ColorPickerPreference
      * @param color
-    **/
+     */
     static String convertToARGB(int color) {
         String alpha = Integer.toHexString(Color.alpha(color)).toUpperCase();
         String red   = Integer.toHexString(Color.red(color)).toUpperCase();
@@ -192,7 +192,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
      * Method currently used by onGetDefaultValue method to convert hex string provided in android:defaultValue to color integer.
      * @param color
      * @return A string representing the hex value of color without the alpha value
-    **/
+     */
     static String convertToRGB(int color) {
         String red = Integer.toHexString(Color.red(color)).toUpperCase();
         String green = Integer.toHexString(Color.green(color)).toUpperCase();
@@ -207,7 +207,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
      * For custom purposes. Not used by ColorPickerPreference
      * @param argb
      * @throws IllegalArgumentException
-    **/
+     */
     static int convertToColorInt(String argb) throws IllegalArgumentException {
         if (!argb.startsWith("#")) {argb = "#" + argb;}
         return Color.parseColor(argb);

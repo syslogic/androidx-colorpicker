@@ -100,7 +100,7 @@ public class ColorPickerPanelView extends View {
     /**
      * Set the color that should be shown by this view.
      * @param color
-    **/
+     */
     public void setColor(int color) {
         mColor = color;
         invalidate();
@@ -108,7 +108,7 @@ public class ColorPickerPanelView extends View {
 
     /**
      * Get the color currently show by this view.
-    **/
+     */
     public int getColor() {
         return mColor;
     }
@@ -116,7 +116,7 @@ public class ColorPickerPanelView extends View {
     /**
      * Set the color of the border surrounding the panel.
      * @param color
-    **/
+     */
     public void setBorderColor(int color) {
         mBorderColor = color;
         invalidate();
@@ -124,7 +124,7 @@ public class ColorPickerPanelView extends View {
 
     /**
      * Get the color of the border surrounding the panel.
-    **/
+     */
     public int getBorderColor() {
         return mBorderColor;
     }

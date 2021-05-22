@@ -24,6 +24,7 @@ import java.util.Locale;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
+
 import io.syslogic.colorpicker.R;
 
 /**
@@ -183,7 +184,7 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
     /**
      * The OnColorChangedListener will get notified when the color selected by the user has changed.
      * @param listener
-    **/
+     */
     void setOnColorChangedListener(OnColorChangedListener listener) {
         mListener = listener;
     }

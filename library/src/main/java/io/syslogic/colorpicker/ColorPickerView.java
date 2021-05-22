@@ -84,21 +84,21 @@ public class ColorPickerView extends View {
     /**
      * To remember which panel that has the "focus" when
      * processing hardware button data.
-    **/
+     */
     private int mLastTouchedPanel = PANEL_SAT_VAL;
 
     /**
      * Offset from the edge we must have or else
      * the finger tracker will get clipped when
      * it is drawn outside of the view.
-    **/
+     */
     private float mDrawingOffset;
 
 
     /**
      * Distance form the edges of the view
      * of where we are allowed to draw.
-    **/
+     */
     private RectF mDrawingRect;
 
     private RectF mSatValRect;
@@ -327,22 +327,17 @@ public class ColorPickerView extends View {
     }
 
     private float pointToHue(float y) {
-
         final RectF rect = mHueRect;
         float height = rect.height();
-
         if (y < rect.top) {y = 0f;}
         else if (y > rect.bottom) {y = height;}
         else {y = y - rect.top;}
-
         return 360f - (y * 360f / height);
     }
 
     private int pointToAlpha(int x) {
-
         final RectF rect = mAlphaRect;
         final int width = (int) rect.width();
-
         if (x < rect.left) {
             x = 0;
         } else if (x > rect.right) {
@@ -350,21 +345,16 @@ public class ColorPickerView extends View {
         } else {
             x = x - (int) rect.left;
         }
-
         return 0xff - (x * 0xff / width);
-
     }
 
 
     @Override
     public boolean onTrackballEvent(MotionEvent event) {
-
         float x = event.getX();
         float y = event.getY();
         boolean update = false;
-
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
-
             switch (mLastTouchedPanel) {
 
                 case PANEL_SAT_VAL:
@@ -402,7 +392,6 @@ public class ColorPickerView extends View {
             }
 
         }
-
         if (update) {
             if (mListener != null) {mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSat, mVal}));}
             invalidate();
@@ -414,9 +403,7 @@ public class ColorPickerView extends View {
     @Override
     @SuppressLint("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
-
         boolean update = false;
-
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
@@ -596,7 +583,7 @@ public class ColorPickerView extends View {
     /**
      * Set a OnColorChangedListener to get notified when the color selected by the user has changed.
      * @param listener
-    **/
+     */
     public void setOnColorChangedListener(OnColorChangedListener listener) {
         mListener = listener;
     }
@@ -604,7 +591,7 @@ public class ColorPickerView extends View {
     /**
      * Set the color of the border surrounding all panels.
      * @param color
-    **/
+     */
     public void setBorderColor(int color) {
         mBorderColor = color;
         invalidate();
@@ -612,7 +599,7 @@ public class ColorPickerView extends View {
 
     /**
      * Get the color of the border surrounding all panels.
-    **/
+     */
     public int getBorderColor() {
         return mBorderColor;
     }
@@ -620,7 +607,7 @@ public class ColorPickerView extends View {
     /**
      * Get the current color this view is showing.
      * @return the current color.
-    **/
+     */
     public int getColor() {
         return Color.HSVToColor(mAlpha, new float[]{mHue, mSat, mVal});
     }
@@ -628,7 +615,7 @@ public class ColorPickerView extends View {
     /**
      * Set the color the view should show.
      * @param color The color that should be selected.
-    **/
+     */
     public void setColor(int color) {
         setColor(color, false);
     }
@@ -637,7 +624,7 @@ public class ColorPickerView extends View {
      * Set the color this view should show.
      * @param color    The color that should be selected.
      * @param callback If you want to get a callback to your OnColorChangedListener.
-    **/
+     */
     public void setColor(int color, boolean callback) {
         int alpha = Color.alpha(color);
         float[] hsv = new float[3];
@@ -657,7 +644,7 @@ public class ColorPickerView extends View {
      * The drawing offset is the distance from the side of a panel to the side of the view minus the padding.
      * Useful if you want to have your own panel below showing the currently selected color and want to align it perfectly.
      * @return The offset in pixels.
-    **/
+     */
     public float getDrawingOffset() {
         return mDrawingOffset;
     }
@@ -667,7 +654,7 @@ public class ColorPickerView extends View {
      * If it is set to false no alpha will be set.
      *
      * @param visible
-    **/
+     */
     public void setAlphaSliderVisible(boolean visible) {
 
         if (mShowAlphaPanel != visible) {
@@ -699,7 +686,7 @@ public class ColorPickerView extends View {
     /**
      * Set the text that should be shown in the alpha slider. Set to null to disable text.
      * @param res string resource id.
-    **/
+     */
     public void setAlphaSliderText(int res) {
         String text = getContext().getString(res);
         setAlphaSliderText(text);
@@ -708,7 +695,7 @@ public class ColorPickerView extends View {
     /**
      * Set the text that should be shown in the alpha slider. Set to null to disable text.
      * @param text Text that should be shown.
-    **/
+     */
     public void setAlphaSliderText(String text) {
         this.mAlphaSliderText = text;
         invalidate();
@@ -717,7 +704,7 @@ public class ColorPickerView extends View {
     /**
      * Get the current value of the text that will be shown in the alpha slider.
      * @return Text that is being shown.
-    **/
+     */
     public String getAlphaSliderText() {
         return this.mAlphaSliderText;
     }
