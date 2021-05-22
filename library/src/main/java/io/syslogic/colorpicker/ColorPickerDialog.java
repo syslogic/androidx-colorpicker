@@ -181,7 +181,7 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
     }
 
     /**
-     * set a OnColorChangedListener to get notified when the color selected by the user has changed.
+     * The OnColorChangedListener will get notified when the color selected by the user has changed.
      * @param listener
     **/
     void setOnColorChangedListener(OnColorChangedListener listener) {
