@@ -36,6 +36,10 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.mDataBinding = FragmentHomeBinding.inflate(inflater, container, false);
         this.mDataBinding.buttonPreferences.setOnClickListener(view -> Navigation.findNavController(view).navigate(HomeFragmentDirections.actionMainFragmentToPreferencesFragment()));
+        this.mDataBinding.buttonDialog.setOnClickListener(view -> {
+            // ColorPickerDialog dialog = new ColorPickerDialog();
+            // dialog.show();
+        });
         return this.mDataBinding.getRoot();
     }
 }
