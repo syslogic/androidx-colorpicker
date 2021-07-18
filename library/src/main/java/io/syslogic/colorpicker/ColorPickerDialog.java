@@ -25,8 +25,6 @@ import java.util.Locale;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
-import io.syslogic.colorpicker.R;
-
 /**
  * The ColorPicker {@link Dialog}
  * @author Martin Zeitler
