@@ -6,8 +6,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 31
-        compileSdkVersion 30
-        buildToolsVersion "30.0.3"
+        compileSdk 31
         versionName rootProject.ext.get("versionName")
         versionCode rootProject.ext.get("versionCode")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

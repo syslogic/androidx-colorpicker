@@ -7,8 +7,7 @@ android {
         applicationId "io.syslogic.demo.colorpicker"
         minSdkVersion 21
         targetSdkVersion 31
-        compileSdkVersion 30
-        buildToolsVersion "30.0.3"
+        compileSdkVersion 31
         versionName rootProject.ext.get("versionName")
         versionCode rootProject.ext.get("versionCode")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
