@@ -7,6 +7,8 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.preference.PreferenceManager;
 
 import io.syslogic.colorpicker.databinding.DialogColorPickerBinding;
 
@@ -28,17 +31,21 @@ import io.syslogic.colorpicker.databinding.DialogColorPickerBinding;
  *
  * @author Martin Zeitler
  */
-public abstract class ColorPickerDialogFragment extends DialogFragment implements ColorPickerView.OnColorChangedListener, View.OnClickListener, ViewTreeObserver.OnGlobalLayoutListener {
+public abstract class ColorPickerDialogFragment extends DialogFragment implements
+        ViewTreeObserver.OnGlobalLayoutListener,
+        ColorPickerView.OnColorChangedListener,
+        View.OnClickListener {
 
     private boolean mHexValueEnabled = false;
+    private boolean mAlphaSliderEnabled = false;
+    private int initialColor = 0;
+
     private ColorStateList mHexDefaultTextColor;
     private OnColorChangedListener mListener;
     private int mOrientation;
 
     /** Data-Binding */
     DialogColorPickerBinding mDataBinding;
-
-    private View mLayout;
 
     public ColorPickerDialogFragment() {
         super();
@@ -47,7 +54,13 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     @SuppressWarnings("unused")
     public ColorPickerDialogFragment(Context context, int initialColor) {
         super();
+        this.initialColor = initialColor;
         requireActivity().getWindow().setFormat(PixelFormat.RGBA_8888);
+        if (getArguments() != null) {
+            this.initialColor = getArguments().getInt("initialColor", 0);
+            this.mAlphaSliderEnabled = getArguments().getBoolean("alphaSlider", false);
+            this.mHexValueEnabled = getArguments().getBoolean("hexValue", false);
+        }
         setUp(initialColor);
     }
 
@@ -108,7 +121,7 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
         if (requireContext().getResources().getConfiguration().orientation != mOrientation) {
             int oldColor = this.mDataBinding.oldColorPanel.getColor();
             int newColor = this.mDataBinding.newColorPanel.getColor();
-            mLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            this.mDataBinding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(this);
             setUp(oldColor);
             this.mDataBinding.newColorPanel.setColor(newColor);
             this.mDataBinding.colorPickerView.setColor(newColor);

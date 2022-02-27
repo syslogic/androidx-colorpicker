@@ -69,19 +69,16 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mLayout = inflater.inflate(R.layout.dialog_color_picker, null);
-
-
-
-        mLayout.getViewTreeObserver().addOnGlobalLayoutListener(this);
+        this.mLayout.getViewTreeObserver().addOnGlobalLayoutListener(this);
         mOrientation = getContext().getResources().getConfiguration().orientation;
         setContentView(mLayout);
         setTitle(R.string.text_color_picker_dialog);
 
         mColorPicker = mLayout.findViewById(R.id.color_picker_view);
-        mOldColor = mLayout.findViewById(R.id.old_color_panel);
-        mNewColor = mLayout.findViewById(R.id.new_color_panel);
+        mOldColor = this.mLayout.findViewById(R.id.old_color_panel);
+        mNewColor = this.mLayout.findViewById(R.id.new_color_panel);
 
-        mHexVal = mLayout.findViewById(R.id.hexadecimal_value);
+        mHexVal = this.mLayout.findViewById(R.id.hexadecimal_value);
         mHexVal.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         mHexDefaultTextColor = mHexVal.getTextColors();
 

@@ -15,7 +15,7 @@
             app:destination="@id/preferencesFragment"/>
         <action
             android:id="@+id/action_homeFragment_to_colorPickerDialogFragment"
-            app:destination="@id/colorPickerDialogFragment" />
+            app:destination="@id/colorPickerDialogFragment"/>
     </fragment>
 
     <fragment
@@ -25,6 +25,11 @@
     <dialog
         android:id="@+id/colorPickerDialogFragment"
         android:name="io.syslogic.demo.colorpicker.fragment.ColorPickerDialogFragmentImpl"
-        tools:layout="@layout/dialog_color_picker"/>
+        tools:layout="@layout/dialog_color_picker">
+
+        <argument app:argType="integer" android:name="initialColor" android:defaultValue="0"/>
+        <argument app:argType="boolean" android:name="alphaSlider" android:defaultValue="true"/>
+        <argument app:argType="boolean" android:name="hexValue" android:defaultValue="true"/>
+    </dialog>
 
 </navigation>

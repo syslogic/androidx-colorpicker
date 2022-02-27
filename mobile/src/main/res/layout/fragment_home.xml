@@ -24,12 +24,16 @@
                 android:id="@+id/button_dialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="24dp"
                 android:text="@string/button_dialog"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_preferences"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="24dp"
                 android:text="@string/button_preferences"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
