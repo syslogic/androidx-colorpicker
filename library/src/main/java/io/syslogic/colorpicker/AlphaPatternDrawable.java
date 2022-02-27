@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 /**
  * This drawable that draws a simple white and gray chessboard pattern.
+ *
  * It's pattern you will often see as a background behind a partly transparent image in many applications.
  * @author Martin Zeitler
  */

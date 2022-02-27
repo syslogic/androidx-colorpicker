@@ -11,22 +11,20 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.Locale;
 
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 /**
  * The ColorPicker {@link Dialog}
+ *
  * @author Martin Zeitler
  */
 public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColorChangedListener, View.OnClickListener, ViewTreeObserver.OnGlobalLayoutListener {
@@ -38,7 +36,6 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
     private EditText mHexVal;
     private boolean mHexValueEnabled = false;
     private ColorStateList mHexDefaultTextColor;
-
     private OnColorChangedListener mListener;
     private int mOrientation;
     private View mLayout;
@@ -46,12 +43,12 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
     @Override
     public void onGlobalLayout() {
         if (getContext().getResources().getConfiguration().orientation != mOrientation) {
-            final int oldcolor = mOldColor.getColor();
-            final int newcolor = mNewColor.getColor();
+            int oldColor = mOldColor.getColor();
+            int newColor = mNewColor.getColor();
             mLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            setUp(oldcolor);
-            mNewColor.setColor(newcolor);
-            mColorPicker.setColor(newcolor);
+            setUp(oldColor);
+            mNewColor.setColor(newColor);
+            mColorPicker.setColor(newColor);
         }
     }
 
@@ -61,22 +58,20 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
 
     ColorPickerDialog(Context context, int initialColor) {
         super(context);
-        init(initialColor);
-    }
-
-    private void init(int color) {
-        // To fight color banding.
-        getWindow().setFormat(PixelFormat.RGBA_8888);
-        setUp(color);
+        setUp(initialColor);
     }
 
     @SuppressLint("InflateParams")
-    private void setUp(int color) {
+    private void setUp(int initialColor) {
+
+        // To fight color banding.
+        getWindow().setFormat(PixelFormat.RGBA_8888);
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.mLayout = inflater.inflate(R.layout.dialog_color_picker, null);
 
-        assert inflater != null;
-        mLayout = inflater.inflate(R.layout.dialog_color_picker, null);
+
+
         mLayout.getViewTreeObserver().addOnGlobalLayoutListener(this);
         mOrientation = getContext().getResources().getConfiguration().orientation;
         setContentView(mLayout);
@@ -90,29 +85,21 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
         mHexVal.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         mHexDefaultTextColor = mHexVal.getTextColors();
 
-        mHexVal.setOnEditorActionListener(new AppCompatTextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    String s = mHexVal.getText().toString();
-                    if (s.length() > 5 || s.length() < 10) {
-                        try {
-                            int c = ColorPickerPreference.convertToColorInt(s);
-                            mColorPicker.setColor(c, true);
-                            mHexVal.setTextColor(mHexDefaultTextColor);
-                        } catch (IllegalArgumentException e) {
-                            mHexVal.setTextColor(Color.RED);
-                        }
-                    } else {
-                        mHexVal.setTextColor(Color.RED);
-                    }
-                    return true;
+        mHexVal.setOnEditorActionListener((view, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                String s = mHexVal.getText().toString();
+                try {
+                    int c = ColorPickerPreference.convertToColorInt(s);
+                    mColorPicker.setColor(c, true);
+                    mHexVal.setTextColor(mHexDefaultTextColor);
+                } catch (IllegalArgumentException e) {
+                    mHexVal.setTextColor(Color.RED);
                 }
-                return false;
+                return true;
             }
+            return false;
         });
 
         ((LinearLayoutCompat) mOldColor.getParent()).setPadding(
@@ -125,8 +112,8 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
         mOldColor.setOnClickListener(this);
         mNewColor.setOnClickListener(this);
         mColorPicker.setOnColorChangedListener(this);
-        mOldColor.setColor(color);
-        mColorPicker.setColor(color, true);
+        mOldColor.setColor(initialColor);
+        mColorPicker.setColor(initialColor, true);
     }
 
     @Override
@@ -135,7 +122,7 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
         if (mHexValueEnabled) {updateHexValue(color);}
     }
 
-    void setHexValueEnabled(boolean enable) {
+    void setHexValueEnabled(@SuppressWarnings("SameParameterValue") boolean enable) {
         mHexValueEnabled = enable;
         if (enable) {
             mHexVal.setVisibility(View.VISIBLE);
@@ -146,8 +133,9 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
         }
     }
 
+    @SuppressWarnings("unused")
     public boolean getHexValueEnabled() {
-        return mHexValueEnabled;
+        return this.mHexValueEnabled;
     }
 
     private void updateHexLengthFilter() {
@@ -167,7 +155,7 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
         mHexVal.setTextColor(mHexDefaultTextColor);
     }
 
-    void setAlphaSliderVisible(boolean visible) {
+    void setAlphaSliderVisible(@SuppressWarnings("SameParameterValue") boolean visible) {
         mColorPicker.setAlphaSliderVisible(visible);
         if (mHexValueEnabled) {
             updateHexLengthFilter();
@@ -181,7 +169,8 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
 
     /**
      * The OnColorChangedListener will get notified when the color selected by the user has changed.
-     * @param listener
+     *
+     * @param listener to be used for callbacks.
      */
     void setOnColorChangedListener(OnColorChangedListener listener) {
         mListener = listener;

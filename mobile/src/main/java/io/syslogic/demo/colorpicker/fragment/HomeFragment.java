@@ -16,17 +16,21 @@ import io.syslogic.demo.colorpicker.databinding.FragmentHomeBinding;
 
 /**
  * Home Fragment
+ *
  * @author Martin Zeitler
  */
 public class HomeFragment extends Fragment {
 
     /** Log Tag */
+    @SuppressWarnings("unused")
     protected static final String LOG_TAG = HomeFragment.class.getSimpleName();
 
     /** Debug Output */
+    @SuppressWarnings("unused")
     protected static final boolean mDebug = BuildConfig.DEBUG;
 
     /** Kept for reference */
+    @SuppressWarnings("unused")
     private static final int resId = R.layout.fragment_home;
 
     /** Data-Binding */
@@ -35,11 +39,14 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.mDataBinding = FragmentHomeBinding.inflate(inflater, container, false);
-        this.mDataBinding.buttonPreferences.setOnClickListener(view -> Navigation.findNavController(view).navigate(HomeFragmentDirections.actionMainFragmentToPreferencesFragment()));
-        this.mDataBinding.buttonDialog.setOnClickListener(view -> {
-            // ColorPickerDialog dialog = new ColorPickerDialog();
-            // dialog.show();
-        });
+        this.mDataBinding.buttonPreferences.setOnClickListener(view ->
+                Navigation.findNavController(view).navigate(
+                        HomeFragmentDirections.actionMainFragmentToPreferencesFragment()
+                ));
+        this.mDataBinding.buttonDialog.setOnClickListener(view ->
+                Navigation.findNavController(view).navigate(
+                        HomeFragmentDirections.actionHomeFragmentToColorPickerDialogFragment()
+                ));
         return this.mDataBinding.getRoot();
     }
 }

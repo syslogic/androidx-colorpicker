@@ -7,8 +7,11 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 /**
- * The ColorPicker Panel {@link View}.
+ * The ColorPicker Panel {@link View}
+ *
  * This class draws a panel which which will be filled with a color which can be set.
  * It can be used to show the currently selected color which you will get from the {@link ColorPickerView}.
  * @author Martin Zeitler
@@ -50,14 +53,11 @@ public class ColorPickerPanelView extends View {
         mDensity = getContext().getResources().getDisplayMetrics().density;
     }
 
-
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         final RectF rect = mColorRect;
-        if (BORDER_WIDTH_PX > 0) {
-            mBorderPaint.setColor(mBorderColor);
-            canvas.drawRect(mDrawingRect, mBorderPaint);
-        }
+        mBorderPaint.setColor(mBorderColor);
+        canvas.drawRect(mDrawingRect, mBorderPaint);
         if (mAlphaPattern != null) {mAlphaPattern.draw(canvas);}
         mColorPaint.setColor(mColor);
         canvas.drawRect(rect, mColorPaint);
@@ -99,6 +99,7 @@ public class ColorPickerPanelView extends View {
 
     /**
      * Set the color that should be shown by this view.
+     *
      * @param color
      */
     public void setColor(int color) {
@@ -106,25 +107,24 @@ public class ColorPickerPanelView extends View {
         invalidate();
     }
 
-    /**
-     * Get the color currently show by this view.
-     */
+    /** Get the color currently show by this view. */
     public int getColor() {
         return mColor;
     }
 
     /**
      * Set the color of the border surrounding the panel.
+     *
      * @param color
      */
+    @SuppressWarnings("unused")
     public void setBorderColor(int color) {
         mBorderColor = color;
         invalidate();
     }
 
-    /**
-     * Get the color of the border surrounding the panel.
-     */
+    /** Get the color of the border surrounding the panel. */
+    @SuppressWarnings("unused")
     public int getBorderColor() {
         return mBorderColor;
     }

@@ -14,6 +14,7 @@ import android.graphics.PorterDuff;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.Shader.TileMode;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,8 +22,9 @@ import android.view.View;
 import java.util.Objects;
 
 /**
- * The ColorPicker {@link View}.
- * displays a color picker to the user and allow them to select a color.
+ * The ColorPicker {@link View}
+ *
+ * It displays a color picker to the user and allow them to select a color.
  * the slider for the alpha-channel can be enabled setAlphaSliderVisible(true).
  * @author Martin Zeitler
  */
@@ -214,7 +216,7 @@ public class ColorPickerView extends View {
         Point p = satValToPoint(mSat, mVal);
 
         mSatValTrackerPaint.setColor(0xff000000);
-        canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS - 1f * mDensity, mSatValTrackerPaint);
+        canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS - mDensity, mSatValTrackerPaint);
 
         mSatValTrackerPaint.setColor(0xffdddddd);
         canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS, mSatValTrackerPaint);
@@ -261,8 +263,13 @@ public class ColorPickerView extends View {
         mAlphaShader = new LinearGradient(rect.left, rect.top, rect.right, rect.top, color, acolor, TileMode.CLAMP);
         mAlphaPaint.setShader(mAlphaShader);
         canvas.drawRect(rect, mAlphaPaint);
-        if (mAlphaSliderText != null && !Objects.equals(mAlphaSliderText, "")) {
-            canvas.drawText(mAlphaSliderText, rect.centerX(), rect.centerY() + 4 * mDensity, mAlphaTextPaint);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (mAlphaSliderText != null && !Objects.equals(mAlphaSliderText, "")) {
+                canvas.drawText(mAlphaSliderText, rect.centerX(), rect.centerY() + 4 * mDensity, mAlphaTextPaint);
+            }
+        } else {
+            /*  ?? */
         }
 
         float rectWidth = 4 * mDensity / 2;
@@ -457,8 +464,8 @@ public class ColorPickerView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        int width = 0;
-        int height = 0;
+        int width;
+        int height;
 
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
@@ -579,10 +586,10 @@ public class ColorPickerView extends View {
         mAlphaPattern.setBounds(Math.round(mAlphaRect.left), Math.round(mAlphaRect.top), Math.round(mAlphaRect.right), Math.round(mAlphaRect.bottom));
     }
 
-
     /**
      * Set a OnColorChangedListener to get notified when the color selected by the user has changed.
-     * @param listener
+     *
+     * @param listener to be used for callbacks.
      */
     public void setOnColorChangedListener(OnColorChangedListener listener) {
         mListener = listener;
@@ -590,16 +597,17 @@ public class ColorPickerView extends View {
 
     /**
      * Set the color of the border surrounding all panels.
+     *
      * @param color
      */
+    @SuppressWarnings("unused")
     public void setBorderColor(int color) {
         mBorderColor = color;
         invalidate();
     }
 
-    /**
-     * Get the color of the border surrounding all panels.
-     */
+    /** Get the color of the border surrounding all panels. */
+    @SuppressWarnings("unused")
     public int getBorderColor() {
         return mBorderColor;
     }
@@ -673,12 +681,14 @@ public class ColorPickerView extends View {
         return mShowAlphaPanel;
     }
 
+    @SuppressWarnings("unused")
     public void setSliderTrackerColor(int color) {
         mSliderTrackerColor = color;
         mHueTrackerPaint.setColor(mSliderTrackerColor);
         invalidate();
     }
 
+    @SuppressWarnings("unused")
     public int getSliderTrackerColor() {
         return mSliderTrackerColor;
     }
@@ -687,6 +697,7 @@ public class ColorPickerView extends View {
      * Set the text that should be shown in the alpha slider. Set to null to disable text.
      * @param res string resource id.
      */
+    @SuppressWarnings("unused")
     public void setAlphaSliderText(int res) {
         String text = getContext().getString(res);
         setAlphaSliderText(text);
@@ -705,6 +716,7 @@ public class ColorPickerView extends View {
      * Get the current value of the text that will be shown in the alpha slider.
      * @return Text that is being shown.
      */
+    @SuppressWarnings("unused")
     public String getAlphaSliderText() {
         return this.mAlphaSliderText;
     }

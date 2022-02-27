@@ -10,26 +10,29 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import io.syslogic.demo.colorpicker.R;
-import io.syslogic.demo.colorpicker.databinding.FragmentNavhostBinding;
+import io.syslogic.demo.colorpicker.databinding.FragmentNavHostBinding;
 
 /**
- * Navhost Fragment
+ * NavHost Fragment
+ *
  * @author Martin Zeitler
  */
-public class NavhostFragment extends Fragment {
+public class NavHostFragment extends Fragment {
 
     /** Log Tag */
-    protected static final String LOG_TAG = NavhostFragment.class.getSimpleName();
+    @SuppressWarnings("unused")
+    protected static final String LOG_TAG = NavHostFragment.class.getSimpleName();
 
     /** Kept for reference */
-    private static final int resId = R.layout.fragment_navhost;
+    @SuppressWarnings("unused")
+    private static final int resId = R.layout.fragment_nav_host;
 
     /** Data-Binding */
-    private FragmentNavhostBinding mDataBinding;
+    FragmentNavHostBinding mDataBinding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.mDataBinding = FragmentNavhostBinding.inflate(inflater, container, false);
+        this.mDataBinding = FragmentNavHostBinding.inflate(inflater, container, false);
         return this.mDataBinding.getRoot();
     }
 }

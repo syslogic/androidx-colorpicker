@@ -6,6 +6,11 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import io.syslogic.demo.colorpicker.R;
 
+/**
+ * Preferences Fragment
+ *
+ * @author Martin Zeitler
+ */
 public class PreferencesFragment extends PreferenceFragmentCompat {
 
     @Override

@@ -7,18 +7,24 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.VectorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.preference.Preference;
 
 import androidx.preference.PreferenceManager;
 
+import org.jetbrains.annotations.Contract;
+
 /**
- * The ColorPicker {@link Preference}.
+ * The ColorPicker {@link Preference}
+ *
  * @author Martin Zeitler
  */
 public class ColorPickerPreference extends Preference implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener, ColorPickerDialog.OnColorChangedListener {
@@ -35,8 +41,6 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     private boolean mHexValueEnabled    = false;
 
     private int mValue = Color.BLACK;
-
-    private float mDensity = 0;
 
     private SharedPreferences sharedPrefs;
 
@@ -55,9 +59,9 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
         init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(@NonNull Context context, AttributeSet attrs) {
 
-        this.mDensity = context.getResources().getDisplayMetrics().density;
+        // float mDensity = context.getResources().getDisplayMetrics().density;
         this.sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         this.mValue = this.sharedPrefs.getInt(this.getKey(), this.mValue);
 
@@ -74,12 +78,13 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     }
 
     /**
-     * accept hex string and resources reference string (eg. @color/someColor) as defaultValue.
-     * @param a
-     * @param index
+     * Accept hex string and resources reference string (eg. @color/someColor) as defaultValue.
+     *
+     * @param a resource typed array
+     * @param index the index to get
      */
     @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
+    protected Object onGetDefaultValue(@NonNull TypedArray a, int index) {
         int colorInt;
         String mHexDefaultValue = a.getString(index);
         if (mHexDefaultValue != null && mHexDefaultValue.startsWith("#")) {
@@ -90,8 +95,8 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
         }
     }
 
-    /** uses the new api */
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void onSetInitialValue(Object defaultValue) {
         if(defaultValue != null) {
             this.onColorChanged((Integer) defaultValue);
@@ -103,9 +108,8 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
         }
     }
 
-    /** a fixed version of the function */
     @Override
-    public boolean onPreferenceClick(Preference preference) {
+    public boolean onPreferenceClick(@NonNull Preference preference) {
         this.mDialog = new ColorPickerDialog(getContext(), this.mValue);
         if (this.mAlphaSliderEnabled) {this.mDialog.setAlphaSliderVisible(true);}
         if (this.mHexValueEnabled) {this.mDialog.setHexValueEnabled(true);}
@@ -115,7 +119,8 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public boolean onPreferenceChange(@NonNull Preference preference, @NonNull Object newValue) {
 
         this.mValue = Integer.parseInt(newValue.toString());
         this.setSummary(convertToARGB(this.mValue));
@@ -137,6 +142,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     }
 
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onColorChanged(int color) {
         this.mValue = color;
         try {
@@ -158,24 +164,27 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
 
     /**
      * toggle Alpha Slider visibility (by default it's disabled)
-     * @param value
+     * @param value true or false.
      */
+    @SuppressWarnings("unused")
     public void setAlphaSliderEnabled(boolean value) {
         this.mAlphaSliderEnabled = value;
     }
 
     /**
      * toggle Hex Value visibility (by default it's disabled)
-     * @param value
+     * @param value true or false.
      */
+    @SuppressWarnings("unused")
     public void setHexValueEnabled(boolean value) {
         this.mHexValueEnabled = value;
     }
 
     /**
      * for custom purposes. Not used by ColorPickerPreference
-     * @param color
+     * @param color true or false.
      */
+    @NonNull
     static String convertToARGB(int color) {
         String alpha = Integer.toHexString(Color.alpha(color)).toUpperCase();
         String red   = Integer.toHexString(Color.red(color)).toUpperCase();
@@ -193,6 +202,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
      * @param color
      * @return A string representing the hex value of color without the alpha value
      */
+    @NonNull
     static String convertToRGB(int color) {
         String red = Integer.toHexString(Color.red(color)).toUpperCase();
         String green = Integer.toHexString(Color.green(color)).toUpperCase();
@@ -206,10 +216,9 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     /**
      * For custom purposes. Not used by ColorPickerPreference
      * @param argb
-     * @throws IllegalArgumentException
      */
-    static int convertToColorInt(String argb) throws IllegalArgumentException {
-        if (!argb.startsWith("#")) {argb = "#" + argb;}
+    static int convertToColorInt(@NonNull String argb) {
+        if (! argb.startsWith("#")) {argb = "#" + argb;}
         return Color.parseColor(argb);
     }
 
@@ -254,9 +263,11 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
         }
 
         public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            @NonNull @Contract("_ -> new")
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
             }
+            @NonNull @Contract(value = "_ -> new", pure = true)
             public SavedState[] newArray(int size) {
                 return new SavedState[size];
             }

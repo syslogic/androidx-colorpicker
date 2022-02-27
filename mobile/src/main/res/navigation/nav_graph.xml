@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_mainFragment_to_preferencesFragment"
             app:destination="@id/preferencesFragment"/>
+        <action
+            android:id="@+id/action_homeFragment_to_colorPickerDialogFragment"
+            app:destination="@id/colorPickerDialogFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/preferencesFragment"
         android:name="io.syslogic.demo.colorpicker.fragment.PreferencesFragment"/>
+
+    <dialog
+        android:id="@+id/colorPickerDialogFragment"
+        android:name="io.syslogic.demo.colorpicker.fragment.ColorPickerDialogFragmentImpl"
+        tools:layout="@layout/dialog_color_picker"/>
 
 </navigation>

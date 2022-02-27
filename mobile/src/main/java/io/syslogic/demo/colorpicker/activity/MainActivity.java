@@ -6,16 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import io.syslogic.demo.colorpicker.R;
 
+/**
+ * Main Activity
+ *
+ * @author Martin Zeitler
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_navhost);
-        /*
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.settings, new SettingsFragment()).commit();
-        }
-        */
+        setContentView(R.layout.fragment_nav_host);
     }
 }
