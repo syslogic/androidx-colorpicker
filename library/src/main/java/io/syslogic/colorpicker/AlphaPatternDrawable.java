@@ -44,7 +44,6 @@ public class AlphaPatternDrawable extends Drawable {
 
     /** Must return either: PixelFormat.UNKNOWN, PixelFormat.TRANSLUCENT, PixelFormat.TRANSPARENT, PixelFormat.OPAQUE */
     @Override
-    @SuppressWarnings("deprecation")
     public int getOpacity() {
         return PixelFormat.UNKNOWN;
     }
@@ -65,7 +64,8 @@ public class AlphaPatternDrawable extends Drawable {
         int height = bounds.height();
         int width = bounds.width();
         //noinspection IntegerDivisionInFloatingPointContext
-        numRectanglesHorizontal = (int) Math.ceil((width / mRectangleSize));
+        numRectanglesHorizontal = (int) Math.ceil(width / mRectangleSize);
+        //noinspection IntegerDivisionInFloatingPointContext
         numRectanglesVertical = (int) Math.ceil(height / mRectangleSize);
         generatePatternBitmap();
     }

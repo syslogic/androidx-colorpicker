@@ -36,17 +36,15 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/hex_val"
+                android:id="@+id/hexadecimal_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="HEX"
+                android:hint="@string/text_hexadecimal_value"
                 android:imeOptions="actionDone"
                 android:maxLength="7"
                 android:maxLines="1"
                 android:inputType="textCapCharacters"
-
-                tools:ignore="HardcodedText"
                 android:visibility="gone"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

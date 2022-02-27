@@ -9,7 +9,7 @@
         android:id="@+id/layout_dialog_color_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
 
@@ -18,66 +18,61 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layerType="hardware"
-            android:tag="portrait" />
+            android:tag="landscape"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/text_hex_wrapper"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp">
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
                 android:text="@string/text_press_color_to_apply"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/hex_val"
+                android:id="@+id/hexadecimal_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="HEX"
+                android:hint="@string/text_hexadecimal_value"
                 android:imeOptions="actionDone"
                 android:maxLength="7"
                 android:maxLines="1"
                 android:inputType="textCapCharacters"
-
-                tools:ignore="HardcodedText"
                 android:visibility="gone"/>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <io.syslogic.colorpicker.ColorPickerPanelView
-                android:id="@+id/old_color_panel"
-                android:layout_width="0px"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.5" />
-
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="→"
-                android:textSize="20sp"
-                tools:ignore="HardcodedText"/>
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-            <io.syslogic.colorpicker.ColorPickerPanelView
-                android:id="@+id/new_color_panel"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5" />
+                <io.syslogic.colorpicker.ColorPickerPanelView
+                    android:id="@+id/old_color_panel"
+                    android:layout_width="0px"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.5" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="→"
+                    android:textSize="20sp"
+                    tools:ignore="HardcodedText"/>
+
+                <io.syslogic.colorpicker.ColorPickerPanelView
+                    android:id="@+id/new_color_panel"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

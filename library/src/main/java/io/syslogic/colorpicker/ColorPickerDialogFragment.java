@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import java.util.Locale;
 
@@ -56,30 +55,29 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
         void onColorChanged(int color);
     }
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.mDataBinding = DialogColorPickerBinding.inflate(inflater, container, false);
-        return this.mLayout = this.mDataBinding.getRoot();
-    }
-
-    protected void setUp(int color) {
 
         this.mOrientation = requireActivity().getResources().getConfiguration().orientation;
-        this.mLayout.getViewTreeObserver().addOnGlobalLayoutListener(this);
-        this.mDataBinding.hexVal.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        mHexDefaultTextColor = this.mDataBinding.hexVal.getTextColors();
-        this.mDataBinding.hexVal.setOnEditorActionListener((view, actionId, event) -> {
+        this.mDataBinding = DialogColorPickerBinding.inflate(inflater, container, false);
+        this.mDataBinding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(this);
+
+        this.mDataBinding.hexadecimalValue.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        this.mHexDefaultTextColor = this.mDataBinding.hexadecimalValue.getTextColors();
+
+        this.mDataBinding.hexadecimalValue.setOnEditorActionListener((view, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                String s = mDataBinding.hexVal.getText().toString();
-                try {
-                    int c = ColorPickerPreference.convertToColorInt(s);
-                    mDataBinding.colorPickerView.setColor(c, true);
-                    mDataBinding.hexVal.setTextColor(mHexDefaultTextColor);
-                } catch (IllegalArgumentException e) {
-                    mDataBinding.hexVal.setTextColor(Color.RED);
+                if (mDataBinding.hexadecimalValue.getText() != null) {
+                    String s = mDataBinding.hexadecimalValue.getText().toString();
+                    try {
+                        int c = ColorPickerPreference.convertToColorInt(s);
+                        mDataBinding.colorPickerView.setColor(c, true);
+                        mDataBinding.hexadecimalValue.setTextColor(mHexDefaultTextColor);
+                    } catch (IllegalArgumentException e) {
+                        mDataBinding.hexadecimalValue.setTextColor(Color.RED);
+                    }
                 }
                 return true;
             }
@@ -93,10 +91,15 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
                 0
         );
 
-        this.mDataBinding.oldColorPanel.setColor(color);
         this.mDataBinding.oldColorPanel.setOnClickListener(this);
         this.mDataBinding.newColorPanel.setOnClickListener(this);
         this.mDataBinding.colorPickerView.setOnColorChangedListener(this);
+
+        return this.mDataBinding.getRoot();
+    }
+
+    protected void setUp(int color) {
+        this.mDataBinding.oldColorPanel.setColor(color);
         this.mDataBinding.colorPickerView.setColor(color, true);
     }
 
@@ -122,11 +125,11 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     void setHexValueEnabled(boolean enable) {
         mHexValueEnabled = enable;
         if (enable) {
-            this.mDataBinding.hexVal.setVisibility(View.VISIBLE);
+            this.mDataBinding.hexadecimalValue.setVisibility(View.VISIBLE);
             updateHexLengthFilter();
             updateHexValue(getColor());
         } else {
-            this.mDataBinding.hexVal.setVisibility(View.GONE);
+            this.mDataBinding.hexadecimalValue.setVisibility(View.GONE);
         }
     }
 
@@ -137,19 +140,19 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
 
     private void updateHexLengthFilter() {
         if (getAlphaSliderVisible()) {
-            this.mDataBinding.hexVal.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
+            this.mDataBinding.hexadecimalValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
         } else {
-            this.mDataBinding.hexVal.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
+            this.mDataBinding.hexadecimalValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
         }
     }
 
     private void updateHexValue(int color) {
         if (getAlphaSliderVisible()) {
-            this.mDataBinding.hexVal.setText(ColorPickerPreference.convertToARGB(color).toUpperCase(Locale.getDefault()));
+            this.mDataBinding.hexadecimalValue.setText(ColorPickerPreference.convertToARGB(color).toUpperCase(Locale.getDefault()));
         } else {
-            this.mDataBinding.hexVal.setText(ColorPickerPreference.convertToRGB(color).toUpperCase(Locale.getDefault()));
+            this.mDataBinding.hexadecimalValue.setText(ColorPickerPreference.convertToRGB(color).toUpperCase(Locale.getDefault()));
         }
-        this.mDataBinding.hexVal.setTextColor(mHexDefaultTextColor);
+        this.mDataBinding.hexadecimalValue.setTextColor(mHexDefaultTextColor);
     }
 
     @SuppressWarnings("unused")
