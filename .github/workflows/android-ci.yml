@@ -7,11 +7,6 @@ on:
       - README.md
       - .run/**
       - docs/**
-  pull_request:
-    branches: [ master ]
-      - README.md
-      - .run/**
-      - docs/**
 
 jobs:
   build:
