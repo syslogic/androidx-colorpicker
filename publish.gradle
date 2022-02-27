@@ -57,6 +57,16 @@ afterEvaluate {
                 artifact javadocJar {
                     classifier "javadoc"
                 }
+                pom {
+                    name = 'Color Picker'
+                    description = 'A simple color-picker library for Android'
+                    url = 'https://github.com/syslogic/androidx-colorpicker'
+                    scm {
+                        connection = 'scm:git:git://github.com/syslogic/androidx-colorpicker.git'
+                        developerConnection = 'scm:git:ssh://github.com/syslogic/androidx-colorpicker.git'
+                        url = 'https://github.com/syslogic/androidx-colorpicker/'
+                    }
+                }
             }
         }
     }

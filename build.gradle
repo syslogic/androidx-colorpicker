@@ -1,4 +1,9 @@
-// root project
+// Gradle plugins
+plugins {
+    id 'com.android.application' version '7.1.2' apply false
+    id 'com.android.library' version '7.1.2' apply false
+    id 'androidx.navigation.safeargs' version '2.5.0-alpha03' apply false
+}
 
 // Load version.properties
 if(rootProject.file('version.properties').exists()) {
@@ -6,25 +11,6 @@ if(rootProject.file('version.properties').exists()) {
     version.load(new FileInputStream(rootProject.file('version.properties')))
     project.ext.set('versionName', version['versionName'])
     project.ext.set('versionCode', new Integer(version['versionCode']))
-}
-
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath "com.android.tools.build:gradle:7.0.2"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
-    }
 }
 
 task clean(type: Delete) {
