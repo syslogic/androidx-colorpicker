@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -7,9 +8,15 @@
 
         <io.syslogic.colorpicker.ColorPickerPreference
             android:title="@string/text_select_color"
-            android:icon="@drawable/ic_baseline_invert_colors_24"
+            android:icon="@drawable/ic_baseline_invert_colors"
             android:defaultValue="@string/value_default_color"
-            android:key="color_code"/>
+            android:key="color_code_01"/>
+
+        <io.syslogic.colorpicker.ColorPickerPreference
+            android:title="@string/text_select_color"
+            android:icon="@drawable/ic_baseline_invert_colors"
+            android:defaultValue="@string/value_default_color"
+            android:key="color_code_02"/>
 
     </PreferenceCategory>
 

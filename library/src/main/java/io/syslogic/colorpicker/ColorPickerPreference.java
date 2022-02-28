@@ -42,7 +42,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
 
     private int mValue = Color.BLACK;
 
-    private SharedPreferences sharedPrefs;
+    private SharedPreferences prefs;
 
     public ColorPickerPreference(Context context) {
         super(context);
@@ -61,20 +61,15 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
 
     private void init(@NonNull Context context, AttributeSet attrs) {
 
-        // float mDensity = context.getResources().getDisplayMetrics().density;
-        this.sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        this.mValue = this.sharedPrefs.getInt(this.getKey(), this.mValue);
-
-        if(mDebug) {
-            Log.d(LOG_TAG, this.getKey() + ": " + convertToARGB(this.mValue));
-        }
-
-        this.setOnPreferenceClickListener(this);
-
         if (attrs != null) {
             this.mAlphaSliderEnabled = attrs.getAttributeBooleanValue(null, "alphaSlider", false);
             this.mHexValueEnabled = attrs.getAttributeBooleanValue(null, "hexValue", false);
         }
+
+        this.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        this.mValue = this.prefs.getInt(this.getKey(), this.mValue);
+        if(mDebug) {Log.d(LOG_TAG, this.getKey() + ": " + convertToARGB(this.mValue));}
+        this.setOnPreferenceClickListener(this);
     }
 
     /**
@@ -102,7 +97,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
             this.onColorChanged((Integer) defaultValue);
             super.onSetInitialValue(defaultValue);
         } else {
-            this.mValue = this.sharedPrefs.getInt(this.getKey(), this.mValue);
+            this.mValue = this.prefs.getInt(this.getKey(), this.mValue);
             this.onColorChanged(this.mValue);
             super.onSetInitialValue(this.mValue);
         }
@@ -121,10 +116,8 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     @Override
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public boolean onPreferenceChange(@NonNull Preference preference, @NonNull Object newValue) {
-
         this.mValue = Integer.parseInt(newValue.toString());
         this.setSummary(convertToARGB(this.mValue));
-
         if (preference.getIcon() instanceof BitmapDrawable) {
             BitmapDrawable drawable = (BitmapDrawable) preference.getIcon();
             drawable.setTintMode(PorterDuff.Mode.ADD);
@@ -136,8 +129,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
         } else if(mDebug) {
             Log.e(LOG_TAG, "onPreferenceChange: neither BitmapDrawable nor VectorDrawable");
         }
-
-        this.sharedPrefs.edit().putInt(preference.getKey(), this.mValue).apply();
+        this.prefs.edit().putInt(preference.getKey(), this.mValue).apply();
         return false;
     }
 
@@ -163,7 +155,8 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     }
 
     /**
-     * toggle Alpha Slider visibility (by default it's disabled)
+     * Toggle Alpha Slider visibility (by default it's disabled).
+     *
      * @param value true or false.
      */
     @SuppressWarnings("unused")
@@ -172,7 +165,8 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     }
 
     /**
-     * toggle Hex Value visibility (by default it's disabled)
+     * Toggle Hex-Value visibility (by default it's disabled).
+     *
      * @param value true or false.
      */
     @SuppressWarnings("unused")
@@ -248,7 +242,6 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
         Bundle dialogBundle;
         SavedState(Parcel source) {
             super(source);
-            // dialogBundle = source.readBundle();
             this.dialogBundle = source.readBundle(getClass().getClassLoader());
         }
 
