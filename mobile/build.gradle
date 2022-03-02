@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdk 32
     defaultConfig {
         applicationId "io.syslogic.demo.colorpicker"
-        minSdkVersion 21
-        targetSdkVersion 32
+        minSdk 21
+        targetSdk 32
         versionName rootProject.ext.get("versionName")
         versionCode rootProject.ext.get("versionCode")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -33,7 +33,7 @@ android {
 
 dependencies {
 
-    // implementation "io.syslogic:androidx-colorpicker:1.0.1"
+    // implementation "io.syslogic:androidx-colorpicker:1.0.2"
     implementation project(path: ':library')
 
     implementation "com.google.android.material:material:1.5.0"

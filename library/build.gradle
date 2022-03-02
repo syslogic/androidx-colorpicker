@@ -5,10 +5,10 @@ plugins {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdk 32
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 32
+        minSdk 16
+        targetSdk 32
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "${project.rootDir}/proguard/consumer.pro"
         setProperty("archivesBaseName", "colorpicker")
