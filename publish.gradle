@@ -11,7 +11,7 @@ task javadoc(type: Javadoc) {
     }
     failOnError false
     configurations.implementation.setCanBeResolved(true)
-    title = "colorpicker ${versionName} API"
+    title = "Colorpicker ${versionName} API"
     source = android.sourceSets.main.java.srcDirs
     classpath = files(new File("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"))
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
@@ -49,22 +49,16 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = "io.syslogic"
                 artifactId = "androidx-colorpicker"
+                from components.getByName('release')
                 version = versionName
-                from components.release
-                artifact sourcesJar {
-                    classifier "sources"
-                }
-                artifact javadocJar {
-                    classifier "javadoc"
-                }
                 pom {
                     name = 'Color Picker'
                     description = 'A simple color-picker library for Android'
-                    url = 'https://github.com/syslogic/androidx-colorpicker'
+                    url = "https://github.com/syslogic/${artifactId}"
                     scm {
-                        connection = 'scm:git:git://github.com/syslogic/androidx-colorpicker.git'
-                        developerConnection = 'scm:git:ssh://github.com/syslogic/androidx-colorpicker.git'
-                        url = 'https://github.com/syslogic/androidx-colorpicker/'
+                        connection = "scm:git:git://github.com/syslogic/${artifactId}.git"
+                        developerConnection = "scm:git:ssh://github.com/syslogic/${artifactId}.git"
+                        url = "https://github.com/syslogic/${artifactId}/"
                     }
                 }
             }
