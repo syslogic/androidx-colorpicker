@@ -7,8 +7,6 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.preference.PreferenceManager;
 
 import io.syslogic.colorpicker.databinding.DialogColorPickerBinding;
 
