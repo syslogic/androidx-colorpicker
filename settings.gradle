@@ -7,12 +7,6 @@ pluginManagement {
         mavenCentral()
         mavenLocal()
     }
-    plugins {}
-    resolutionStrategy {
-        eachPlugin {
-            println "> ${it.target}"
-        }
-    }
 }
 
 dependencyResolutionManagement {
