@@ -34,6 +34,8 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
         View.OnClickListener {
 
     private ColorStateList mHexDefaultTextColor;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
+    private boolean mAlphaSliderEnabled = false;
     private boolean mHexValueEnabled = false;
     private int mOrientation;
 
@@ -44,28 +46,24 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
         super();
     }
 
-    @SuppressWarnings("unused")
-    public ColorPickerDialogFragment(Context context, int initialColor) {
-        super();
-        int initialColor1 = initialColor;
-        requireActivity().getWindow().setFormat(PixelFormat.RGBA_8888);
-        if (getArguments() != null) {
-            initialColor1 = getArguments().getInt("initialColor", 0);
-            boolean mAlphaSliderEnabled = getArguments().getBoolean("alphaSlider", false);
-            this.mHexValueEnabled = getArguments().getBoolean("hexValue", false);
-        }
-        setUp(initialColor);
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         this.mOrientation = requireActivity().getResources().getConfiguration().orientation;
         this.mDataBinding = DialogColorPickerBinding.inflate(inflater, container, false);
         this.mDataBinding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(this);
+        requireActivity().getWindow().setFormat(PixelFormat.RGBA_8888);
 
         this.mDataBinding.hexadecimalValue.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         this.mHexDefaultTextColor = this.mDataBinding.hexadecimalValue.getTextColors();
+
+        /* The arguments of DialogFragment aren't known in the constructor. */
+        if (getArguments() != null) {
+            int initialColor = getArguments().getInt("initialColor", Color.BLACK);
+            this.mAlphaSliderEnabled = getArguments().getBoolean("alphaSlider", false);
+            this.mHexValueEnabled = getArguments().getBoolean("hexValue", false);
+            setUp(initialColor);
+        }
 
         this.mDataBinding.hexadecimalValue.setOnEditorActionListener((view, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {

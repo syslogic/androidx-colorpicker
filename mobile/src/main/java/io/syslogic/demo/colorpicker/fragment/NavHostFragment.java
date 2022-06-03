@@ -19,10 +19,6 @@ import io.syslogic.demo.colorpicker.databinding.FragmentNavHostBinding;
  */
 public class NavHostFragment extends Fragment {
 
-    /** Log Tag */
-    @SuppressWarnings("unused")
-    protected static final String LOG_TAG = NavHostFragment.class.getSimpleName();
-
     /** Kept for reference */
     @SuppressWarnings("unused")
     private static final int resId = R.layout.fragment_nav_host;

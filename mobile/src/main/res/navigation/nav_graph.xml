@@ -27,9 +27,9 @@
         android:name="io.syslogic.demo.colorpicker.fragment.ColorPickerDialogFragmentImpl"
         tools:layout="@layout/dialog_color_picker">
 
-        <argument app:argType="integer" android:name="initialColor" android:defaultValue="0"/>
-        <argument app:argType="boolean" android:name="alphaSlider" android:defaultValue="true"/>
-        <argument app:argType="boolean" android:name="hexValue" android:defaultValue="true"/>
+        <argument app:argType="integer" android:name="initialColor" android:defaultValue="-16777216"/>
+        <argument app:argType="boolean" android:name="alphaSlider" android:defaultValue="false"/>
+        <argument app:argType="boolean" android:name="hexValue" android:defaultValue="false"/>
     </dialog>
 
 </navigation>

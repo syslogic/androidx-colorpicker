@@ -1,5 +1,9 @@
 package io.syslogic.demo.colorpicker.fragment;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import io.syslogic.demo.colorpicker.BuildConfig;
 import io.syslogic.demo.colorpicker.R;
 import io.syslogic.demo.colorpicker.databinding.FragmentHomeBinding;
 
@@ -21,14 +25,6 @@ import io.syslogic.demo.colorpicker.databinding.FragmentHomeBinding;
  * @author Martin Zeitler
  */
 public class HomeFragment extends Fragment implements FragmentResultListener {
-
-    /** Log Tag */
-    @SuppressWarnings("unused")
-    protected static final String LOG_TAG = HomeFragment.class.getSimpleName();
-
-    /** Debug Output */
-    @SuppressWarnings("unused")
-    protected static final boolean mDebug = BuildConfig.DEBUG;
 
     /** Kept for reference */
     @SuppressWarnings("unused")
@@ -45,16 +41,44 @@ public class HomeFragment extends Fragment implements FragmentResultListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         this.mDataBinding = FragmentHomeBinding.inflate(inflater, container, false);
+
+        /* Navigating to ColorPickerDialogFragment */
+        this.mDataBinding.buttonDialog.setOnClickListener(view -> {
+            NavDirections action = HomeFragmentDirections
+                    .actionHomeFragmentToColorPickerDialogFragment()
+                    .setInitialColor(getBackgroundColor(mDataBinding.layoutHome))
+                    .setAlphaSlider(false)
+                    .setHexValue(false);
+
+            Navigation.findNavController(view).navigate(action);
+        });
+
+        /* Navigating to PreferencesFragment */
         this.mDataBinding.buttonPreferences.setOnClickListener(view ->
-                Navigation.findNavController(view).navigate(
-                        HomeFragmentDirections.actionMainFragmentToPreferencesFragment()
+                Navigation.findNavController(view).navigate(HomeFragmentDirections
+                        .actionMainFragmentToPreferencesFragment()
                 ));
-        this.mDataBinding.buttonDialog.setOnClickListener(view ->
-                Navigation.findNavController(view).navigate(
-                        HomeFragmentDirections.actionHomeFragmentToColorPickerDialogFragment()
-                ));
+
         return this.mDataBinding.getRoot();
+    }
+
+    private int getBackgroundColor(@NonNull View view) {
+        Drawable drawable = view.getBackground();
+        if (drawable != null) {
+
+            /* Obtain the current drawable, if required. */
+            if(drawable instanceof StateListDrawable) {
+                drawable = drawable.getCurrent();
+            }
+
+            /* Return the color's value, if possible. */
+            if (drawable instanceof ColorDrawable) {
+                return ((ColorDrawable) drawable).getColor();
+            }
+        }
+        return Color.BLACK;
     }
 
     /**

@@ -1,6 +1,6 @@
 package io.syslogic.demo.colorpicker.fragment;
 
-import android.content.Context;
+import androidx.fragment.app.DialogFragment;
 
 import io.syslogic.colorpicker.ColorPickerDialogFragment;
 
@@ -13,10 +13,5 @@ public class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
 
     public ColorPickerDialogFragmentImpl() {
         super();
-    }
-
-    public ColorPickerDialogFragmentImpl(Context context, int initialColor) {
-        super();
-        setUp(initialColor);
     }
 }
