@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.Navigation;
 
 import io.syslogic.demo.colorpicker.BuildConfig;
@@ -19,7 +20,7 @@ import io.syslogic.demo.colorpicker.databinding.FragmentHomeBinding;
  *
  * @author Martin Zeitler
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements FragmentResultListener {
 
     /** Log Tag */
     @SuppressWarnings("unused")
@@ -37,6 +38,12 @@ public class HomeFragment extends Fragment {
     FragmentHomeBinding mDataBinding;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getParentFragmentManager().setFragmentResultListener("colorpicker", requireActivity(), this);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.mDataBinding = FragmentHomeBinding.inflate(inflater, container, false);
         this.mDataBinding.buttonPreferences.setOnClickListener(view ->
@@ -48,5 +55,19 @@ public class HomeFragment extends Fragment {
                         HomeFragmentDirections.actionHomeFragmentToColorPickerDialogFragment()
                 ));
         return this.mDataBinding.getRoot();
+    }
+
+    /**
+     * Callback used to handle results passed between fragments.
+     * The result of ColorPickerDialogFragment is being set as background color.
+     *
+     * @param requestKey key used to store the result
+     * @param result     result passed to the callback
+     */
+    @Override
+    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+        if (requestKey.equals("colorpicker")) {
+            this.mDataBinding.layoutHome.setBackgroundColor(result.getInt("color"));
+        }
     }
 }

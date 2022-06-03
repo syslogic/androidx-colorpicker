@@ -33,12 +33,8 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
         ColorPickerView.OnColorChangedListener,
         View.OnClickListener {
 
-    private boolean mHexValueEnabled = false;
-    private boolean mAlphaSliderEnabled = false;
-    private int initialColor = 0;
-
     private ColorStateList mHexDefaultTextColor;
-    private OnColorChangedListener mListener;
+    private boolean mHexValueEnabled = false;
     private int mOrientation;
 
     /** Data-Binding */
@@ -51,18 +47,14 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     @SuppressWarnings("unused")
     public ColorPickerDialogFragment(Context context, int initialColor) {
         super();
-        this.initialColor = initialColor;
+        int initialColor1 = initialColor;
         requireActivity().getWindow().setFormat(PixelFormat.RGBA_8888);
         if (getArguments() != null) {
-            this.initialColor = getArguments().getInt("initialColor", 0);
-            this.mAlphaSliderEnabled = getArguments().getBoolean("alphaSlider", false);
+            initialColor1 = getArguments().getInt("initialColor", 0);
+            boolean mAlphaSliderEnabled = getArguments().getBoolean("alphaSlider", false);
             this.mHexValueEnabled = getArguments().getBoolean("hexValue", false);
         }
         setUp(initialColor);
-    }
-
-    public interface OnColorChangedListener {
-        void onColorChanged(int color);
     }
 
     @Override
@@ -178,29 +170,20 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
         return this.mDataBinding.colorPickerView.getAlphaSliderVisible();
     }
 
-    /**
-     * The OnColorChangedListener will get notified when the color selected by the user has changed.
-     *
-     * @param listener to be used for callbacks.
-     */
-    @SuppressWarnings("unused")
-    void setOnColorChangedListener(OnColorChangedListener listener) {
-        mListener = listener;
-    }
-
     public int getColor() {
         return this.mDataBinding.colorPickerView.getColor();
     }
 
+    /**
+     * FragmentResult will be returned, when the color selected by the user has changed.
+     */
     @Override
     public void onClick(@NonNull View view) {
         if (view.getId() == R.id.new_color_panel) {
-            if (mListener != null) {
-                mListener.onColorChanged(
-                        this.mDataBinding.newColorPanel.getColor()
-                );
-            }
+            Bundle bundle = new Bundle();
+            bundle.putInt("color", this.mDataBinding.newColorPanel.getColor());
+            getParentFragmentManager().setFragmentResult("colorpicker", bundle);
+            dismiss();
         }
-        dismiss();
     }
 }
