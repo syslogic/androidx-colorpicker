@@ -25,6 +25,6 @@ dependencyResolutionManagement {
     }
 }
 
+rootProject.name = "ColorPicker"
 include ":library"
 include ":mobile"
-rootProject.name = "ColorPicker"

@@ -1,18 +1,14 @@
-// Gradle plugins
+// Root project build.gradle
 plugins {
-    id 'com.android.application' version '7.1.2' apply false
-    id 'com.android.library' version '7.1.2' apply false
-    id 'androidx.navigation.safeargs' version '2.5.0-alpha03' apply false
+    id 'com.android.application' version '7.2.1' apply false
+    id 'com.android.library' version '7.2.1' apply false
+    id 'androidx.navigation.safeargs' version '2.5.0-rc01' apply false
 }
 
-// Load version.properties
-if(rootProject.file('version.properties').exists()) {
-    def version = new Properties()
-    version.load(new FileInputStream(rootProject.file('version.properties')))
-    project.ext.set('versionName', version['versionName'])
-    project.ext.set('versionCode', new Integer(version['versionCode']))
-}
+project.ext.set('versionCode', 3)
+project.ext.set('versionName', "1.0.3")
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+    delete project.buildDir
 }
