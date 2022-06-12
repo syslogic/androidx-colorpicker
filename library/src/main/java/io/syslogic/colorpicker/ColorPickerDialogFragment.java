@@ -39,7 +39,10 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     private boolean mHexValueEnabled = false;
     private int mOrientation;
 
-    /** Data-Binding */
+    /**
+     * Data-Binding
+     * @hidden
+     */
     DialogColorPickerBinding mDataBinding;
 
     public ColorPickerDialogFragment() {

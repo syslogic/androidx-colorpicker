@@ -19,7 +19,7 @@ task javadoc(type: Javadoc) {
     classpath += configurations.implementation
     destinationDir = file("${project.buildDir}/outputs/javadoc/")
     options.linkSource true
-    options.links("https://docs.oracle.com/javase/8/docs/api/")
+    options.links("https://docs.oracle.com/en/java/javase/11/docs/api/")
     options.links("https://developer.android.com/reference/")
     exclude "**/BuildConfig.java"
     exclude "**/R.java"
