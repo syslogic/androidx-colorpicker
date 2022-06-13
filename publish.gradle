@@ -11,8 +11,9 @@ task javadoc(type: Javadoc) {
         }
 
         def aar_main = new File("$buildDir/intermediates/aar_main_jar")
-        if (aar_main.exists()) {
-            println "Copy a$buildDir/intermediates/aar_main_jar"
+        if (! aar_main.exists()) {
+            throw new GradleException('Not found: ' + aar_main.getAbsolutePath().toString())
+        } else {
             copy {
                 from aar_main
                 include "**/classes.jar"
