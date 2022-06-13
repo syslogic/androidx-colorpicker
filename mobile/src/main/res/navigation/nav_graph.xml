@@ -24,8 +24,7 @@
 
     <dialog
         android:id="@+id/colorPickerDialogFragment"
-        android:name="io.syslogic.demo.colorpicker.fragment.ColorPickerDialogFragmentImpl"
-        tools:layout="@layout/dialog_color_picker">
+        android:name="io.syslogic.demo.colorpicker.fragment.ColorPickerDialogFragmentImpl">
 
         <argument app:argType="integer" android:name="initialColor" android:defaultValue="-16777216"/>
         <argument app:argType="boolean" android:name="alphaSlider" android:defaultValue="false"/>
