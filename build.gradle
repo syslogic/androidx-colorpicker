@@ -8,6 +8,14 @@ plugins {
 project.ext.set('versionCode', 3)
 project.ext.set('versionName', "1.0.3")
 
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
     delete project.buildDir
