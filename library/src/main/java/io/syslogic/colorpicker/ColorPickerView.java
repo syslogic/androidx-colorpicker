@@ -24,7 +24,7 @@ import androidx.annotation.NonNull;
 import java.util.Objects;
 
 /**
- * The ColorPicker {@link View}
+ * The Color-Picker {@link View}
  *
  * It displays a color picker to the user and allow them to select a color.
  * the slider for the alpha-channel can be enabled setAlphaSliderVisible(true).
@@ -580,7 +580,7 @@ public class ColorPickerView extends View {
     /**
      * Set the color of the border surrounding all panels.
      *
-     * @param color
+     * @param color the color value to set.
      */
     @SuppressWarnings("unused")
     public void setBorderColor(int color) {
@@ -588,7 +588,10 @@ public class ColorPickerView extends View {
         invalidate();
     }
 
-    /** Get the color of the border surrounding all panels. */
+    /**
+     * Get the color of the border surrounding all panels.
+     * @return the current border color.
+     */
     @SuppressWarnings("unused")
     public int getBorderColor() {
         return mBorderColor;
@@ -643,7 +646,7 @@ public class ColorPickerView extends View {
      * Set if the user is allowed to adjust the alpha panel. Default is false.
      * When it is set to false, no alpha will be set.
      *
-     * @param visible
+     * @param visible whether to show the alpha-slider panel.
      */
     public void setAlphaSliderVisible(boolean visible) {
 

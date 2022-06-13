@@ -23,7 +23,7 @@ import java.util.Locale;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 /**
- * The ColorPicker {@link Dialog}
+ * The Color-Picker {@link Dialog}
  *
  * @author Martin Zeitler
  */

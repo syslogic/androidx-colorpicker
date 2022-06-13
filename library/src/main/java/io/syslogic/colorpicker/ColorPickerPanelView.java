@@ -10,7 +10,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 /**
- * The ColorPicker Panel {@link View}
+ * The Color-Picker Panel {@link View}
  *
  * This class draws a panel which which will be filled with a color which can be set.
  * It can be used to show the currently selected color which you will get from the {@link ColorPickerView}.
@@ -71,8 +71,8 @@ public class ColorPickerPanelView extends View {
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onSizeChanged(int w, int h, int oldW, int oldH) {
+        super.onSizeChanged(w, h, oldW, oldH);
         mDrawingRect = new RectF();
         mDrawingRect.left = getPaddingLeft();
         mDrawingRect.right = w - getPaddingRight();
@@ -100,14 +100,18 @@ public class ColorPickerPanelView extends View {
     /**
      * Set the color that should be shown by this view.
      *
-     * @param color
+     * @param color the color value to set.
      */
     public void setColor(int color) {
         mColor = color;
         invalidate();
     }
 
-    /** Get the color currently show by this view. */
+    /**
+     * Get the color currently shown by this view.
+     *
+     * @return the current color value.
+     */
     public int getColor() {
         return mColor;
     }
@@ -115,7 +119,7 @@ public class ColorPickerPanelView extends View {
     /**
      * Set the color of the border surrounding the panel.
      *
-     * @param color
+     * @param color the color value to set.
      */
     @SuppressWarnings("unused")
     public void setBorderColor(int color) {
@@ -123,7 +127,11 @@ public class ColorPickerPanelView extends View {
         invalidate();
     }
 
-    /** Get the color of the border surrounding the panel. */
+    /**
+     * Get the color of the border surrounding the panel.
+     *
+     * @return the current border color value.
+     */
     @SuppressWarnings("unused")
     public int getBorderColor() {
         return mBorderColor;

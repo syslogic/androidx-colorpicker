@@ -17,13 +17,12 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.preference.Preference;
-
 import androidx.preference.PreferenceManager;
 
 import org.jetbrains.annotations.Contract;
 
 /**
- * The ColorPicker {@link Preference}
+ * The Color-Picker {@link Preference}
  *
  * @author Martin Zeitler
  */
@@ -44,16 +43,19 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
 
     private SharedPreferences prefs;
 
+    @SuppressWarnings("unused")
     public ColorPickerPreference(Context context) {
         super(context);
         init(context, null);
     }
 
+    @SuppressWarnings("unused")
     public ColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
+    @SuppressWarnings("unused")
     public ColorPickerPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
@@ -68,7 +70,9 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
 
         this.prefs = PreferenceManager.getDefaultSharedPreferences(context);
         this.mValue = this.prefs.getInt(this.getKey(), this.mValue);
-        if(mDebug) {Log.d(LOG_TAG, this.getKey() + ": " + convertToARGB(this.mValue));}
+        if(mDebug) {
+            Log.d(LOG_TAG, String.format("%s: %s", this.getKey(), convertToARGB(this.mValue)));
+        }
         this.setOnPreferenceClickListener(this);
     }
 
@@ -140,7 +144,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
         try {
             this.onPreferenceChange(this, color);
         } catch (NullPointerException e) {
-            if(mDebug) {Log.e(LOG_TAG, "" + e.getMessage());}
+            if(mDebug) {Log.e(LOG_TAG, String.format("%s", e.getMessage()));}
         }
     }
 
@@ -184,16 +188,16 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
         String red   = Integer.toHexString(Color.red(color)).toUpperCase();
         String green = Integer.toHexString(Color.green(color)).toUpperCase();
         String blue  = Integer.toHexString(Color.blue(color)).toUpperCase();
-        if (alpha.length() == 1) {alpha = "0" + alpha;}
-        if (red.length()   == 1) {red   = "0" + red;}
-        if (green.length() == 1) {green = "0" + green;}
-        if (blue.length()  == 1) {blue  = "0" + blue;}
-        return "#" + alpha + red + green + blue;
+        if (alpha.length() == 1) {alpha = String.format("0%s", alpha);}
+        if (red.length()   == 1) {red   = String.format("0%s", red);}
+        if (green.length() == 1) {green = String.format("0%s", green);}
+        if (blue.length()  == 1) {blue  = String.format("0%s", blue);}
+        return String.format("#%s%s%s%s", alpha, red, green, blue);
     }
 
     /**
      * Method currently used by onGetDefaultValue method to convert hex string provided in android:defaultValue to color integer.
-     * @param color
+     * @param color the color value to convert.
      * @return A string representing the hex value of color without the alpha value
      */
     @NonNull
@@ -201,18 +205,19 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
         String red = Integer.toHexString(Color.red(color)).toUpperCase();
         String green = Integer.toHexString(Color.green(color)).toUpperCase();
         String blue = Integer.toHexString(Color.blue(color)).toUpperCase();
-        if (red.length()   == 1) {red   = "0" + red;}
-        if (green.length() == 1) {green = "0" + green;}
-        if (blue.length()  == 1) {blue  = "0" + blue;}
-        return "#" + red + green + blue;
+        if (red.length()   == 1) {red   = String.format("0%s", red);}
+        if (green.length() == 1) {green = String.format("0%s", green);}
+        if (blue.length()  == 1) {blue  = String.format("0%s", blue);}
+        return String.format("#%s%s%s", red, green, blue);
     }
 
     /**
-     * For custom purposes. Not used by ColorPickerPreference
-     * @param argb
+     * For custom purposes. Not used by ColorPickerPreference.
+     *
+     * @param argb the ARGB string to convert.
      */
     static int convertToColorInt(@NonNull String argb) {
-        if (! argb.startsWith("#")) {argb = "#" + argb;}
+        if (! argb.startsWith("#")) {argb = String.format("#%s", argb);}
         return Color.parseColor(argb);
     }
 
@@ -255,7 +260,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
             super(superState);
         }
 
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+        public static final Creator<SavedState> CREATOR = new Creator<>() {
             @NonNull @Contract("_ -> new")
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);

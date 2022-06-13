@@ -24,7 +24,7 @@ import androidx.fragment.app.DialogFragment;
 import io.syslogic.colorpicker.databinding.DialogColorPickerBinding;
 
 /**
- * The ColorPicker {@link DialogFragment}
+ * The Color-Picker {@link DialogFragment}
  *
  * @author Martin Zeitler
  */
