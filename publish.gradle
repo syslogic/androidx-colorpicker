@@ -1,5 +1,6 @@
 
 task javadoc(type: Javadoc) {
+
     doFirst {
         configurations.implementation.filter { it.name.endsWith('.aar') }.each { aar ->
             copy {
@@ -8,16 +9,29 @@ task javadoc(type: Javadoc) {
                 into "$buildDir/tmp/aarsToJars/${aar.name.replace('.aar', '')}/"
             }
         }
+
+        def aar_main = new File("$buildDir/intermediates/aar_main_jar")
+        if (aar_main.exists()) {
+            println "Copy a$buildDir/intermediates/aar_main_jar"
+            copy {
+                from aar_main
+                include "**/classes.jar"
+                into "$buildDir/tmp/aarsToJars/aar_main_jar/"
+            }
+        }
     }
+
     failOnError false
     configurations.implementation.setCanBeResolved(true)
-    title = "Colorpicker ${versionName} API"
+    title = "Colorpicker Library ${versionName} API"
     source = android.sourceSets.main.java.srcDirs
     classpath = files(new File("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"))
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += fileTree(dir: "$buildDir/tmp/aarsToJars/")
     classpath += configurations.implementation
     destinationDir = file("${project.buildDir}/outputs/javadoc/")
+
+    // options.verbose()
     options.linkSource true
     options.links("https://docs.oracle.com/en/java/javase/11/docs/api/")
     options.links("https://developer.android.com/reference/")
