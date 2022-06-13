@@ -20,14 +20,16 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import java.util.Objects;
 
 /**
- * The Color-Picker {@link View}
+ * The Color-Picker {@link View}.
  *
  * It displays a color picker to the user and allow them to select a color.
  * the slider for the alpha-channel can be enabled setAlphaSliderVisible(true).
+ *
  * @author Martin Zeitler
  */
 public class ColorPickerView extends View {
@@ -54,8 +56,6 @@ public class ColorPickerView extends View {
     /** The dp which the tracker of the hue or alpha panel will extend outside of its bounds. */
     private float RECTANGLE_TRACKER_OFFSET = 2f;
 
-    private float mDensity = 1f;
-
     private OnColorChangedListener mListener;
 
     private Paint mSatValPaint;
@@ -68,6 +68,8 @@ public class ColorPickerView extends View {
     private Paint mAlphaTextPaint;
 
     private Paint mBorderPaint;
+
+    private float mDensity = 1f;
 
     private Shader mValShader;
     private Shader mSatShader;
@@ -93,7 +95,6 @@ public class ColorPickerView extends View {
      */
     private float mDrawingOffset;
 
-
     /** Distance form the edges of the view of where we are allowed to draw. */
     private RectF mDrawingRect;
 
@@ -104,10 +105,6 @@ public class ColorPickerView extends View {
     private AlphaPatternDrawable mAlphaPattern;
 
     private Point mStartTouchPoint = null;
-
-    public interface OnColorChangedListener {
-        void onColorChanged(int color);
-    }
 
     public ColorPickerView(Context context) {
         this(context, null);
@@ -123,6 +120,7 @@ public class ColorPickerView extends View {
     }
 
     private void init() {
+
         mDensity = getContext().getResources().getDisplayMetrics().density;
         PALETTE_CIRCLE_TRACKER_RADIUS *= mDensity;
         RECTANGLE_TRACKER_OFFSET *= mDensity;
@@ -131,32 +129,33 @@ public class ColorPickerView extends View {
         PANEL_SPACING = PANEL_SPACING * mDensity;
 
         mDrawingOffset = this.calculateRequiredOffset();
-        this.initPaintTools();
 
         // needed for receiving trackball motion events.
-        this.setFocusable(true);
         this.setFocusableInTouchMode(true);
+        this.setFocusable(true);
+
+        this.initPaintTools();
     }
 
     private void initPaintTools() {
 
-        mSatValPaint = new Paint();
-        mSatValTrackerPaint = new Paint();
-        mHuePaint = new Paint();
-        mHueTrackerPaint = new Paint();
-        mAlphaPaint = new Paint();
-        mAlphaTextPaint = new Paint();
         mBorderPaint = new Paint();
 
+        mSatValPaint = new Paint();
+        mSatValTrackerPaint = new Paint();
         mSatValTrackerPaint.setStyle(Style.STROKE);
         mSatValTrackerPaint.setStrokeWidth(2f * mDensity);
         mSatValTrackerPaint.setAntiAlias(true);
 
+        mHuePaint = new Paint();
+        mHueTrackerPaint = new Paint();
         mHueTrackerPaint.setColor(mSliderTrackerColor);
         mHueTrackerPaint.setStyle(Style.STROKE);
         mHueTrackerPaint.setStrokeWidth(2f * mDensity);
         mHueTrackerPaint.setAntiAlias(true);
 
+        mAlphaPaint = new Paint();
+        mAlphaTextPaint = new Paint();
         mAlphaTextPaint.setColor(0xff1c1c1c);
         mAlphaTextPaint.setTextSize(14f * mDensity);
         mAlphaTextPaint.setAntiAlias(true);
@@ -180,17 +179,16 @@ public class ColorPickerView extends View {
         return hue;
     }
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         if (mDrawingRect.width() <= 0 || mDrawingRect.height() <= 0) return;
         drawSatValPanel(canvas);
         drawHuePanel(canvas);
         drawAlphaPanel(canvas);
-
     }
 
     private void drawSatValPanel(@NonNull Canvas canvas) {
+
         final RectF rect = mSatValRect;
         mBorderPaint.setColor(mBorderColor);
         canvas.drawRect(mDrawingRect.left, mDrawingRect.top, rect.right + BORDER_WIDTH_PX, rect.bottom + BORDER_WIDTH_PX, mBorderPaint);
@@ -390,7 +388,9 @@ public class ColorPickerView extends View {
 
         }
         if (update) {
-            if (mListener != null) {mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSat, mVal}));}
+            if (mListener != null) {
+                mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSat, mVal}));
+            }
             invalidate();
             return true;
         }
@@ -522,8 +522,8 @@ public class ColorPickerView extends View {
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onSizeChanged(int w, int h, int oldW, int oldH) {
+        super.onSizeChanged(w, h, oldW, oldH);
         mDrawingRect = new RectF();
         mDrawingRect.left = mDrawingOffset + getPaddingLeft();
         mDrawingRect.right = w - mDrawingOffset - getPaddingRight();
@@ -678,11 +678,11 @@ public class ColorPickerView extends View {
 
     /**
      * Set the text that should be shown in the alpha slider. Set to null to disable text.
-     * @param res string resource id.
+     * @param resId string resource id.
      */
     @SuppressWarnings("unused")
-    public void setAlphaSliderText(int res) {
-        String text = getContext().getString(res);
+    public void setAlphaSliderText(@StringRes int resId) {
+        String text = getContext().getString(resId);
         setAlphaSliderText(text);
     }
 

@@ -27,7 +27,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
  *
  * @author Martin Zeitler
  */
-public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColorChangedListener, View.OnClickListener, ViewTreeObserver.OnGlobalLayoutListener {
+public class ColorPickerDialog extends Dialog implements OnColorChangedListener, View.OnClickListener, ViewTreeObserver.OnGlobalLayoutListener {
 
     private ColorPickerView mColorPicker;
     private ColorPickerPanelView mOldColor;

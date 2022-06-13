@@ -36,8 +36,8 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
 
     private ColorPickerDialog mDialog;
 
-    private boolean mAlphaSliderEnabled = false;
-    private boolean mHexValueEnabled    = false;
+    private boolean mShowAlphaSlider = false;
+    private boolean mShowHexValue = false;
 
     private int mValue = Color.BLACK;
 
@@ -64,8 +64,8 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     private void init(@NonNull Context context, AttributeSet attrs) {
 
         if (attrs != null) {
-            this.mAlphaSliderEnabled = attrs.getAttributeBooleanValue(null, "alphaSlider", false);
-            this.mHexValueEnabled = attrs.getAttributeBooleanValue(null, "hexValue", false);
+            this.mShowAlphaSlider = attrs.getAttributeBooleanValue(null, "alphaSlider", false);
+            this.mShowHexValue = attrs.getAttributeBooleanValue(null, "hexValue", false);
         }
 
         this.prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -110,8 +110,8 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     @Override
     public boolean onPreferenceClick(@NonNull Preference preference) {
         this.mDialog = new ColorPickerDialog(getContext(), this.mValue);
-        if (this.mAlphaSliderEnabled) {this.mDialog.setAlphaSliderVisible(true);}
-        if (this.mHexValueEnabled) {this.mDialog.setHexValueEnabled(true);}
+        if (this.mShowAlphaSlider) {this.mDialog.setAlphaSliderVisible(true);}
+        if (this.mShowHexValue) {this.mDialog.setHexValueEnabled(true);}
         this.mDialog.setOnColorChangedListener(this);
         this.mDialog.show();
         return false;
@@ -152,8 +152,8 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     private void showDialog(Bundle state) {
         this.mDialog = new ColorPickerDialog(getContext(), this.mValue);
         this.mDialog.setOnColorChangedListener(this);
-        if (this.mAlphaSliderEnabled) {this.mDialog.setAlphaSliderVisible(true);}
-        if (this.mHexValueEnabled) {this.mDialog.setHexValueEnabled(true);}
+        if (this.mShowAlphaSlider) {this.mDialog.setAlphaSliderVisible(true);}
+        if (this.mShowHexValue) {this.mDialog.setHexValueEnabled(true);}
         if (state != null) {this.mDialog.onRestoreInstanceState(state);}
         this.mDialog.show();
     }
@@ -165,7 +165,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
      */
     @SuppressWarnings("unused")
     public void setAlphaSliderEnabled(boolean value) {
-        this.mAlphaSliderEnabled = value;
+        this.mShowAlphaSlider = value;
     }
 
     /**
@@ -175,7 +175,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
      */
     @SuppressWarnings("unused")
     public void setHexValueEnabled(boolean value) {
-        this.mHexValueEnabled = value;
+        this.mShowHexValue = value;
     }
 
     /**
@@ -212,7 +212,8 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     }
 
     /**
-     * For custom purposes. Not used by ColorPickerPreference.
+     * For custom purposes.
+     * Not used by ColorPickerPreference.
      *
      * @param argb the ARGB string to convert.
      */
@@ -233,7 +234,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         if (!(state instanceof SavedState)) {
-            // didn't save state for us in onSaveInstanceState
+            // didn't save state in onSaveInstanceState
             super.onRestoreInstanceState(state);
             return;
         }
@@ -261,10 +262,12 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
         }
 
         public static final Creator<SavedState> CREATOR = new Creator<>() {
+
             @NonNull @Contract("_ -> new")
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
             }
+
             @NonNull @Contract(value = "_ -> new", pure = true)
             public SavedState[] newArray(int size) {
                 return new SavedState[size];
