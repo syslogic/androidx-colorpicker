@@ -24,7 +24,7 @@ import androidx.fragment.app.DialogFragment;
 import io.syslogic.colorpicker.databinding.DialogColorPickerBinding;
 
 /**
- * The Color-Picker {@link DialogFragment}
+ * The Color-Picker {@link DialogFragment} accepts NavArgs and returns a FragmentResult.
  *
  * @author Martin Zeitler
  */
