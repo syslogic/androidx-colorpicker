@@ -30,10 +30,14 @@ public class TestColorPicker extends TestSuite {
         button.click();
         sleep(200);
 
-        UiObject2 colorPickerView = this.mDevice.findObject(By.res(this.packageName, "color_picker_view"));
-        Assert.assertTrue(colorPickerView.isFocusable());
-        this.randomClick(colorPickerView);
-        sleep(200);
+        /* tapping around a bit */
+        for (int i=0; i < 50; i++) {
+            UiObject2 colorPickerView = this.mDevice.findObject(By.res(this.packageName, "color_picker_view"));
+            Assert.assertTrue(colorPickerView.isFocusable());
+            this.randomClick(colorPickerView);
+            colorPickerView.recycle();
+            sleep(100);
+        }
 
         UiObject2 newColorPanel = this.mDevice.findObject(By.res(this.packageName, "new_color_panel"));
         Assert.assertTrue(newColorPanel.isFocusable());
@@ -55,11 +59,14 @@ public class TestColorPicker extends TestSuite {
         colorCode.recycle();
         sleep(200);
 
-        UiObject2 colorPickerView = this.mDevice.findObject(By.res(this.packageName, "color_picker_view"));
-        Assert.assertTrue(colorPickerView.isFocusable());
-        this.randomClick(colorPickerView);
-        colorPickerView.recycle();
-        sleep(200);
+        /* tapping around a bit */
+        for (int i=0; i < 50; i++) {
+            UiObject2 colorPickerView = this.mDevice.findObject(By.res(this.packageName, "color_picker_view"));
+            Assert.assertTrue(colorPickerView.isFocusable());
+            this.randomClick(colorPickerView);
+            colorPickerView.recycle();
+            sleep(100);
+        }
 
         UiObject2 newColorPanel = this.mDevice.findObject(By.res(this.packageName, "new_color_panel"));
         Assert.assertTrue(newColorPanel.isFocusable());
