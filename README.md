@@ -10,7 +10,7 @@ One can either depend on the local `:library` module:
         implementation project(path: ':library')
     }
 
-Or depend on JitPack `maven { url 'https://jitpack.io' }`:
+Or depend on JitPack `maven { url 'https://jitpack.io' }`; either by version tag or by `master-SNAPSHOT`:
 
     dependencies {
         implementation "io.syslogic:androidx-colorpicker:1.0.4"

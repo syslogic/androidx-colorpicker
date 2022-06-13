@@ -12,6 +12,7 @@ task javadoc(type: Javadoc) {
 
         def aar_main = new File("$buildDir/intermediates/aar_main_jar")
         if (! aar_main.exists()) {
+            // it depends on task :library:assembleDebug output
             throw new GradleException('Not found: ' + aar_main.getAbsolutePath().toString())
         } else {
             copy {
@@ -31,13 +32,15 @@ task javadoc(type: Javadoc) {
     classpath += fileTree(dir: "$buildDir/tmp/aarsToJars/")
     classpath += configurations.implementation
     destinationDir = file("${project.buildDir}/outputs/javadoc/")
+    exclude "**/BuildConfig.java", "**/R.java"
 
-    // options.verbose()
-    options.linkSource true
-    options.links("https://docs.oracle.com/en/java/javase/11/docs/api/")
-    options.links("https://developer.android.com/reference/")
-    exclude "**/BuildConfig.java"
-    exclude "**/R.java"
+    options {
+        author true
+        linkSource true
+        // verbose()
+        links "https://docs.oracle.com/en/java/javase/11/docs/api/"
+        linksOffline "https://developer.android.com/reference","${android.sdkDirectory}/docs/reference"
+    }
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
