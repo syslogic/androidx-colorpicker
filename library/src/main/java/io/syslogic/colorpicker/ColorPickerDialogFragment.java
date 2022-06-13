@@ -176,7 +176,8 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     }
 
     /**
-     * FragmentResult will be returned, when the color selected by the user has changed.
+     * The FragmentResult will be returned to the parent fragment,
+     * when the color selected by the user has been confirmed.
      */
     @Override
     public void onClick(@NonNull View view) {

@@ -43,7 +43,7 @@ public class AlphaPatternDrawable extends Drawable {
 
     /** Must return either: PixelFormat.UNKNOWN, PixelFormat.TRANSLUCENT, PixelFormat.TRANSPARENT, PixelFormat.OPAQUE */
     @Override
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({"deprecation", "RedundantSuppression"})
     public int getOpacity() {
         return PixelFormat.UNKNOWN;
     }
