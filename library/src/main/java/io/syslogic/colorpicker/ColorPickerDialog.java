@@ -23,7 +23,7 @@ import java.util.Locale;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 /**
- * The Color-Picker {@link Dialog}
+ * The Color-Picker {@link Dialog}, which is being used by ColorPickerPreference.
  *
  * @author Martin Zeitler
  */
@@ -178,7 +178,7 @@ public class ColorPickerDialog extends Dialog implements ColorPickerView.OnColor
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         if (view.getId() == R.id.new_color_panel) {
             if (mListener != null) {mListener.onColorChanged(mNewColor.getColor());}
         }
