@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
 /**
  * Color-Picker Test Case
  *
@@ -25,21 +27,21 @@ public class TestColorPicker extends TestSuite {
     @Test
     public void ColorPickerDialogFragment() {
 
-        UiObject2 button = this.mDevice.findObject(By.res(this.packageName, "button_dialog"));
+        UiObject2 button = this.getButtonDialog();
         Assert.assertTrue(button.isClickable());
         button.click();
         sleep(200);
 
-        /* tapping around a bit */
-        for (int i=0; i < 50; i++) {
-            UiObject2 colorPickerView = this.mDevice.findObject(By.res(this.packageName, "color_picker_view"));
+        /* Randomly tapping the ColorPickerView for 5 seconds. */
+        for (int i=0; i < 100; i++) {
+            UiObject2 colorPickerView = this.getColorPickerView();
             Assert.assertTrue(colorPickerView.isFocusable());
-            this.randomClick(colorPickerView);
+            this.randomlyClick(colorPickerView);
             colorPickerView.recycle();
-            sleep(100);
+            sleep(50);
         }
 
-        UiObject2 newColorPanel = this.mDevice.findObject(By.res(this.packageName, "new_color_panel"));
+        UiObject2 newColorPanel = this.getNewColorPanel();
         Assert.assertTrue(newColorPanel.isFocusable());
         newColorPanel.click();
         sleep(200);
@@ -48,7 +50,7 @@ public class TestColorPicker extends TestSuite {
     @Test
     public void ColorPickerPreference() {
 
-        UiObject2 button = this.mDevice.findObject(By.res(this.packageName, "button_preferences"));
+        UiObject2 button = this.getButtonPreferences();
         Assert.assertTrue(button.isClickable());
         button.click();
         button.recycle();
@@ -59,16 +61,16 @@ public class TestColorPicker extends TestSuite {
         colorCode.recycle();
         sleep(200);
 
-        /* tapping around a bit */
-        for (int i=0; i < 50; i++) {
-            UiObject2 colorPickerView = this.mDevice.findObject(By.res(this.packageName, "color_picker_view"));
+        /* Randomly tapping the ColorPickerView for 5s. */
+        for (int i=0; i < 100; i++) {
+            UiObject2 colorPickerView = this.getColorPickerView();
             Assert.assertTrue(colorPickerView.isFocusable());
-            this.randomClick(colorPickerView);
+            this.randomlyClick(colorPickerView);
             colorPickerView.recycle();
-            sleep(100);
+            sleep(50);
         }
 
-        UiObject2 newColorPanel = this.mDevice.findObject(By.res(this.packageName, "new_color_panel"));
+        UiObject2 newColorPanel = this.getNewColorPanel();
         Assert.assertTrue(newColorPanel.isFocusable());
         newColorPanel.click();
         newColorPanel.recycle();

@@ -1,7 +1,5 @@
 package io.syslogic.demo.colorpicker;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 import android.content.ComponentName;
@@ -23,7 +21,6 @@ import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite.SuiteClasses;
 
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -32,9 +29,7 @@ import java.util.Random;
  * @author Martin Zeitler
  */
 @RunWith(org.junit.runners.Suite.class)
-@SuiteClasses({
-    TestColorPicker.class
-})
+@SuiteClasses({TestColorPicker.class})
 public class TestSuite {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -67,7 +62,7 @@ public class TestSuite {
     }
 
     /** launches the blueprint application */
-    void startMainActivity(){
+    void startMainActivity() {
 
         /* initialize UiDevice */
         this.mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
@@ -99,24 +94,29 @@ public class TestSuite {
         }
     }
 
-    /** it clicks spinner items by index */
-    public void clickSpinnerItem(String spinnerName, int itemIndex) {
-
-        UiObject2 spinner = this.mDevice.findObject(By.res(this.packageName, spinnerName));
-        Assert.assertThat(spinner.isClickable(), is(equalTo(true)));
-        spinner.click();
-        sleep(2000);
-
-        List<UiObject2> items = this.mDevice.findObjects(By.res("android:id/text1"));
-        Assert.assertThat(items.size() > itemIndex, is(equalTo(true)));
-
-        UiObject2 item = items.get(itemIndex);
-        Assert.assertThat(item.isClickable(), is(equalTo(true)));
-        item.click(500);
-        sleep(2000);
+    UiObject2 getButtonDialog() {
+        return this.mDevice.findObject(By.res(this.packageName, "button_dialog"));
     }
 
-    void randomClick(@NonNull UiObject2 view) {
+    UiObject2 getButtonPreferences() {
+        return this.mDevice.findObject(By.res(this.packageName, "button_preferences"));
+    }
+
+    UiObject2 getColorPickerView() {
+        return this.mDevice.findObject(By.res(this.packageName, "color_picker_view"));
+    }
+
+    @SuppressWarnings("unused")
+    UiObject2 getOldColorPanel() {
+        return this.mDevice.findObject(By.res(this.packageName, "old_color_panel"));
+    }
+
+    UiObject2 getNewColorPanel() {
+        return this.mDevice.findObject(By.res(this.packageName, "new_color_panel"));
+    }
+
+    /** TODO: This randomly clicks the whole panel... */
+    void randomlyClick(@NonNull UiObject2 view) {
         Rect rect = view.getVisibleBounds();
         Random rnd = new Random();
         int[] coordinate = new int[] {
@@ -126,7 +126,7 @@ public class TestSuite {
         this.mDevice.click(coordinate[0], coordinate[1]);
     }
 
-    void sleep(@SuppressWarnings("SameParameterValue") int ms){
+    void sleep(int ms) {
         try {
             Thread.sleep(ms);
         } catch (InterruptedException e) {
