@@ -9,6 +9,7 @@ android {
     defaultConfig {
         minSdk 16
         targetSdk 32
+        buildToolsVersion "32.0.0"
         setProperty('archivesBaseName', 'colorpicker')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         consumerProguardFiles "${project.rootDir}/proguard/consumer.pro"
