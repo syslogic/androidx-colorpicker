@@ -23,7 +23,7 @@ import java.util.Locale;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 /**
- * The Color-Picker {@link Dialog}, which is being used by ColorPickerPreference.
+ * The Color-Picker {@link Dialog} is (still) being used by ColorPickerPreference.
  *
  * @author Martin Zeitler
  */
