@@ -179,8 +179,8 @@ public class ColorPickerDialog extends Dialog implements OnColorChangedListener,
 
     @Override
     public void onClick(@NonNull View view) {
-        if (view.getId() == R.id.new_color_panel) {
-            if (mListener != null) {mListener.onColorChanged(mNewColor.getColor());}
+        if (view.getId() == R.id.new_color_panel && mListener != null) {
+            mListener.onColorChanged(mNewColor.getColor());
         }
         dismiss();
     }

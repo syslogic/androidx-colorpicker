@@ -3,7 +3,7 @@
 
     <!-- Color Picker -->
     <string name="text_color_picker_dialog">Color Picker</string>
-    <string name="text_press_color_to_apply">Touch color to apply</string>
+    <string name="text_touch_to_apply">Touch to apply</string>
     <string name="text_hexadecimal_value">Hex Value</string>
 
 </resources>

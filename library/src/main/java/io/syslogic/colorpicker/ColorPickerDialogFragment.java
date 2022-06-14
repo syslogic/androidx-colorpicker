@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
         View.OnClickListener {
 
     private ColorStateList mHexDefaultTextColor;
+
     private boolean mShowAlphaSlider = false;
     private boolean mShowHexValue = false;
     private int mOrientation;
@@ -49,6 +51,13 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {}
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         this.mOrientation = requireActivity().getResources().getConfiguration().orientation;
@@ -58,13 +67,6 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
 
         this.mDataBinding.hexadecimalValue.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         this.mHexDefaultTextColor = this.mDataBinding.hexadecimalValue.getTextColors();
-
-        /* The arguments of DialogFragment aren't known in the constructor. */
-        if (getArguments() != null) {
-            this.setShowHexValue(getArguments().getBoolean("hexValue", false));
-            this.setShowAlphaSlider(getArguments().getBoolean("alphaSlider", false));
-            this.setUp(getArguments().getInt("initialColor", Color.BLACK));
-        }
 
         this.mDataBinding.hexadecimalValue.setOnEditorActionListener((view, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -96,6 +98,13 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
         this.mDataBinding.newColorPanel.setOnClickListener(this);
         this.mDataBinding.colorPickerView.setOnColorChangedListener(this);
 
+        /* The arguments of DialogFragment aren't known in the constructor. */
+        if (getArguments() != null) {
+            this.setShowHexValue(getArguments().getBoolean("hexValue", false));
+            this.setShowAlphaSlider(getArguments().getBoolean("alphaSlider", false));
+            this.setUp(getArguments().getInt("initialColor", Color.BLACK));
+        }
+
         return this.mDataBinding.getRoot();
     }
 
@@ -119,16 +128,16 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
 
     @Override
     public void onColorChanged(int color) {
+        if (this.mShowHexValue) {this.updateHexValue(color);}
         this.mDataBinding.newColorPanel.setColor(color);
-        if (this.mShowHexValue) {updateHexValue(color);}
     }
 
-    void setShowHexValue(boolean enable) {
-        this.mShowHexValue = enable;
-        if (enable) {
+    void setShowHexValue(boolean value) {
+        this.mShowHexValue = value;
+        if (this.mShowHexValue) {
             this.mDataBinding.hexadecimalValue.setVisibility(View.VISIBLE);
-            updateHexLengthFilter();
-            updateHexValue(getColor());
+            this.updateHexLengthFilter();
+            this.updateHexValue(getColor());
         } else {
             this.mDataBinding.hexadecimalValue.setVisibility(View.GONE);
         }
@@ -140,7 +149,7 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     }
 
     private void updateHexLengthFilter() {
-        if (getAlphaSliderVisible()) {
+        if (this.getAlphaSliderVisible()) {
             this.mDataBinding.hexadecimalValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
         } else {
             this.mDataBinding.hexadecimalValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
@@ -148,7 +157,7 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     }
 
     private void updateHexValue(int color) {
-        if (getAlphaSliderVisible()) {
+        if (this.getAlphaSliderVisible()) {
             this.mDataBinding.hexadecimalValue.setText(ColorPickerPreference.convertToARGB(color).toUpperCase(Locale.getDefault()));
         } else {
             this.mDataBinding.hexadecimalValue.setText(ColorPickerPreference.convertToRGB(color).toUpperCase(Locale.getDefault()));
@@ -157,8 +166,8 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     }
 
     void setShowAlphaSlider(boolean value) {
-        this.mDataBinding.colorPickerView.setAlphaSliderVisible(value);
         this.mShowAlphaSlider = value;
+        this.mDataBinding.colorPickerView.setAlphaSliderVisible(value);
         if (this.mShowHexValue) {
             updateHexLengthFilter();
             updateHexValue(getColor());

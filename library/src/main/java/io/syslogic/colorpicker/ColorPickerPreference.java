@@ -33,14 +33,12 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
 
     /** Debug Output */
     protected static final boolean mDebug = BuildConfig.DEBUG;
-
-    private ColorPickerDialog mDialog;
-
+    
+    private int mCurrentValue = Color.BLACK;
     private boolean mShowAlphaSlider = false;
     private boolean mShowHexValue = false;
-
-    private int mValue = Color.BLACK;
-
+    
+    private ColorPickerDialog mDialog;
     private SharedPreferences prefs;
 
     @SuppressWarnings("unused")
@@ -69,9 +67,9 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
         }
 
         this.prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        this.mValue = this.prefs.getInt(this.getKey(), this.mValue);
+        this.mCurrentValue = this.prefs.getInt(this.getKey(), this.mCurrentValue);
         if(mDebug) {
-            Log.d(LOG_TAG, String.format("%s: %s", this.getKey(), convertToARGB(this.mValue)));
+            Log.d(LOG_TAG, String.format("%s: %s", this.getKey(), convertToARGB(this.mCurrentValue)));
         }
         this.setOnPreferenceClickListener(this);
     }
@@ -90,7 +88,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
             colorInt = convertToColorInt(mHexDefaultValue);
             return colorInt;
         } else {
-            return a.getColor(index, this.mValue);
+            return a.getColor(index, this.mCurrentValue);
         }
     }
 
@@ -101,15 +99,15 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
             this.onColorChanged((Integer) defaultValue);
             super.onSetInitialValue(defaultValue);
         } else {
-            this.mValue = this.prefs.getInt(this.getKey(), this.mValue);
-            this.onColorChanged(this.mValue);
-            super.onSetInitialValue(this.mValue);
+            this.mCurrentValue = this.prefs.getInt(this.getKey(), this.mCurrentValue);
+            this.onColorChanged(this.mCurrentValue);
+            super.onSetInitialValue(this.mCurrentValue);
         }
     }
 
     @Override
     public boolean onPreferenceClick(@NonNull Preference preference) {
-        this.mDialog = new ColorPickerDialog(getContext(), this.mValue);
+        this.mDialog = new ColorPickerDialog(getContext(), this.mCurrentValue);
         if (this.mShowAlphaSlider) {this.mDialog.setAlphaSliderVisible(true);}
         if (this.mShowHexValue) {this.mDialog.setHexValueEnabled(true);}
         this.mDialog.setOnColorChangedListener(this);
@@ -120,27 +118,27 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
     @Override
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public boolean onPreferenceChange(@NonNull Preference preference, @NonNull Object newValue) {
-        this.mValue = Integer.parseInt(newValue.toString());
-        this.setSummary(convertToARGB(this.mValue));
+        this.mCurrentValue = Integer.parseInt(newValue.toString());
+        this.setSummary(convertToARGB(this.mCurrentValue));
         if (preference.getIcon() instanceof BitmapDrawable) {
             BitmapDrawable drawable = (BitmapDrawable) preference.getIcon();
             drawable.setTintMode(PorterDuff.Mode.ADD);
-            drawable.setTint(this.mValue);
+            drawable.setTint(this.mCurrentValue);
         } else if (preference.getIcon() instanceof VectorDrawable) {
             VectorDrawable drawable = (VectorDrawable) preference.getIcon();
             drawable.setTintMode(PorterDuff.Mode.ADD);
-            drawable.setTint(this.mValue);
+            drawable.setTint(this.mCurrentValue);
         } else if(mDebug) {
             Log.e(LOG_TAG, "onPreferenceChange: neither BitmapDrawable nor VectorDrawable");
         }
-        this.prefs.edit().putInt(preference.getKey(), this.mValue).apply();
+        this.prefs.edit().putInt(preference.getKey(), this.mCurrentValue).apply();
         return false;
     }
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onColorChanged(int color) {
-        this.mValue = color;
+        this.mCurrentValue = color;
         try {
             this.onPreferenceChange(this, color);
         } catch (NullPointerException e) {
@@ -150,7 +148,7 @@ public class ColorPickerPreference extends Preference implements Preference.OnPr
 
     /** it crashes the preferences screen */
     private void showDialog(Bundle state) {
-        this.mDialog = new ColorPickerDialog(getContext(), this.mValue);
+        this.mDialog = new ColorPickerDialog(getContext(), this.mCurrentValue);
         this.mDialog.setOnColorChangedListener(this);
         if (this.mShowAlphaSlider) {this.mDialog.setAlphaSliderVisible(true);}
         if (this.mShowHexValue) {this.mDialog.setHexValueEnabled(true);}

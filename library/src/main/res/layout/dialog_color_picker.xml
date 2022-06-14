@@ -29,10 +29,10 @@
             android:layout_marginRight="6dp">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:text="@string/text_press_color_to_apply"
+                android:gravity="center_vertical|end"
+                android:text="@string/text_touch_to_apply"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <androidx.appcompat.widget.AppCompatEditText
