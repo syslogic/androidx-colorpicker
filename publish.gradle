@@ -1,6 +1,7 @@
 // publish.gradle
 task javadoc(type: Javadoc) {
-    title = "Color Picker Library ${versionName} API"
+
+    title = "Color Picker ${versionName} API"
     source = android.sourceSets.main.java.srcDirs
     destinationDir = file("${project.buildDir}/outputs/javadoc/")
     configurations.implementation.setCanBeResolved(true)
@@ -11,16 +12,12 @@ task javadoc(type: Javadoc) {
     exclude "**/BuildConfig.java", "**/R.java"
     failOnError false
 
-    // options.setOutputLevel(JavadocOutputLevel.VERBOSE)
-    // options.setOutputLevel(JavadocOutputLevel.QUIET)
     // options.verbose()
-
     // javadoc: warning - The code being documented uses modules but the packages
     // defined in https://developer.android.com/reference/ are in the unnamed module.
-
     options.links "https://docs.oracle.com/en/java/javase/11/docs/api/"
     options.linksOffline "https://developer.android.com/reference", "${android.sdkDirectory}/docs/reference"
-    options.linkSource false
+    options.linkSource true
     options.author true
 
     doFirst {
