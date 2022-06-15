@@ -18,7 +18,7 @@ It's also available on JitPack; either by version tag or by `master-SNAPSHOT`.<b
 This requires the repository URL to be added: `maven { url 'https://jitpack.io' }`
 
     dependencies {
-        implementation "io.syslogic:androidx-colorpicker:1.0.4"
+        implementation "io.syslogic:androidx-colorpicker:1.0.5"
     }
 
 [![](https://jitci.com/gh/syslogic/androidx-colorpicker/svg)](https://jitci.com/gh/syslogic/androidx-colorpicker) [![Release](https://jitpack.io/v/syslogic/androidx-colorpicker.svg)](https://jitpack.io/#io.syslogic/androidx-colorpicker)
