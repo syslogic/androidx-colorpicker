@@ -1,7 +1,5 @@
 package io.syslogic.demo.colorpicker.fragment;
 
-import androidx.fragment.app.DialogFragment;
-
 import io.syslogic.colorpicker.ColorPickerDialogFragment;
 
 /**
