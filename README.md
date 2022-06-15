@@ -22,3 +22,4 @@ This requires the repository URL to be added: `maven { url 'https://jitpack.io' 
     }
 
 [![](https://jitci.com/gh/syslogic/androidx-colorpicker/svg)](https://jitci.com/gh/syslogic/androidx-colorpicker) [![Release](https://jitpack.io/v/syslogic/androidx-colorpicker.svg)](https://jitpack.io/#io.syslogic/androidx-colorpicker)
+
