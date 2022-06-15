@@ -7,6 +7,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.DimenRes;
 import androidx.annotation.NonNull;
 
 /**
@@ -18,13 +19,13 @@ import androidx.annotation.NonNull;
  */
 public class ColorPickerPanelView extends View {
 
+    private int mBorderColor = 0xFF6E6E6E;
+    private int mColor = 0xFF000000;
+
     /** the width in pixels of the border surrounding the color panel. */
-    private final static float BORDER_WIDTH_PX = 1;
+    private float BORDER_WIDTH_PX;
 
     private float mDensity = 1f;
-
-    private int mBorderColor = 0xff6E6E6E;
-    private int mColor = 0xff000000;
 
     private Paint mBorderPaint;
     private Paint mColorPaint;
@@ -44,13 +45,26 @@ public class ColorPickerPanelView extends View {
 
     public ColorPickerPanelView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(@NonNull Context context) {
+        this.mDensity = getDisplayDensity(context);
+        BORDER_WIDTH_PX = getDimension(context, R.dimen.border_width_px);
+        this.initPaintTools();
+    }
+
+    private void initPaintTools() {
         mBorderPaint = new Paint();
         mColorPaint = new Paint();
-        mDensity = getContext().getResources().getDisplayMetrics().density;
+    }
+
+    private static float getDimension(@NonNull Context context, @DimenRes int resId) {
+        return context.getResources().getDimension(resId);
+    }
+
+    private static float getDisplayDensity(@NonNull Context context) {
+        return context.getResources().getDisplayMetrics().density;
     }
 
     @Override

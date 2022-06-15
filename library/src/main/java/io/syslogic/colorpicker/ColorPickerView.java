@@ -19,6 +19,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.DimenRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 
@@ -34,27 +35,35 @@ import java.util.Objects;
  */
 public class ColorPickerView extends View {
 
-    private final static int PANEL_SAT_VAL = 0;
-    private final static int PANEL_HUE     = 1;
-    private final static int PANEL_ALPHA   = 2;
+    private final static int PANEL_SAT   = 0;
+    private final static int PANEL_HUE   = 1;
+    private final static int PANEL_ALPHA = 2;
+
+    /** To remember which panel that has the "focus" when processing hardware button data. */
+    private int mLastTouchedPanel = PANEL_SAT;
+
+    private int mSliderTrackerColor = 0xFF1C1C1C;
+    private int mBorderColor = 0xFF6E6E6E;
+
+    private float mDensity = 1f;
 
     /** The width in pixels of the border surrounding all color panels. */
-    private final static float BORDER_WIDTH_PX = 1;
+    private float BORDER_WIDTH_PX;
 
     /** The width in dp of the hue panel. */
-    private float HUE_PANEL_WIDTH = 30f;
+    private float HUE_PANEL_WIDTH;
 
     /** The height in dp of the alpha panel */
-    private float ALPHA_PANEL_HEIGHT = 20f;
+    private float ALPHA_PANEL_HEIGHT;
 
     /** The distance in dp between the different color panels. */
-    private float PANEL_SPACING = 10f;
+    private float PANEL_SPACING;
 
     /** The radius in dp of the color palette tracker circle. */
-    private float PALETTE_CIRCLE_TRACKER_RADIUS = 5f;
+    private float PALETTE_CIRCLE_TRACKER_RADIUS;
 
     /** The dp which the tracker of the hue or alpha panel will extend outside of its bounds. */
-    private float RECTANGLE_TRACKER_OFFSET = 2f;
+    private float RECTANGLE_TRACKER_OFFSET;
 
     private OnColorChangedListener mListener;
 
@@ -69,8 +78,6 @@ public class ColorPickerView extends View {
 
     private Paint mBorderPaint;
 
-    private float mDensity = 1f;
-
     private Shader mValShader;
     private Shader mSatShader;
     private Shader mHueShader;
@@ -82,12 +89,7 @@ public class ColorPickerView extends View {
     private float mVal = 0f;
 
     private String mAlphaSliderText = "";
-    private int mSliderTrackerColor = 0xff1c1c1c;
-    private int mBorderColor = 0xff6E6E6E;
     private boolean mShowAlphaPanel = false;
-
-    /** To remember which panel that has the "focus" when processing hardware button data. */
-    private int mLastTouchedPanel = PANEL_SAT_VAL;
 
     /**
      * Offset from the edge we must have or else the finger tracker
@@ -116,24 +118,23 @@ public class ColorPickerView extends View {
 
     public ColorPickerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(@NonNull Context context) {
 
-        mDensity = getContext().getResources().getDisplayMetrics().density;
-        PALETTE_CIRCLE_TRACKER_RADIUS *= mDensity;
-        RECTANGLE_TRACKER_OFFSET *= mDensity;
-        HUE_PANEL_WIDTH *= mDensity;
-        ALPHA_PANEL_HEIGHT *= mDensity;
-        PANEL_SPACING = PANEL_SPACING * mDensity;
+        this.mDensity = getDisplayDensity(context);
 
-        mDrawingOffset = this.calculateRequiredOffset();
+        BORDER_WIDTH_PX               = getDimension(context, R.dimen.border_width_px) * mDensity;
+        PALETTE_CIRCLE_TRACKER_RADIUS = getDimension(context, R.dimen.palette_circle_tracker_radius) * mDensity;
+        RECTANGLE_TRACKER_OFFSET      = getDimension(context, R.dimen.rectangle_tracker_offset) * mDensity;
+        HUE_PANEL_WIDTH               = getDimension(context, R.dimen.hue_panel_width) * mDensity;
+        ALPHA_PANEL_HEIGHT            = getDimension(context, R.dimen.alpha_panel_height) * mDensity;
+        PANEL_SPACING                 = getDimension(context, R.dimen.panel_spacing) * mDensity;
 
-        // needed for receiving trackball motion events.
+        this.mDrawingOffset = this.calculateRequiredOffset();
         this.setFocusableInTouchMode(true);
         this.setFocusable(true);
-
         this.initPaintTools();
     }
 
@@ -163,9 +164,17 @@ public class ColorPickerView extends View {
         mAlphaTextPaint.setFakeBoldText(true);
     }
 
+    private static float getDimension(@NonNull Context context, @DimenRes int resId) {
+        return context.getResources().getDimension(resId);
+    }
+
+    private static float getDisplayDensity(@NonNull Context context) {
+        return context.getResources().getDisplayMetrics().density;
+    }
+
     private float calculateRequiredOffset() {
         float offset = Math.max(PALETTE_CIRCLE_TRACKER_RADIUS, RECTANGLE_TRACKER_OFFSET);
-        offset = Math.max(offset, BORDER_WIDTH_PX * mDensity);
+        offset = Math.max(offset, BORDER_WIDTH_PX);
         return offset * 1.5f;
     }
 
@@ -181,7 +190,9 @@ public class ColorPickerView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mDrawingRect.width() <= 0 || mDrawingRect.height() <= 0) return;
+        if (mDrawingRect.width() <= 0 || mDrawingRect.height() <= 0) {
+            return;
+        }
         drawSatValPanel(canvas);
         drawHuePanel(canvas);
         drawAlphaPanel(canvas);
@@ -215,6 +226,7 @@ public class ColorPickerView extends View {
     }
 
     private void drawHuePanel(@NonNull Canvas canvas) {
+
         final RectF rect = mHueRect;
         mBorderPaint.setColor(mBorderColor);
         canvas.drawRect(rect.left - BORDER_WIDTH_PX, rect.top - BORDER_WIDTH_PX, rect.right + BORDER_WIDTH_PX, rect.bottom + BORDER_WIDTH_PX, mBorderPaint);
@@ -236,6 +248,7 @@ public class ColorPickerView extends View {
     }
 
     private void drawAlphaPanel(Canvas canvas) {
+
         if (!mShowAlphaPanel || mAlphaRect == null || mAlphaPattern == null) return;
         final RectF rect = mAlphaRect;
         mBorderPaint.setColor(mBorderColor);
@@ -354,7 +367,7 @@ public class ColorPickerView extends View {
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             switch (mLastTouchedPanel) {
 
-                case PANEL_SAT_VAL:
+                case PANEL_SAT:
                     float sat, val;
                     sat = mSat + x / 50f;
                     val = mVal - y / 50f;
@@ -438,7 +451,7 @@ public class ColorPickerView extends View {
             mHue = pointToHue(event.getY());
             update = true;
         } else if (mSatValRect.contains(startX, startY)) {
-            mLastTouchedPanel = PANEL_SAT_VAL;
+            mLastTouchedPanel = PANEL_SAT;
             float[] result = pointToSatVal(event.getX(), event.getY());
             mSat = result[0];
             mVal = result[1];

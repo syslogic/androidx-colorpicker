@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -38,6 +37,7 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
 
     private boolean mShowAlphaSlider = false;
     private boolean mShowHexValue = false;
+
     private int mOrientation;
 
     /**
