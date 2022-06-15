@@ -5,8 +5,8 @@ plugins {
     id 'androidx.navigation.safeargs' version '2.5.0-rc01' apply false
 }
 
-project.ext.set('versionCode', 4)
-project.ext.set('versionName', "1.0.4")
+project.ext.set('versionCode', 5)
+project.ext.set('versionName', "1.0.5")
 
 allprojects {
     gradle.projectsEvaluated {

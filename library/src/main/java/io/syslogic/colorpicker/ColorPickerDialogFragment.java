@@ -35,9 +35,8 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
 
     private ColorStateList mHexDefaultTextColor;
 
-    private boolean mShowAlphaSlider = false;
     private boolean mShowHexValue = false;
-
+    private boolean mShowAlphaSlider = false;
     private int mOrientation;
 
     /**
@@ -48,13 +47,6 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
 
     public ColorPickerDialogFragment() {
         super();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {}
     }
 
     @Override
@@ -104,7 +96,6 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
             this.setShowAlphaSlider(getArguments().getBoolean("alphaSlider", false));
             this.setUp(getArguments().getInt("initialColor", Color.BLACK));
         }
-
         return this.mDataBinding.getRoot();
     }
 
@@ -133,13 +124,11 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     }
 
     void setShowHexValue(boolean value) {
+        this.mDataBinding.setShowHexValue(value);
         this.mShowHexValue = value;
         if (this.mShowHexValue) {
-            this.mDataBinding.hexadecimalValue.setVisibility(View.VISIBLE);
             this.updateHexLengthFilter();
             this.updateHexValue(getColor());
-        } else {
-            this.mDataBinding.hexadecimalValue.setVisibility(View.GONE);
         }
     }
 
@@ -149,15 +138,19 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     }
 
     private void updateHexLengthFilter() {
-        if (this.getAlphaSliderVisible()) {
-            this.mDataBinding.hexadecimalValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
+        if (this.mDataBinding.hexadecimalValue.getVisibility() == View.VISIBLE) {
+            this.mDataBinding.hexadecimalValue.setFilters(
+                    new InputFilter[] {new InputFilter.LengthFilter(9)}
+            );
         } else {
-            this.mDataBinding.hexadecimalValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
+            this.mDataBinding.hexadecimalValue.setFilters(
+                    new InputFilter[] {new InputFilter.LengthFilter(7)}
+            );
         }
     }
 
     private void updateHexValue(int color) {
-        if (this.getAlphaSliderVisible()) {
+        if (this.mDataBinding.getShowAlphaSlider()) {
             this.mDataBinding.hexadecimalValue.setText(ColorPickerPreference.convertToARGB(color).toUpperCase(Locale.getDefault()));
         } else {
             this.mDataBinding.hexadecimalValue.setText(ColorPickerPreference.convertToRGB(color).toUpperCase(Locale.getDefault()));
@@ -166,16 +159,12 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     }
 
     void setShowAlphaSlider(boolean value) {
+        this.mDataBinding.setShowAlphaSlider(value);
         this.mShowAlphaSlider = value;
-        this.mDataBinding.colorPickerView.setAlphaSliderVisible(value);
-        if (this.mShowHexValue) {
+        if (this.mShowAlphaSlider) {
             updateHexLengthFilter();
             updateHexValue(getColor());
         }
-    }
-
-    private boolean getAlphaSliderVisible() {
-        return this.mDataBinding.colorPickerView.getAlphaSliderVisible();
     }
 
     public int getColor() {

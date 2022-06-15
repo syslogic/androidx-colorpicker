@@ -3,7 +3,10 @@
     <dimen name="border_width_px">1px</dimen>
     <dimen name="hue_panel_width">10dp</dimen>
     <dimen name="alpha_panel_height">20dp</dimen>
-    <dimen name="panel_spacing">6dp</dimen>
-    <dimen name="palette_circle_tracker_radius">5dp</dimen>
+    <dimen name="panel_spacing">4dp</dimen>
+    <dimen name="palette_circle_tracker_radius">4dp</dimen>
     <dimen name="rectangle_tracker_offset">2dp</dimen>
+
+    <dimen name="margin_double_arrow">4dp</dimen>
+
 </resources>
