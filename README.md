@@ -26,7 +26,7 @@ class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
 }
 ````
 
-And define `ColorPickerDialogFragmentImpl` as navigation destination in [`nav_graph.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/navigation/nav_graph.xml):
+Then define `ColorPickerDialogFragmentImpl` as navigation destination in [`nav_graph.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/navigation/nav_graph.xml):
 ````xml
 <dialog
     android:id="@+id/colorPickerDialogFragment"
