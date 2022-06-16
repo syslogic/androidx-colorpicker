@@ -1,7 +1,7 @@
 # androidx-colorpicker
 A simple color-picker library for Android, which works with Navigation Component.<br/><br/>
 It is generally available on JitPack; either by version tag or `master-SNAPSHOT`.<br/>
-The JitPack repository URL needs to be added: `maven { url 'https://jitpack.io' }`
+The JitPack repository URL would be: `maven { url 'https://jitpack.io' }`
 
     dependencies {
         implementation "io.syslogic:androidx-colorpicker:1.0.5"
