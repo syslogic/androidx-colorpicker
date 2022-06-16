@@ -36,8 +36,8 @@ class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
 </dialog>
 ````
 
-B The `Preference` can be added as [`ColorPickerPreference`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerPreference.java)
-into file [`preferences.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/xml/preferences.xml)
+B) The [`ColorPickerPreference`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerPreference.java)
+can be added into eg. [`preferences.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/xml/preferences.xml)
 ````xml
 <io.syslogic.colorpicker.ColorPickerPreference
     android:title="@string/text_select_color"
