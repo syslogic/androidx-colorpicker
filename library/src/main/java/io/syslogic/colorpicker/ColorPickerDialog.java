@@ -34,11 +34,12 @@ public class ColorPickerDialog extends Dialog implements OnColorChangedListener,
     private ColorPickerPanelView mNewColor;
 
     private EditText mHexVal;
-    private boolean mHexValueEnabled = false;
     private ColorStateList mHexDefaultTextColor;
     private OnColorChangedListener mListener;
     private int mOrientation;
     private View mLayout;
+
+    private boolean mHexValueEnabled = true;
 
     @Override
     public void onGlobalLayout() {
