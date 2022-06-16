@@ -20,8 +20,24 @@ It provides these classes:
 
 The `:mobile` module provides these usage examples:
 
- - [`ColorPickerDialogFragmentImpl.java`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/java/io/syslogic/demo/colorpicker/fragment/ColorPickerDialogFragmentImpl.java)
- - [`preferences.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/xml/preferences.xml)
+[`ColorPickerDialogFragmentImpl.java`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/java/io/syslogic/demo/colorpicker/fragment/ColorPickerDialogFragmentImpl.java)
+
+````java
+class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
+    public ColorPickerDialogFragmentImpl() {
+        super();
+    }
+}
+````
+
+[`preferences.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/xml/preferences.xml)
+````xml
+    <io.syslogic.colorpicker.ColorPickerPreference
+        android:title="@string/text_select_color"
+        android:icon="@drawable/ic_baseline_invert_colors"
+        android:defaultValue="@string/value_default_color"
+        android:key="color_code_01"/>
+````
 
 And it looks about like this:
 
