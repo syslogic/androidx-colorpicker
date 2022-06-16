@@ -15,8 +15,7 @@ Alternatively, one can also depend on the local `:library` module:
 
 The `:mobile` application module provides these usage examples:
 
-A) [`ColorPickerDialogFragment`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerDialogFragment.java) can be added as [`ColorPickerDialogFragmentImpl.java`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/java/io/syslogic/demo/colorpicker/fragment/ColorPickerDialogFragmentImpl.java) `extends ColorPickerDialogFragment`
-
+A) Use [`ColorPickerDialogFragmentImpl.java`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/java/io/syslogic/demo/colorpicker/fragment/ColorPickerDialogFragmentImpl.java) `extends` [`ColorPickerDialogFragment`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerDialogFragment.java)
 ````java
 class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
     public ColorPickerDialogFragmentImpl() {
@@ -36,8 +35,8 @@ Where [`nav_graph.xml`](https://github.com/syslogic/androidx-colorpicker/blob/ma
 </dialog>
 ````
 
-B) The [`ColorPickerPreference`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerPreference.java)
-can be added into eg. [`preferences.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/xml/preferences.xml)
+B) [`ColorPickerPreference`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerPreference.java)
+can be added as XML node; into eg. [`preferences.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/xml/preferences.xml)
 ````xml
 <io.syslogic.colorpicker.ColorPickerPreference
     android:title="@string/text_select_color"
