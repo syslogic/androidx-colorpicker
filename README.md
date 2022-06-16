@@ -13,9 +13,9 @@ Alternatively, one can also depend on the local `:library` module:
         implementation project(path: ':library')
     }
 
-The `:mobile` module provides these usage examples:
+The `:mobile` application module provides these usage examples:
 
-A) The `DialogFragment` can be added as [`ColorPickerDialogFragmentImpl.java`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/java/io/syslogic/demo/colorpicker/fragment/ColorPickerDialogFragmentImpl.java) `extends` [`ColorPickerDialogFragment`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerDialogFragment.java)
+A) `ColorPickerDialogFragment` can be added as [`ColorPickerDialogFragmentImpl.java`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/java/io/syslogic/demo/colorpicker/fragment/ColorPickerDialogFragmentImpl.java) `extends` [`ColorPickerDialogFragment`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerDialogFragment.java)
 
 ````java
 class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
@@ -25,7 +25,7 @@ class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
 }
 ````
 
-[`nav_graph.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/navigation/nav_graph.xml) defines it as navigation destination:
+Where [`nav_graph.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/navigation/nav_graph.xml) defines it as a navigation destination:
 ````xml
 <dialog
     android:id="@+id/colorPickerDialogFragment"
