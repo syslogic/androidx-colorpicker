@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Contract;
 public class ColorPickerPreference extends Preference implements
         Preference.OnPreferenceChangeListener,
         Preference.OnPreferenceClickListener,
-        ColorPickerDialog.OnColorChangedListener {
+        OnColorChangedListener {
 
     /** {@link Log} Tag */
     private static final String LOG_TAG = ColorPickerPreference.class.getSimpleName();
@@ -113,7 +113,7 @@ public class ColorPickerPreference extends Preference implements
         this.mDialog = new ColorPickerDialog(getContext(), this.mCurrentValue);
         if (this.mShowAlphaSlider) {this.mDialog.setAlphaSliderVisible(true);}
         if (this.mShowHexValue) {this.mDialog.setHexValueEnabled(true);}
-        this.mDialog.setOnColorChangedListener((ColorPickerDialog.OnColorChangedListener) this);
+        this.mDialog.setOnColorChangedListener((OnColorChangedListener) this);
         this.mDialog.show();
         return false;
     }
@@ -152,7 +152,7 @@ public class ColorPickerPreference extends Preference implements
     /** it crashes the preferences screen */
     private void showDialog(Bundle state) {
         this.mDialog = new ColorPickerDialog(getContext(), this.mCurrentValue);
-        this.mDialog.setOnColorChangedListener((ColorPickerDialog.OnColorChangedListener) this);
+        this.mDialog.setOnColorChangedListener((OnColorChangedListener) this);
         if (this.mShowAlphaSlider) {this.mDialog.setAlphaSliderVisible(true);}
         if (this.mShowHexValue) {this.mDialog.setHexValueEnabled(true);}
         if (state != null) {this.mDialog.onRestoreInstanceState(state);}
@@ -180,7 +180,7 @@ public class ColorPickerPreference extends Preference implements
     }
 
     /**
-     * for custom purposes. Not used by ColorPickerPreference
+     * Not used by ColorPickerPreference
      * @param color true or false.
      */
     @NonNull

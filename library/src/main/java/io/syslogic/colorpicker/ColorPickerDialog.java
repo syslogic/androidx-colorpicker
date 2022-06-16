@@ -43,17 +43,17 @@ public class ColorPickerDialog extends Dialog implements OnColorChangedListener,
     @Override
     public void onGlobalLayout() {
         if (getContext().getResources().getConfiguration().orientation != mOrientation) {
+
+            mOrientation = getContext().getResources().getConfiguration().orientation;
+            mLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
             int oldColor = mOldColor.getColor();
             int newColor = mNewColor.getColor();
-            mLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             setUp(oldColor);
+
             mNewColor.setColor(newColor);
             mColorPicker.setColor(newColor);
         }
-    }
-
-    public interface OnColorChangedListener {
-        void onColorChanged(int color);
     }
 
     ColorPickerDialog(Context context, int initialColor) {

@@ -67,8 +67,8 @@ public class ColorPickerView extends View {
 
     private OnColorChangedListener mListener;
 
-    private Paint mSatValPaint;
-    private Paint mSatValTrackerPaint;
+    private Paint mSaturationPaint;
+    private Paint mSaturationTrackerPaint;
 
     private Paint mHuePaint;
     private Paint mHueTrackerPaint;
@@ -100,7 +100,7 @@ public class ColorPickerView extends View {
     /** Distance form the edges of the view of where we are allowed to draw. */
     private RectF mDrawingRect;
 
-    private RectF mSatValRect;
+    private RectF mSatRect;
     private RectF mHueRect;
     private RectF mAlphaRect;
 
@@ -125,12 +125,12 @@ public class ColorPickerView extends View {
 
         this.mDensity = getDisplayDensity(context);
 
-        BORDER_WIDTH_PX               = getDimension(context, R.dimen.border_width_px) * mDensity;
-        PALETTE_CIRCLE_TRACKER_RADIUS = getDimension(context, R.dimen.palette_circle_tracker_radius) * mDensity;
-        RECTANGLE_TRACKER_OFFSET      = getDimension(context, R.dimen.rectangle_tracker_offset) * mDensity;
-        HUE_PANEL_WIDTH               = getDimension(context, R.dimen.hue_panel_width) * mDensity;
-        ALPHA_PANEL_HEIGHT            = getDimension(context, R.dimen.alpha_panel_height) * mDensity;
-        PANEL_SPACING                 = getDimension(context, R.dimen.panel_spacing) * mDensity;
+        BORDER_WIDTH_PX               = getDimension(context, R.dimen.border_width_px);
+        PALETTE_CIRCLE_TRACKER_RADIUS = mDensity * getDimension(context, R.dimen.palette_circle_tracker_radius);
+        RECTANGLE_TRACKER_OFFSET      = mDensity * getDimension(context, R.dimen.rectangle_tracker_offset);
+        HUE_PANEL_WIDTH               = mDensity * getDimension(context, R.dimen.hue_panel_width);
+        ALPHA_PANEL_HEIGHT            = mDensity * getDimension(context, R.dimen.alpha_panel_height);
+        PANEL_SPACING                 = mDensity * getDimension(context, R.dimen.panel_spacing);
 
         this.mDrawingOffset = this.calculateRequiredOffset();
         this.setFocusableInTouchMode(true);
@@ -142,11 +142,11 @@ public class ColorPickerView extends View {
 
         mBorderPaint = new Paint();
 
-        mSatValPaint = new Paint();
-        mSatValTrackerPaint = new Paint();
-        mSatValTrackerPaint.setStyle(Style.STROKE);
-        mSatValTrackerPaint.setStrokeWidth(2f * mDensity);
-        mSatValTrackerPaint.setAntiAlias(true);
+        mSaturationPaint = new Paint();
+        mSaturationTrackerPaint = new Paint();
+        mSaturationTrackerPaint.setStyle(Style.STROKE);
+        mSaturationTrackerPaint.setStrokeWidth(2f * mDensity);
+        mSaturationTrackerPaint.setAntiAlias(true);
 
         mHuePaint = new Paint();
         mHueTrackerPaint = new Paint();
@@ -193,14 +193,14 @@ public class ColorPickerView extends View {
         if (mDrawingRect.width() <= 0 || mDrawingRect.height() <= 0) {
             return;
         }
-        drawSatValPanel(canvas);
+        drawSatPanel(canvas);
         drawHuePanel(canvas);
         drawAlphaPanel(canvas);
     }
 
-    private void drawSatValPanel(@NonNull Canvas canvas) {
+    private void drawSatPanel(@NonNull Canvas canvas) {
 
-        final RectF rect = mSatValRect;
+        final RectF rect = mSatRect;
         mBorderPaint.setColor(mBorderColor);
         canvas.drawRect(mDrawingRect.left, mDrawingRect.top, rect.right + BORDER_WIDTH_PX, rect.bottom + BORDER_WIDTH_PX, mBorderPaint);
         if (mValShader == null) {
@@ -212,16 +212,16 @@ public class ColorPickerView extends View {
 
         mSatShader = new LinearGradient(rect.left, rect.top, rect.right, rect.top, 0xffffffff, rgb, TileMode.CLAMP);
         ComposeShader mShader = new ComposeShader(mValShader, mSatShader, PorterDuff.Mode.MULTIPLY);
-        mSatValPaint.setShader(mShader);
+        mSaturationPaint.setShader(mShader);
 
-        canvas.drawRect(rect, mSatValPaint);
-        Point p = satValToPoint(mSat, mVal);
+        canvas.drawRect(rect, mSaturationPaint);
+        Point p = saturationToPoint(mSat, mVal);
 
-        mSatValTrackerPaint.setColor(0xff000000);
-        canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS - mDensity, mSatValTrackerPaint);
+        mSaturationTrackerPaint.setColor(0xff000000);
+        canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS - mDensity, mSaturationTrackerPaint);
 
-        mSatValTrackerPaint.setColor(0xffdddddd);
-        canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS, mSatValTrackerPaint);
+        mSaturationTrackerPaint.setColor(0xffdddddd);
+        canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS, mSaturationTrackerPaint);
 
     }
 
@@ -295,8 +295,8 @@ public class ColorPickerView extends View {
     }
 
     @NonNull
-    private Point satValToPoint(float sat, float val) {
-        final RectF rect = mSatValRect;
+    private Point saturationToPoint(float sat, float val) {
+        final RectF rect = mSatRect;
         final float height = rect.height();
         final float width = rect.width();
         Point p = new Point();
@@ -316,9 +316,9 @@ public class ColorPickerView extends View {
     }
 
     @NonNull
-    private float[] pointToSatVal(float x, float y) {
+    private float[] pointToSaturation(float x, float y) {
 
-        final RectF rect = mSatValRect;
+        final RectF rect = mSatRect;
         float[] result = new float[2];
         float width = rect.width();
         float height = rect.height();
@@ -450,9 +450,9 @@ public class ColorPickerView extends View {
             mLastTouchedPanel = PANEL_HUE;
             mHue = pointToHue(event.getY());
             update = true;
-        } else if (mSatValRect.contains(startX, startY)) {
+        } else if (mSatRect.contains(startX, startY)) {
             mLastTouchedPanel = PANEL_SAT;
-            float[] result = pointToSatVal(event.getX(), event.getY());
+            float[] result = pointToSaturation(event.getX(), event.getY());
             mSat = result[0];
             mVal = result[1];
             update = true;
@@ -555,7 +555,7 @@ public class ColorPickerView extends View {
         float top = dRect.top + BORDER_WIDTH_PX;
         float bottom = top + panelSide;
         float right = left + panelSide;
-        mSatValRect = new RectF(left, top, right, bottom);
+        mSatRect = new RectF(left, top, right, bottom);
     }
 
     private void setUpHueRect() {

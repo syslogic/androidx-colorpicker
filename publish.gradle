@@ -29,7 +29,7 @@ task javadoc(type: Javadoc) {
                 into "$buildDir/tmp/aarsToJars/${aar.name.replace('.aar', '')}/"
             }
         }
-        // provide data-binding classes
+        // provide JAR, which contains the generated data-binding classes
         def aar_main = new File("$buildDir/intermediates/aar_main_jar")
         if (aar_main.exists()) {
             copy {
