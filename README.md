@@ -13,6 +13,8 @@ Alternatively, one can also depend on the local `:library` module:
         implementation project(path: ':library')
     }
 
+ ---
+
 The `:mobile` application module provides these usage examples:
 
 a) Use [`ColorPickerDialogFragmentImpl.java`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/java/io/syslogic/demo/colorpicker/fragment/ColorPickerDialogFragmentImpl.java) `extends` [`ColorPickerDialogFragment`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerDialogFragment.java):
