@@ -21,7 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.DialogFragment;
 
-import io.syslogic.colorpicker.databinding.DialogColorPickerBinding;
+import io.syslogic.colorpicker.databinding.DialogFragmentColorPickerBinding;
 
 /**
  * The Color-Picker {@link DialogFragment} accepts NavArgs and returns a FragmentResult.
@@ -34,16 +34,15 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
         View.OnClickListener {
 
     private ColorStateList mHexDefaultTextColor;
-
-    private boolean mShowHexValue = false;
     private boolean mShowAlphaSlider = false;
+    private boolean mShowHexValue = false;
     private int mOrientation;
 
     /**
      * Data-Binding
      * @hidden
      */
-    DialogColorPickerBinding mDataBinding;
+    DialogFragmentColorPickerBinding mDataBinding;
 
     public ColorPickerDialogFragment() {
         super();
@@ -53,7 +52,7 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         this.mOrientation = requireActivity().getResources().getConfiguration().orientation;
-        this.mDataBinding = DialogColorPickerBinding.inflate(inflater, container, false);
+        this.mDataBinding = DialogFragmentColorPickerBinding.inflate(inflater, container, false);
         this.mDataBinding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(this);
         requireActivity().getWindow().setFormat(PixelFormat.RGBA_8888);
 
@@ -172,7 +171,7 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
     }
 
     /**
-     * The FragmentResult will be returned to the parent fragment,
+     * The FragmentResult will be returned to the parent Fragment,
      * when the color selected by the user has been confirmed.
      */
     @Override

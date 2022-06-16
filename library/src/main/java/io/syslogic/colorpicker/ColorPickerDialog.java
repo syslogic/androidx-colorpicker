@@ -69,7 +69,7 @@ public class ColorPickerDialog extends Dialog implements OnColorChangedListener,
         getWindow().setFormat(PixelFormat.RGBA_8888);
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.mLayout = inflater.inflate(R.layout.dialog_color_picker, null);
+        this.mLayout = inflater.inflate(R.layout.dialog_fragment_color_picker, null);
         this.mLayout.getViewTreeObserver().addOnGlobalLayoutListener(this);
         mOrientation = getContext().getResources().getConfiguration().orientation;
         setContentView(mLayout);
