@@ -13,14 +13,9 @@ Alternatively, one can also depend on the local `:library` module:
         implementation project(path: ':library')
     }
 
-It provides these classes:
-
- - [`ColorPickerDialogFragment`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerDialogFragment.java)
- - [`ColorPickerPreference`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerPreference.java)
-
 The `:mobile` module provides these usage examples:
 
-[`ColorPickerDialogFragmentImpl.java`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/java/io/syslogic/demo/colorpicker/fragment/ColorPickerDialogFragmentImpl.java)
+A) The `DialogFragment` can be added as [`ColorPickerDialogFragmentImpl.java`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/java/io/syslogic/demo/colorpicker/fragment/ColorPickerDialogFragmentImpl.java) `extends` [`ColorPickerDialogFragment`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerDialogFragment.java)
 
 ````java
 class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
@@ -29,8 +24,8 @@ class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
     }
 }
 ````
-It requires a navigation destination in file [`nav_graph.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/navigation/nav_graph.xml) added:
 
+[`nav_graph.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/navigation/nav_graph.xml) defines it as navigation destination:
 ````xml
 <dialog
     android:id="@+id/colorPickerDialogFragment"
@@ -41,7 +36,8 @@ It requires a navigation destination in file [`nav_graph.xml`](https://github.co
 </dialog>
 ````
 
-[`preferences.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/xml/preferences.xml)
+B The `Preference` can be added as [`ColorPickerPreference`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerPreference.java)
+into file [`preferences.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/xml/preferences.xml)
 ````xml
 <io.syslogic.colorpicker.ColorPickerPreference
     android:title="@string/text_select_color"
@@ -50,7 +46,7 @@ It requires a navigation destination in file [`nav_graph.xml`](https://github.co
     android:key="color_code_01"/>
 ````
 
-And it looks about like this:
+Screenshots:
 
   ![Screenshot 01](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_01.png)
 
