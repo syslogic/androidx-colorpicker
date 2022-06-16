@@ -15,7 +15,7 @@ Alternatively, one can also depend on the local `:library` module:
 
 The `:mobile` application module provides these usage examples:
 
-A) `ColorPickerDialogFragment` can be added as [`ColorPickerDialogFragmentImpl.java`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/java/io/syslogic/demo/colorpicker/fragment/ColorPickerDialogFragmentImpl.java) `extends` [`ColorPickerDialogFragment`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerDialogFragment.java)
+A) [`ColorPickerDialogFragment`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerDialogFragment.java) can be added as [`ColorPickerDialogFragmentImpl.java`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/java/io/syslogic/demo/colorpicker/fragment/ColorPickerDialogFragmentImpl.java) `extends ColorPickerDialogFragment`
 
 ````java
 class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
