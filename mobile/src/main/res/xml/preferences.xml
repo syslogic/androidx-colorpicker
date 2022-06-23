@@ -9,13 +9,13 @@
         <io.syslogic.colorpicker.ColorPickerPreference
             android:title="@string/text_select_color"
             android:icon="@drawable/ic_baseline_invert_colors"
-            android:defaultValue="@string/value_default_color"
+            android:defaultValue="#FFFFFFFF"
             android:key="color_code_01"/>
 
         <io.syslogic.colorpicker.ColorPickerPreference
             android:title="@string/text_select_color"
             android:icon="@drawable/ic_baseline_invert_colors"
-            android:defaultValue="@string/value_default_color"
+            android:defaultValue="#FF000000"
             android:key="color_code_02"/>
 
     </PreferenceCategory>

@@ -8,13 +8,12 @@
     <string name="button_dialog">Dialog</string>
     <string name="button_preferences">Preferences</string>
 
-    <string name="button_git_hub_sponsors">GitHub Sponsors</string>
-    <string name="text_git_hub_sponsors">Sponsor this project with GitHub</string>
+    <!--  GitHub Sponsors  -->
+    <string name="text_git_hub_sponsors">Sponsor this project on GitHub</string>
     <string name="url_git_hub_sponsors">https://github.com/sponsors/syslogic</string>
 
     <!--  Color Picker  -->
     <string name="text_color_picker_preference">Color Picker Preference</string>
     <string name="text_select_color">Tap to change the color</string>
-    <string name="value_default_color">#FFD82323</string>
 
 </resources>
