@@ -13,8 +13,8 @@ android {
         minSdk 21
         targetSdk 32
         buildToolsVersion "32.0.0"
-        versionName rootProject.ext.get("versionName")
-        versionCode rootProject.ext.get("versionCode")
+        versionName "$version_name"
+        versionCode new Integer("$version_code")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
@@ -64,6 +64,7 @@ dependencies {
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.foundation:foundation:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    debugImplementation "androidx.customview:customview-poolingcontainer:1.0.0-rc01"
     runtimeOnly "androidx.compose.ui:ui-tooling-preview:$compose_version"
     runtimeOnly "androidx.compose.runtime:runtime:$compose_version"
 

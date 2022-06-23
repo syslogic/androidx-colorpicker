@@ -1,7 +1,7 @@
 // publish.gradle
 task javadoc(type: Javadoc) {
 
-    title = "Color Picker ${versionName} API"
+    title = "Color Picker ${android.defaultConfig.versionName} API"
     source = android.sourceSets.main.java.srcDirs
     destinationDir = file("${project.buildDir}/outputs/javadoc/")
     configurations.implementation.setCanBeResolved(true)
@@ -60,7 +60,7 @@ artifacts {
 }
 
 group = "io.syslogic"
-version = versionName
+version = android.defaultConfig.versionName
 
 afterEvaluate {
     publishing {
@@ -69,7 +69,7 @@ afterEvaluate {
                 groupId = "io.syslogic"
                 artifactId = "androidx-colorpicker"
                 from components.getByName('release')
-                version = versionName
+                version = android.defaultConfig.versionName
                 pom {
                     name = 'Color Picker'
                     description = 'A simple color-picker library for Android'
