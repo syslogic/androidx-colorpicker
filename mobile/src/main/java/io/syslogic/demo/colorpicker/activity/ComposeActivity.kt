@@ -37,6 +37,6 @@ class ComposeActivity : ComponentActivity(), OnColorChangedListener {
 
     override fun onColorChanged(color: Int) {
         this.prefs.edit().putInt("color_code_01", color).apply()
-        println("current color: $color")
+        println("onColorChanged: $color")
     }
 }
