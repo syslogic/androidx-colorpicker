@@ -64,9 +64,8 @@ dependencies {
     implementation "androidx.compose.runtime:runtime:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.foundation:foundation:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    debugImplementation "androidx.customview:customview-poolingcontainer:1.0.0-rc01"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
     testImplementation "junit:junit:4.13.2"
     androidTestImplementation "androidx.test.ext:junit:1.1.3"
