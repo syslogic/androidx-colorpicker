@@ -11,8 +11,6 @@ import androidx.compose.ui.graphics.painter.Painter
 
 class HuePainter(override val intrinsicSize: Size) : Painter() {
 
-    private val mHue = 360f
-
     /**
      * Implementation of drawing logic for instances of [Painter].
      *
