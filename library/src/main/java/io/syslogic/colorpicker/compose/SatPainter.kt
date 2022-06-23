@@ -8,16 +8,18 @@ import androidx.compose.ui.graphics.painter.Painter
 
 class SatPainter(override val intrinsicSize: Size) : Painter() {
 
+    private var color: Int = Color.Black.hashCode()
+
     /**
      * Implementation of drawing logic for instances of [Painter]. This is invoked
      * internally within [draw] after the positioning and configuring the [Painter]
      */
     override fun DrawScope.onDraw() {
         drawRect(
-            brush = Brush.linearGradient(
+            size = size,
+            brush = Brush.verticalGradient(
                 colors = getValues()
-            ),
-            size = size
+            )
         )
     }
 
@@ -32,5 +34,9 @@ class SatPainter(override val intrinsicSize: Size) : Painter() {
             count++
         }
         return list
+    }
+
+    fun setColor(value: Int) {
+        this.color = value
     }
 }

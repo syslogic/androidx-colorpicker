@@ -17,15 +17,14 @@ class ColorPainter(override val intrinsicSize: Size) : Painter() {
      */
     override fun DrawScope.onDraw() {
         drawRect(
+            size = size,
             brush = Brush.linearGradient(
                 colors = listOf(Color(color), Color(color))
-            ),
-            size = size
+            )
         )
     }
 
     fun setColor(value: Int) {
         this.color = value
-
     }
 }

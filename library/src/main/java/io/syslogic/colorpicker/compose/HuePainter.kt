@@ -5,11 +5,12 @@ import android.graphics.Color.HSVToColor
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
 
 class HuePainter(override val intrinsicSize: Size) : Painter() {
+
+    private var color: Int = Color.Black.hashCode()
 
     /**
      * Implementation of drawing logic for instances of [Painter].
@@ -18,11 +19,10 @@ class HuePainter(override val intrinsicSize: Size) : Painter() {
      */
     override fun DrawScope.onDraw() {
         drawRect(
+            size = size,
             brush = Brush.linearGradient(
-                colors = getValues(),
-                tileMode = TileMode.Clamp
-            ),
-            size = size
+                colors = listOf(Color.Black, Color.White)
+            )
         )
     }
 
@@ -37,5 +37,9 @@ class HuePainter(override val intrinsicSize: Size) : Painter() {
             count++
         }
         return list
+    }
+
+    fun setColor(value: Int) {
+        this.color = value
     }
 }
