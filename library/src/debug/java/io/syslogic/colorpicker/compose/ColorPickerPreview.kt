@@ -1,6 +1,7 @@
 package io.syslogic.colorpicker.compose
 
 import android.graphics.Color
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -13,10 +14,12 @@ import androidx.compose.ui.tooling.preview.Preview
     showSystemUi = true
 )
 fun ColorPickerPreview() {
-    ColorPickerComponent(
-        initialColor = Color.DKGRAY,
-        showAlphaSlider = true,
-        showHexValue = true,
-        onColorChanged = null
-    )
+    MaterialTheme {
+        ColorPickerComponent(
+            initialColor = Color.DKGRAY,
+            showAlphaSlider = true,
+            showHexValue = true,
+            onColorChanged = null
+        )
+    }
 }
