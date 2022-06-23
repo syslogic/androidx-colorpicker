@@ -1,10 +1,12 @@
 package io.syslogic.demo.colorpicker.fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,8 +51,10 @@ public class HomeFragment extends Fragment implements FragmentResultListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         this.mDataBinding = FragmentHomeBinding.inflate(inflater, container, false);
-        int initialColor = this.prefs.getInt("color_code_01", Color.DKGRAY);
-        this.mDataBinding.layoutHome.setBackgroundColor(initialColor);
+        int colorCode01 = this.prefs.getInt("color_code_01", Color.DKGRAY);
+        int colorCode02 = this.prefs.getInt("color_code_02", Color.WHITE);
+        this.mDataBinding.setColorCode01(colorCode01);
+        this.mDataBinding.setColorCode02(colorCode02);
 
         /* Navigating to ColorPickerDialogFragment */
         this.mDataBinding.buttonDialog.setOnClickListener(view -> {
@@ -68,6 +72,13 @@ public class HomeFragment extends Fragment implements FragmentResultListener {
                 Navigation.findNavController(view).navigate(HomeFragmentDirections
                         .actionMainFragmentToPreferencesFragment()
                 ));
+
+        /* Navigating to GitHub Sponsors */
+        this.mDataBinding.textGitHubSponsors.setOnClickListener(view -> {
+            Uri uri = Uri.parse(requireActivity().getString(R.string.url_git_hub_sponsors));
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        });
 
         return this.mDataBinding.getRoot();
     }

@@ -27,7 +27,7 @@ fun ColorPickerComponent(
 ) {
     @Suppress("CanBeVal")
     var currentColor: Int = initialColor
-    
+
     @Suppress("UNUSED_VARIABLE")
     var listener: OnColorChangedListener? = onColorChanged
 
