@@ -96,7 +96,6 @@ public class ColorPickerPreference extends Preference implements
     }
 
     @Override
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void onSetInitialValue(Object defaultValue) {
         if(defaultValue != null) {
             this.onColorChanged((Integer) defaultValue);
@@ -119,7 +118,6 @@ public class ColorPickerPreference extends Preference implements
     }
 
     @Override
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public boolean onPreferenceChange(@NonNull Preference preference, @NonNull Object newValue) {
         this.mCurrentValue = Integer.parseInt(newValue.toString());
         this.setSummary(convertToARGB(this.mCurrentValue));
@@ -139,7 +137,6 @@ public class ColorPickerPreference extends Preference implements
     }
 
     @Override
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onColorChanged(int color) {
         this.mCurrentValue = color;
         try {
@@ -262,7 +259,7 @@ public class ColorPickerPreference extends Preference implements
             super(superState);
         }
 
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+        public static final Creator<SavedState> CREATOR = new Creator<>() {
 
             @NonNull @Contract("_ -> new")
             public SavedState createFromParcel(Parcel in) {
