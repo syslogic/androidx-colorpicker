@@ -18,14 +18,15 @@ import io.syslogic.colorpicker.compose.ColorPickerComponent
  */
 class ComposeActivity : ComponentActivity(), OnColorChangedListener {
 
+    private lateinit var prefs: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val initialColor: Int = prefs.getInt("color_code_01", Color.BLACK)
+        this.prefs = PreferenceManager.getDefaultSharedPreferences(this)
         this.setContent {
             MaterialTheme {
                 ColorPickerComponent(
-                    initialColor = initialColor,
+                    initialColor = prefs.getInt("color_code_01", Color.BLACK),
                     onColorChanged = this@ComposeActivity,
                     showAlphaSlider = true,
                     showHexValue = true
@@ -35,7 +36,7 @@ class ComposeActivity : ComponentActivity(), OnColorChangedListener {
     }
 
     override fun onColorChanged(color: Int) {
+        this.prefs.edit().putInt("color_code_01", color).apply()
         println("current color: $color")
-
     }
 }
