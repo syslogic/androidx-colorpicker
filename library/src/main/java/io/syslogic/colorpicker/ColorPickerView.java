@@ -142,12 +142,14 @@ public class ColorPickerView extends View {
         mBorderPaint = new Paint();
 
         mSaturationPaint = new Paint();
+
         mSaturationTrackerPaint = new Paint();
         mSaturationTrackerPaint.setStyle(Style.STROKE);
         mSaturationTrackerPaint.setStrokeWidth(2f * mDensity);
         mSaturationTrackerPaint.setAntiAlias(true);
 
         mHuePaint = new Paint();
+
         mHueTrackerPaint = new Paint();
         mHueTrackerPaint.setColor(mSliderTrackerColor);
         mHueTrackerPaint.setStyle(Style.STROKE);
@@ -155,6 +157,7 @@ public class ColorPickerView extends View {
         mHueTrackerPaint.setAntiAlias(true);
 
         mAlphaPaint = new Paint();
+
         mAlphaTextPaint = new Paint();
         mAlphaTextPaint.setColor(0xff1c1c1c);
         mAlphaTextPaint.setTextSize(14f * mDensity);
