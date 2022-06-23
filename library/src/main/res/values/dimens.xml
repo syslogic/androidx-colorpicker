@@ -9,4 +9,6 @@
 
     <dimen name="margin_double_arrow">4dp</dimen>
 
+    <dimen name="compose_row_padding">4dp</dimen>
+
 </resources>

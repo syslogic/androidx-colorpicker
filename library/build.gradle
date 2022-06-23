@@ -1,26 +1,48 @@
 // Module :library
+import org.jetbrains.kotlin.config.KotlinCompilerVersion
+
 plugins {
     id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
     id 'maven-publish'
 }
 
 android {
     compileSdk 32
     defaultConfig {
-        minSdk 16
+        minSdk 21
         targetSdk 32
         buildToolsVersion "32.0.0"
         setProperty('archivesBaseName', 'colorpicker')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         consumerProguardFiles "${project.rootDir}/proguard/consumer.pro"
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_11.toString()
+        targetCompatibility JavaVersion.VERSION_11.toString()
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+        useIR = true
+    }
+    kapt {
+        // keepJavacAnnotationProcessors = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.2.0-rc02"
+        kotlinCompilerVersion "1.6.21"
+    }
+    packagingOptions {
+        resources.pickFirsts.add('META-INF/LGPL2.1')
+        resources.pickFirsts.add('META-INF/AL2.0')
     }
     buildFeatures {
         dataBinding true
+        compose true
     }
+
     buildTypes {
         debug {
             // it breaks the data-binding, eg. when running ./gradlew :library:publishToMavenLocal
@@ -44,7 +66,21 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
+
+    implementation 'androidx.core:core-ktx:1.8.0'
+    //noinspection GradleDependency
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${KotlinCompilerVersion.VERSION}"
+    // implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2'
+
+    // Compose: https://mvnrepository.com/artifact/androidx.compose
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.foundation:foundation:$compose_version"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    implementation "androidx.compose.material:material-icons-core:$compose_version"
+    // implementation 'androidx.compose.material:material-icons-extended:$compose_version'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

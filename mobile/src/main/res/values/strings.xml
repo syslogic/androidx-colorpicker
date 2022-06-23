@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Color Picker Example</string>
+    <string name="label_main_activity">Default Example</string>
+    <string name="label_compose_activity">Jetpack Compose</string>
+
     <string name="button_dialog">Dialog</string>
     <string name="button_preferences">Preferences</string>
 
