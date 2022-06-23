@@ -28,6 +28,7 @@ android {
         useIR = true
     }
     kapt {
+        generateStubs = false
         // keepJavacAnnotationProcessors = true
     }
     composeOptions {
