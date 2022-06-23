@@ -1,13 +1,15 @@
 package io.syslogic.colorpicker.compose
 
-import android.graphics.Color
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -20,7 +22,7 @@ import java.util.*
 
 @Composable
 fun ColorPickerComponent(
-    initialColor: Int = Color.BLACK,
+    initialColor: Int,
     onColorChanged: OnColorChangedListener?,
     showAlphaSlider: Boolean = false,
     showHexValue: Boolean = true
@@ -28,8 +30,7 @@ fun ColorPickerComponent(
     @Suppress("CanBeVal")
     var currentColor: Int = initialColor
 
-    @Suppress("UNUSED_VARIABLE")
-    var listener: OnColorChangedListener? = onColorChanged
+    val listener: OnColorChangedListener? = onColorChanged
 
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
 
@@ -43,16 +44,22 @@ fun ColorPickerComponent(
             modifier = Modifier.padding(all = rowPadding)
         ) {
 
-            /* Hue Panel as Image (experimental). */
+            /* Hue Panel */
             Image(
                 contentDescription = "Hue",
                 contentScale = ContentScale.FillBounds,
                 painter = HuePainter(Size(900F, 900F)).also {
                     it.setColor(initialColor)
-                }
-            )
+                },
+                modifier = Modifier.pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = { it ->
+                            println("Hue.onPress ${it.x} x ${it.y}")
+                        }
+                    )
+            })
 
-            Box(
+            Spacer(
                 modifier = Modifier.padding(all = rowPadding)
             )
 
@@ -62,6 +69,13 @@ fun ColorPickerComponent(
                 contentScale = ContentScale.FillBounds,
                 painter = SatPainter(Size(100F, 900F)).also {
                     it.setColor(initialColor)
+                },
+                modifier = Modifier.pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = { it ->
+                            println("Hue.onPress ${it.x} x ${it.y}")
+                        }
+                    )
                 }
             )
         }
@@ -81,6 +95,13 @@ fun ColorPickerComponent(
                         contentScale = ContentScale.FillBounds,
                         painter = AlphaPainter(Size(1030F, 80F)).also {
                             it.setAlpha(initialColor)
+                        },
+                        modifier = Modifier.pointerInput(Unit) {
+                            detectTapGestures(
+                                onPress = { it ->
+                                    println("AlphaSlider.onPress ${it.x} x ${it.y}")
+                                }
+                            )
                         }
                     )
                 }
@@ -115,12 +136,20 @@ fun ColorPickerComponent(
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    contentDescription = "Old Color",
+                    contentDescription = "Old Color Panel",
                     contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.padding(all = rowPadding),
                     painter = ColorPainter(Size(800F, 120F)).also {
                         it.setColor(initialColor)
-                    }
+                    },
+                    modifier = Modifier
+                        .padding(all = rowPadding)
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onPress = {
+                                    println("OldColor.onPress")
+                                }
+                            )
+                        }
                 )
             }
 
@@ -136,12 +165,20 @@ fun ColorPickerComponent(
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    contentDescription = "New Color",
+                    contentDescription = "New Color Panel",
                     contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.padding(all = rowPadding),
                     painter = ColorPainter(Size(800F, 120F)).also {
                         it.setColor(initialColor)
-                    }
+                    },
+                    modifier = Modifier
+                        .padding(all = rowPadding)
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onPress = {
+                                    println("NewColor.onPress")
+                                }
+                            )
+                        }
                 )
             }
         }
@@ -152,13 +189,13 @@ fun ColorPickerComponent(
  * @param color the color value to convert.
  */
 fun convertToARGB(color: Int): String {
-    var alpha = Integer.toHexString(Color.alpha(color)).uppercase(Locale.getDefault())
-    var red = Integer.toHexString(Color.red(color)).uppercase(Locale.getDefault())
-    var green = Integer.toHexString(Color.green(color)).uppercase(Locale.getDefault())
-    var blue = Integer.toHexString(Color.blue(color)).uppercase(Locale.getDefault())
+    var alpha = Integer.toHexString(Color(color).alpha.toInt()).uppercase(Locale.getDefault())
+    var red = Integer.toHexString(Color(color).red.toInt()).uppercase(Locale.getDefault())
+    var green = Integer.toHexString(Color(color).green.toInt()).uppercase(Locale.getDefault())
+    var blue = Integer.toHexString(Color(color).blue.toInt()).uppercase(Locale.getDefault())
     if (alpha.length == 1) {alpha = String.format("0%s", alpha)}
-    if (red.length == 1) {red = String.format("0%s", red)}
+    if (red.length   == 1) {red   = String.format("0%s", red)}
     if (green.length == 1) {green = String.format("0%s", green)}
-    if (blue.length == 1) {blue = String.format("0%s", blue)}
+    if (blue.length  == 1) {blue  = String.format("0%s", blue)}
     return String.format("#%s%s%s%s", alpha, red, green, blue)
 }

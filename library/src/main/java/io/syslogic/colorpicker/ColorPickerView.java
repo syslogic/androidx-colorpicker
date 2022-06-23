@@ -84,8 +84,8 @@ public class ColorPickerView extends View {
 
     private int mAlpha = 0xff;
     private float mHue = 360f;
-    private float mSat = 0f;
-    private float mVal = 0f;
+    private float mSaturation = 0f;
+    private float mValue = 0f;
 
     private String mAlphaSliderText = "";
     private boolean mShowAlphaPanel = false;
@@ -218,7 +218,7 @@ public class ColorPickerView extends View {
         mSaturationPaint.setShader(mShader);
 
         canvas.drawRect(rect, mSaturationPaint);
-        Point p = saturationToPoint(mSat, mVal);
+        Point p = saturationToPoint(mSaturation, mValue);
 
         mSaturationTrackerPaint.setColor(0xff000000);
         canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS - mDensity, mSaturationTrackerPaint);
@@ -258,7 +258,7 @@ public class ColorPickerView extends View {
         canvas.drawRect(rect.left - BORDER_WIDTH_PX, rect.top - BORDER_WIDTH_PX, rect.right + BORDER_WIDTH_PX, rect.bottom + BORDER_WIDTH_PX, mBorderPaint);
         mAlphaPattern.draw(canvas);
 
-        float[] hsv = new float[]{mHue, mSat, mVal};
+        float[] hsv = new float[]{mHue, mSaturation, mValue};
         int color = Color.HSVToColor(hsv);
         int aColor = Color.HSVToColor(0, hsv);
 
@@ -367,14 +367,14 @@ public class ColorPickerView extends View {
 
                 case PANEL_SAT:
                     float sat, val;
-                    sat = mSat + x / 50f;
-                    val = mVal - y / 50f;
+                    sat = mSaturation + x / 50f;
+                    val = mValue - y / 50f;
                     if (sat < 0f) {sat = 0f;}
                     else if (sat > 1f) {sat = 1f;}
                     if (val < 0f) {val = 0f;}
                     else if (val > 1f) {val = 1f;}
-                    mSat = sat;
-                    mVal = val;
+                    mSaturation = sat;
+                    mValue = val;
                     update = true;
                     break;
 
@@ -399,7 +399,7 @@ public class ColorPickerView extends View {
         }
         if (update) {
             if (mListener != null) {
-                mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSat, mVal}));
+                mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mValue}));
             }
             invalidate();
             return true;
@@ -430,7 +430,7 @@ public class ColorPickerView extends View {
 
         if (update) {
             if (mListener != null) {
-                mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSat, mVal}));
+                mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mValue}));
             }
             invalidate();
             return true;
@@ -450,8 +450,8 @@ public class ColorPickerView extends View {
         } else if (mSatRect.contains(startX, startY)) {
             mLastTouchedPanel = PANEL_SAT;
             float[] result = pointToSaturation(event.getX(), event.getY());
-            mSat = result[0];
-            mVal = result[1];
+            mSaturation = result[0];
+            mValue = result[1];
             update = true;
         } else if (mAlphaRect != null && mAlphaRect.contains(startX, startY)) {
             mLastTouchedPanel = PANEL_ALPHA;
@@ -610,7 +610,7 @@ public class ColorPickerView extends View {
      * @return the current color.
      */
     public int getColor() {
-        return Color.HSVToColor(mAlpha, new float[]{mHue, mSat, mVal});
+        return Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mValue});
     }
 
     /**
@@ -630,12 +630,12 @@ public class ColorPickerView extends View {
         int alpha = Color.alpha(color);
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
-        mAlpha = alpha;
-        mHue = hsv[0];
-        mSat = hsv[1];
-        mVal = hsv[2];
+        mAlpha      = alpha;
+        mHue        = hsv[0];
+        mSaturation = hsv[1];
+        mValue      = hsv[2];
         if (callback && mListener != null) {
-            mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSat, mVal}));
+            mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mValue}));
         }
         invalidate();
     }
