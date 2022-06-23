@@ -14,7 +14,6 @@ import android.graphics.PorterDuff;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.Shader.TileMode;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -179,13 +178,13 @@ public class ColorPickerView extends View {
     }
 
     @NonNull
-    private int[] buildHueColorArray() {
-        int[] hue = new int[361];
+    private int[] getHueColors() {
+        int[] list = new int[361];
         int count = 0;
-        for (int i = hue.length - 1; i >= 0; i--, count++) {
-            hue[count] = Color.HSVToColor(new float[]{i, 1f, 1f});
+        for (int i = list.length - 1; i >= 0; i--, count++) {
+            list[count] = Color.HSVToColor(new float[]{i, 1f, 1f});
         }
-        return hue;
+        return list;
     }
 
     @Override
@@ -203,6 +202,7 @@ public class ColorPickerView extends View {
         final RectF rect = mSatRect;
         mBorderPaint.setColor(mBorderColor);
         canvas.drawRect(mDrawingRect.left, mDrawingRect.top, rect.right + BORDER_WIDTH_PX, rect.bottom + BORDER_WIDTH_PX, mBorderPaint);
+
         if (mValShader == null) {
             mValShader = new LinearGradient(rect.left, rect.top, rect.left, rect.bottom,
                     0xffffffff, 0xff000000, TileMode.CLAMP);
@@ -222,7 +222,6 @@ public class ColorPickerView extends View {
 
         mSaturationTrackerPaint.setColor(0xffdddddd);
         canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS, mSaturationTrackerPaint);
-
     }
 
     private void drawHuePanel(@NonNull Canvas canvas) {
@@ -230,8 +229,9 @@ public class ColorPickerView extends View {
         final RectF rect = mHueRect;
         mBorderPaint.setColor(mBorderColor);
         canvas.drawRect(rect.left - BORDER_WIDTH_PX, rect.top - BORDER_WIDTH_PX, rect.right + BORDER_WIDTH_PX, rect.bottom + BORDER_WIDTH_PX, mBorderPaint);
+
         if (mHueShader == null) {
-            mHueShader = new LinearGradient(rect.left, rect.top, rect.left, rect.bottom, buildHueColorArray(), null, TileMode.CLAMP);
+            mHueShader = new LinearGradient(rect.left, rect.top, rect.left, rect.bottom, getHueColors(), null, TileMode.CLAMP);
             mHuePaint.setShader(mHueShader);
         }
 
@@ -263,12 +263,8 @@ public class ColorPickerView extends View {
         mAlphaPaint.setShader(mAlphaShader);
         canvas.drawRect(rect, mAlphaPaint);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (mAlphaSliderText != null && !Objects.equals(mAlphaSliderText, "")) {
-                canvas.drawText(mAlphaSliderText, rect.centerX(), rect.centerY() + 4 * mDensity, mAlphaTextPaint);
-            }
-        } else {
-            /*  ?? */
+        if (mAlphaSliderText != null && !Objects.equals(mAlphaSliderText, "")) {
+            canvas.drawText(mAlphaSliderText, rect.centerX(), rect.centerY() + 4 * mDensity, mAlphaTextPaint);
         }
 
         float rectWidth = 4 * mDensity / 2;
@@ -358,7 +354,6 @@ public class ColorPickerView extends View {
         return 0xff - (x * 0xff / width);
     }
 
-
     @Override
     public boolean onTrackballEvent(@NonNull MotionEvent event) {
         float x = event.getX();
@@ -398,7 +393,6 @@ public class ColorPickerView extends View {
                     }
                     break;
             }
-
         }
         if (update) {
             if (mListener != null) {
@@ -542,12 +536,12 @@ public class ColorPickerView extends View {
         mDrawingRect.right = w - mDrawingOffset - getPaddingRight();
         mDrawingRect.top = mDrawingOffset + getPaddingTop();
         mDrawingRect.bottom = h - mDrawingOffset - getPaddingBottom();
-        setUpSatValRect();
+        setUpSatRect();
         setUpHueRect();
         setUpAlphaRect();
     }
 
-    private void setUpSatValRect() {
+    private void setUpSatRect() {
         final RectF dRect = mDrawingRect;
         float panelSide = dRect.height() - BORDER_WIDTH_PX * 2;
         if (mShowAlphaPanel) {panelSide -= PANEL_SPACING + ALPHA_PANEL_HEIGHT;}
@@ -584,7 +578,7 @@ public class ColorPickerView extends View {
      *
      * @param listener to be used for callbacks.
      */
-    public void setOnColorChangedListener(OnColorChangedListener listener) {
+    public void setOnColorChangedListener(@NonNull OnColorChangedListener listener) {
         mListener = listener;
     }
 

@@ -180,8 +180,7 @@ public class ColorPickerPreference extends Preference implements
     }
 
     /**
-     * Not used by ColorPickerPreference
-     * @param color true or false.
+     * @param color the color value to convert.
      */
     @NonNull
     static String convertToARGB(int color) {
@@ -198,6 +197,7 @@ public class ColorPickerPreference extends Preference implements
 
     /**
      * Method currently used by onGetDefaultValue method to convert hex string provided in android:defaultValue to color integer.
+     *
      * @param color the color value to convert.
      * @return A string representing the hex value of color without the alpha value
      */
@@ -262,7 +262,7 @@ public class ColorPickerPreference extends Preference implements
             super(superState);
         }
 
-        public static final Creator<SavedState> CREATOR = new Creator<>() {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
 
             @NonNull @Contract("_ -> new")
             public SavedState createFromParcel(Parcel in) {
