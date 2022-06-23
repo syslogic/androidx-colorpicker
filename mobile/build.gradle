@@ -27,7 +27,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion "1.2.0-rc02"
-        kotlinCompilerVersion "1.6.21"
     }
     buildFeatures {
         dataBinding true
