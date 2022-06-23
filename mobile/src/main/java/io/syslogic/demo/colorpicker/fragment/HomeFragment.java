@@ -1,5 +1,6 @@
 package io.syslogic.demo.colorpicker.fragment;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+import androidx.preference.PreferenceManager;
 
 import io.syslogic.demo.colorpicker.R;
 import io.syslogic.demo.colorpicker.databinding.FragmentHomeBinding;
@@ -33,16 +35,22 @@ public class HomeFragment extends Fragment implements FragmentResultListener {
     /** Data-Binding */
     FragmentHomeBinding mDataBinding;
 
+    /** Preferences */
+    SharedPreferences prefs;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getParentFragmentManager().setFragmentResultListener("colorpicker", requireActivity(), this);
+        this.prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         this.mDataBinding = FragmentHomeBinding.inflate(inflater, container, false);
+        int initialColor = this.prefs.getInt("color_code_01", Color.DKGRAY);
+        this.mDataBinding.layoutHome.setBackgroundColor(initialColor);
 
         /* Navigating to ColorPickerDialogFragment */
         this.mDataBinding.buttonDialog.setOnClickListener(view -> {
