@@ -30,9 +30,10 @@ fun ColorPickerComponent(
 
     @Suppress("CanBeVal")
     var currentColor: Int = initialColor
+    val rowPadding = dimensionResource(R.dimen.compose_row_padding)
+
     var listener: OnColorChangedListener? = onColorChanged
 
-    val rowPadding = dimensionResource(R.dimen.compose_row_padding)
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.width(Dp(1000F))
@@ -45,20 +46,20 @@ fun ColorPickerComponent(
 
             /* Hue */
             Image(
-                painter = HuePainter(Size(900F, 900F)),
-                contentDescription = "",
-                contentScale = ContentScale.FillBounds
+                contentDescription = "Hue",
+                contentScale = ContentScale.FillBounds,
+                painter = HuePainter(Size(900F, 900F))
             )
 
             Box(
                 modifier = Modifier.padding(all = rowPadding)
             )
 
-            /* Sat */
+            /* Saturation */
             Image(
-                painter = SatPainter(Size(100F, 900F)),
-                contentDescription = "",
-                contentScale = ContentScale.FillBounds
+                contentDescription = "Saturation",
+                contentScale = ContentScale.FillBounds,
+                painter = SatPainter(Size(100F, 900F))
             )
         }
 
@@ -72,11 +73,10 @@ fun ColorPickerComponent(
                     modifier = Modifier.fillMaxWidth(fraction = 1.0f),
                     contentAlignment = Alignment.Center
                 ) {
-
                     Image(
-                        painter = AlphaPainter(Size(904F, 80F)),
-                        contentDescription = "",
-                        contentScale = ContentScale.FillBounds
+                        contentDescription = "Alpha Slider",
+                        contentScale = ContentScale.FillBounds,
+                        painter = AlphaPainter(Size(904F, 80F))
                     )
                 }
             }
@@ -87,36 +87,36 @@ fun ColorPickerComponent(
             modifier = Modifier.padding(all = rowPadding)
         ) {
 
-            /* Old Color */
             Box(
                 modifier = Modifier.weight(.46F),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = ColorPainter(Size(800F, 120F))
-                        .also { it.setColor(initialColor) },
-                    contentDescription = "",
-                    contentScale = ContentScale.FillBounds
+                    contentDescription = "Old Color",
+                    contentScale = ContentScale.FillBounds,
+                    painter = ColorPainter(Size(800F, 120F)).also {
+                        it.setColor(initialColor)
+                    }
                 )
             }
 
             Image(
-                painter = painterResource(id = R.drawable.ic_baseline_keyboard_double_arrow_right_24),
-                contentDescription = "",
+                contentDescription = "Arrow Right",
                 contentScale = ContentScale.FillBounds,
+                painter = painterResource(id = R.drawable.ic_baseline_keyboard_double_arrow_right_24),
                 modifier = Modifier.weight(.08F)
             )
 
-            /* New Color */
             Box(
                 modifier = Modifier.weight(.46F),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = ColorPainter(Size(800F, 120F))
-                        .also { it.setColor(initialColor) },
-                    contentDescription = "",
-                    contentScale = ContentScale.FillBounds
+                    contentDescription = "New Color",
+                    contentScale = ContentScale.FillBounds,
+                    painter = ColorPainter(Size(800F, 120F)).also {
+                        it.setColor(initialColor)
+                    }
                 )
             }
         }
@@ -131,9 +131,8 @@ fun ColorPickerComponent(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    val value = convertToARGB(currentColor)
                     Text(
-                        text = "Hex Value: $value"
+                        text = "Hex Value: ${convertToARGB(currentColor)}"
                     )
                 }
             }
