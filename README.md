@@ -1,4 +1,8 @@
 # androidx-colorpicker
+
+[![](https://jitci.com/gh/syslogic/androidx-colorpicker/svg)](https://jitci.com/gh/syslogic/androidx-colorpicker) [![Release](https://jitpack.io/v/syslogic/androidx-colorpicker.svg)](https://jitpack.io/#io.syslogic/androidx-colorpicker)
+[![MIT License](https://img.shields.io/github/license/syslogic/androidx-colorpicker)](https://github.com/syslogic/androidx-colorpicker/blob/master/LICENSE)
+
 A simple color-picker library for Android, which works with Navigation Component.<br/><br/>
 It is generally available on JitPack; either by version tag or `master-SNAPSHOT`.<br/>
 The JitPack repository URL would be: `maven { url 'https://jitpack.io' }`
@@ -50,6 +54,3 @@ can be added as XML node; into eg. [`preferences.xml`](https://github.com/syslog
 Screenshots:
 
   ![Screenshot 01](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_01.png)
-
-[![](https://jitci.com/gh/syslogic/androidx-colorpicker/svg)](https://jitci.com/gh/syslogic/androidx-colorpicker) [![Release](https://jitpack.io/v/syslogic/androidx-colorpicker.svg)](https://jitpack.io/#io.syslogic/androidx-colorpicker)
-
