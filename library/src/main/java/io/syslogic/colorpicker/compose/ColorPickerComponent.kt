@@ -193,11 +193,11 @@ fun ColorPickerComponent(
 
 @Composable
 @Preview(
-    uiMode = UI_MODE_NIGHT_YES,
     name = "PIXEL_4_XL",
     device = Devices.PIXEL_4_XL,
+    uiMode = UI_MODE_NIGHT_YES,
     showBackground = true,
-    showSystemUi = true
+    showSystemUi = false
 )
 fun ColorPickerPreview() {
     MaterialTheme {
