@@ -1,5 +1,6 @@
-// Module :library
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
+
+// Module :library
 
 plugins {
     id 'com.android.library'
@@ -25,14 +26,13 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
-        useIR = true
     }
     kapt {
-        correctErrorTypes true
+        // correctErrorTypes true
         // keepJavacAnnotationProcessors = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion "1.2.0-rc02"
+        kotlinCompilerExtensionVersion "1.2.0"
     }
     packagingOptions {
         resources.pickFirsts.add('META-INF/LGPL2.1')
@@ -74,12 +74,20 @@ dependencies {
     // implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2'
 
     // https://mvnrepository.com/artifact/androidx.compose
+    //noinspection GradleDependency
     implementation "androidx.compose.ui:ui:$compose_version"
+    //noinspection GradleDependency
     implementation "androidx.compose.material:material:$compose_version"
+    //noinspection GradleDependency
     implementation "androidx.compose.foundation:foundation:$compose_version"
+    //noinspection GradleDependency
     implementation "androidx.compose.material:material-icons-core:$compose_version"
     // implementation 'androidx.compose.material:material-icons-extended:$compose_version'
+
+    //noinspection GradleDependency
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+
+    debugImplementation "androidx.customview:customview-poolingcontainer:1.0.0-rc01"
 }
 
 apply from: "${project.rootDir}/publish.gradle"

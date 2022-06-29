@@ -1,8 +1,9 @@
 // Root project build.gradle
 buildscript {
     ext {
-        kotlin_version = '1.6.21'
+        kotlin_version = '1.7.0'
         compose_version = '1.2.0-rc01'
+        compose_compiler = '1.2.0'
         version_name = "1.0.6"
         version_code = 6
     }
@@ -11,7 +12,7 @@ plugins {
     id 'com.android.application' version '7.2.1' apply false
     id 'com.android.library' version '7.2.1' apply false
     id 'androidx.navigation.safeargs' version '2.5.0-rc01' apply false
-    id 'org.jetbrains.kotlin.android' version '1.6.21' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
 }
 
 allprojects {
