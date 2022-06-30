@@ -1,5 +1,7 @@
 package io.syslogic.colorpicker.compose
 
+import android.graphics.Point
+import android.graphics.RectF
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -8,6 +10,7 @@ import androidx.compose.ui.graphics.painter.Painter
 
 class SatPainter(override val intrinsicSize: Size) : Painter() {
 
+    private lateinit var mRect: RectF
     private var color: Int = Color.Black.hashCode()
 
     /**
@@ -34,6 +37,16 @@ class SatPainter(override val intrinsicSize: Size) : Painter() {
             count++
         }
         return list
+    }
+
+    @Suppress("unused")
+    private fun valueToPoint(sat: Float, value: Float): Point {
+        val height = mRect.height()
+        val width = mRect.width()
+        val p = Point()
+        p.x = (sat * width + mRect.left).toInt()
+        p.y = ((1f - value) * height + mRect.top).toInt()
+        return p
     }
 
     fun setColor(value: Int) {

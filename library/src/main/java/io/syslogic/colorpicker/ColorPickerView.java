@@ -25,7 +25,7 @@ import androidx.annotation.StringRes;
 import java.util.Objects;
 
 /**
- * The Color-Picker {@link View}.
+ * The Color-Picker {@link View} (refactored version).
  *
  * It displays a color picker to the user and allow them to select a color.
  * the slider for the alpha-channel can be enabled setAlphaSliderVisible(true).
@@ -42,6 +42,7 @@ public class ColorPickerView extends View {
     private int mLastTouchedPanel = PANEL_SAT;
 
     private int mSliderTrackerColor = 0xFF1C1C1C;
+
     private int mBorderColor = 0xFF6E6E6E;
 
     private float mDensity = 1f;
@@ -77,8 +78,8 @@ public class ColorPickerView extends View {
 
     private Paint mBorderPaint;
 
-    private Shader mValShader;
-    private Shader mSatShader;
+    private Shader mValueShader;
+    private Shader mSaturationShader;
     private Shader mHueShader;
     private Shader mAlphaShader;
 
@@ -141,23 +142,20 @@ public class ColorPickerView extends View {
 
         mBorderPaint = new Paint();
 
-        mSaturationPaint = new Paint();
-
-        mSaturationTrackerPaint = new Paint();
-        mSaturationTrackerPaint.setStyle(Style.STROKE);
-        mSaturationTrackerPaint.setStrokeWidth(2f * mDensity);
-        mSaturationTrackerPaint.setAntiAlias(true);
-
         mHuePaint = new Paint();
-
         mHueTrackerPaint = new Paint();
         mHueTrackerPaint.setColor(mSliderTrackerColor);
         mHueTrackerPaint.setStyle(Style.STROKE);
         mHueTrackerPaint.setStrokeWidth(2f * mDensity);
         mHueTrackerPaint.setAntiAlias(true);
 
-        mAlphaPaint = new Paint();
+        mSaturationPaint = new Paint();
+        mSaturationTrackerPaint = new Paint();
+        mSaturationTrackerPaint.setStyle(Style.STROKE);
+        mSaturationTrackerPaint.setStrokeWidth(2f * mDensity);
+        mSaturationTrackerPaint.setAntiAlias(true);
 
+        mAlphaPaint = new Paint();
         mAlphaTextPaint = new Paint();
         mAlphaTextPaint.setColor(0xff1c1c1c);
         mAlphaTextPaint.setTextSize(14f * mDensity);
@@ -206,19 +204,19 @@ public class ColorPickerView extends View {
         mBorderPaint.setColor(mBorderColor);
         canvas.drawRect(mDrawingRect.left, mDrawingRect.top, rect.right + BORDER_WIDTH_PX, rect.bottom + BORDER_WIDTH_PX, mBorderPaint);
 
-        if (mValShader == null) {
-            mValShader = new LinearGradient(rect.left, rect.top, rect.left, rect.bottom,
+        if (mValueShader == null) {
+            mValueShader = new LinearGradient(rect.left, rect.top, rect.left, rect.bottom,
                     0xffffffff, 0xff000000, TileMode.CLAMP);
         }
 
         int rgb = Color.HSVToColor(new float[]{mHue, 1f, 1f});
 
-        mSatShader = new LinearGradient(rect.left, rect.top, rect.right, rect.top, 0xffffffff, rgb, TileMode.CLAMP);
-        ComposeShader mShader = new ComposeShader(mValShader, mSatShader, PorterDuff.Mode.MULTIPLY);
+        mSaturationShader = new LinearGradient(rect.left, rect.top, rect.right, rect.top, 0xffffffff, rgb, TileMode.CLAMP);
+        ComposeShader mShader = new ComposeShader(mValueShader, mSaturationShader, PorterDuff.Mode.MULTIPLY);
         mSaturationPaint.setShader(mShader);
 
         canvas.drawRect(rect, mSaturationPaint);
-        Point p = saturationToPoint(mSaturation, mValue);
+        Point p = satToPoint(mSaturation, mValue);
 
         mSaturationTrackerPaint.setColor(0xff000000);
         canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS - mDensity, mSaturationTrackerPaint);
@@ -294,7 +292,7 @@ public class ColorPickerView extends View {
     }
 
     @NonNull
-    private Point saturationToPoint(float sat, float val) {
+    private Point satToPoint(float sat, float val) {
         final RectF rect = mSatRect;
         final float height = rect.height();
         final float width = rect.width();
@@ -662,8 +660,8 @@ public class ColorPickerView extends View {
             mShowAlphaPanel = visible;
 
             /* reset all shader to force a recreation - otherwise they will not look right after the size of the view has changed. */
-            mValShader = null;
-            mSatShader = null;
+            mValueShader = null;
+            mSaturationShader = null;
             mHueShader = null;
             mAlphaShader = null;
             requestLayout();

@@ -34,9 +34,8 @@ fun ColorPickerComponent(
 
     @Suppress("CanBeVal")
     var currentColor: Int = initialColor
-
-    val listener: OnColorChangedListener? = onColorChanged
-
+    @Suppress("UNUSED_VARIABLE")
+    var listener: OnColorChangedListener? = onColorChanged
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
 
     Column(
@@ -197,7 +196,7 @@ fun ColorPickerComponent(
     device = Devices.PIXEL_4_XL,
     uiMode = UI_MODE_NIGHT_YES,
     showBackground = true,
-    showSystemUi = false
+    showSystemUi = true
 )
 fun ColorPickerPreview() {
     MaterialTheme {
