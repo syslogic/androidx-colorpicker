@@ -1,10 +1,8 @@
 package io.syslogic.colorpicker.compose
 
-import android.content.res.Configuration.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,8 +13,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 
 import io.syslogic.colorpicker.OnColorChangedListener
@@ -192,25 +188,6 @@ fun ColorPickerComponent(
                 )
             }
         }
-    }
-}
-
-@Composable
-@Preview(
-    name = "PIXEL_4_XL",
-    device = Devices.PIXEL_4_XL,
-    uiMode = UI_MODE_NIGHT_YES,
-    showBackground = true,
-    showSystemUi = true
-)
-fun ColorPickerPreview() {
-    MaterialTheme {
-        ColorPickerComponent(
-            initialColor = Color.DarkGray.hashCode(),
-            showAlphaSlider = true,
-            showHexValue = true,
-            onColorChanged = null
-        )
     }
 }
 
