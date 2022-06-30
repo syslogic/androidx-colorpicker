@@ -58,7 +58,7 @@ fun ColorPickerComponent(
                 },
                 modifier = Modifier.pointerInput(Unit) {
                     detectTapGestures(
-                        onPress = { it ->
+                        onPress = {
                             println("Hue.onPress ${it.x} x ${it.y}")
                         }
                     )
@@ -77,7 +77,7 @@ fun ColorPickerComponent(
                 },
                 modifier = Modifier.pointerInput(Unit) {
                     detectTapGestures(
-                        onPress = { it ->
+                        onPress = {
                             println("Saturation.onPress ${it.x} x ${it.y}")
                         }
                     )
@@ -103,7 +103,7 @@ fun ColorPickerComponent(
                         },
                         modifier = Modifier.pointerInput(Unit) {
                             detectTapGestures(
-                                onPress = { it ->
+                                onPress = {
                                     println("AlphaSlider.onPress ${it.x} x ${it.y}")
                                 }
                             )
