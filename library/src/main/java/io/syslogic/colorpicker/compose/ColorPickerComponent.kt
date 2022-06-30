@@ -24,6 +24,11 @@ import io.syslogic.colorpicker.R
 
 import java.util.*
 
+/**
+ * Color-Picker Component.
+ *
+ * @author Martin Zeitler
+ */
 @Composable
 fun ColorPickerComponent(
     initialColor: Int = Color.Transparent.hashCode(),
