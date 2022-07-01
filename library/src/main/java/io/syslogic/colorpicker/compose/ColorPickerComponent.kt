@@ -331,10 +331,7 @@ fun getLayoutBounds(position: Offset, size: IntSize): RectF {
 }
 
 private fun pointToHue(rect: RectF, y: Float): Float {
-    val y2 = if (y < rect.top) { 0f }
-    else if (y > rect.bottom) { rect.height() }
-    else { y - rect.top }
-    return 360f - y2 * 360f / rect.height()
+    return 360f - y * 360f / rect.height()
 }
 
 private fun pointToSat(rect: RectF, x: Float): Float {

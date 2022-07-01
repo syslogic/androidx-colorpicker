@@ -80,7 +80,7 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
     private fun valueToPoint(value: Float): Point {
         val height = rect.height()
         val p = Point()
-        p.y = (height * value / 360f).toInt()
+        p.y = (height - value * height / 360f + rect.top).toInt()
         p.x = rect.left.toInt()
         return p
     }
