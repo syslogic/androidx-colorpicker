@@ -40,9 +40,20 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             )
         ).also {
 
+            /* Border */
+            var offset = Offset(bounds.left.toFloat(), bounds.top.toFloat())
+            drawRect(
+                color = Color(borderColor),
+                size = size,
+                topLeft = offset,
+                style = Stroke(width = 4f,
+                    pathEffect = PathEffect.cornerPathEffect(borderRadius)
+                )
+            )
+
             /* Tracker */
             val p: Point = valueToPoint(value)
-            val offset = Offset(rect.left, p.y - (trackerHeight / 2))
+            offset = Offset(rect.left, p.y - (trackerHeight / 2))
 
             drawRoundRect(
                 color = Color.Black,
@@ -69,7 +80,7 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
     private fun valueToPoint(value: Float): Point {
         val height = rect.height()
         val p = Point()
-        p.y = (height - value * height / 360f + rect.top).toInt()
+        p.y = (height * value / 360f).toInt()
         p.x = rect.left.toInt()
         return p
     }

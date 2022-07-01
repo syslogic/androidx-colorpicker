@@ -39,9 +39,20 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             )
         ).also {
 
+            /* Border */
+            var offset = Offset(bounds.left.toFloat(), bounds.top.toFloat())
+            drawRect(
+                color = Color(borderColor),
+                size = Size(trackerWidth, rect.height()),
+                topLeft = offset,
+                style = Stroke(width = 4f,
+                    pathEffect = PathEffect.cornerPathEffect(borderRadius)
+                )
+            )
+
             /* Tracker */
             val p: Point = valueToPoint(value)
-            val offset = Offset(p.x - (trackerWidth / 2), rect.top)
+            offset = Offset(p.x - (trackerWidth / 2), rect.top)
 
             drawRoundRect(
                 color = Color.Black,

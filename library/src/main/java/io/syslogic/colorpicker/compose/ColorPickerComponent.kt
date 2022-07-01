@@ -225,7 +225,6 @@ fun ColorPickerComponent(
             }
         }
 
-
         /* Color Selector */
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -331,6 +330,34 @@ fun getLayoutBounds(position: Offset, size: IntSize): RectF {
     )
 }
 
+private fun pointToHue(rect: RectF, y: Float): Float {
+    val y2 = if (y < rect.top) { 0f }
+    else if (y > rect.bottom) { rect.height() }
+    else { y - rect.top }
+    return 360f - y2 * 360f / rect.height()
+}
+
+private fun pointToSat(rect: RectF, x: Float): Float {
+    val x2 = if (x < rect.left) { 0f }
+    else if (x > rect.right) { rect.width() }
+    else { x - rect.left }
+    return 1f / rect.width() * x2
+}
+
+private fun pointToVal(rect: RectF, y: Float): Float {
+    val y2 = if (y < rect.top) { 0f }
+    else if (y > rect.bottom) { rect.height() }
+    else { y - rect.top }
+    return 1f - 1f / rect.height() * y2
+}
+
+private fun pointToAlpha(rect: RectF, x: Int): Int {
+    val x2 = if (x < rect.left) { 0 }
+    else if (x > rect.right) { rect.width().toInt() }
+    else { x - rect.left.toInt() }
+    return 0xff + x2 * 0xff / rect.width().toInt()
+}
+
 fun toColor(alpha: Int, hue: Float, sat: Float, value: Float) : Int {
     println("alpha: $alpha, hue: $hue, saturation: $sat, contrast: $value")
     return android.graphics.Color.HSVToColor(alpha, floatArrayOf(hue, sat, value))
@@ -349,37 +376,4 @@ fun convertToARGB(color: Int): String {
     if (green.length == 1) {green = String.format("0%s", green)}
     if (blue.length  == 1) {blue  = String.format("0%s", blue)}
     return String.format("#%s%s%s%s", alpha, red, green, blue)
-}
-
-private fun pointToHue(rect: RectF, y: Float): Float {
-    val height = rect.height()
-    val y2 = if (y < rect.top) { 0f }
-    else if (y > rect.bottom) { height }
-    else { y - rect.top }
-
-    return 360f - y2 * 360f / height
-}
-
-private fun pointToSat(rect: RectF, x: Float): Float {
-    val width = rect.width()
-    val x2 = if (x < rect.left) { 0f }
-    else if (x > rect.right) { width }
-    else { x - rect.left }
-    return 1f / width * x2
-}
-
-private fun pointToVal(rect: RectF, y: Float): Float {
-    val height = rect.height()
-    val y2 = if (y < rect.top) { 0f }
-    else if (y > rect.bottom) { height }
-    else { y - rect.top }
-    return 1f - 1f / height * y2
-}
-
-private fun pointToAlpha(rect: RectF, x: Int): Int {
-    val width = rect.width().toInt()
-    val x2 = if (x < rect.left) { 0 }
-    else if (x > rect.right) { width }
-    else { x - rect.left.toInt() }
-    return 0xff + x2 * 0xff / width
 }

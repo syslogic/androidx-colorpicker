@@ -15,11 +15,11 @@ import androidx.compose.ui.graphics.painter.Painter
  * @author Martin Zeitler
  */
 abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
-
     protected lateinit var canvas: NativeCanvas
-    protected lateinit var bounds: Rect
     protected lateinit var rect: RectF
-
+    lateinit var bounds: Rect
+    val borderWidth: Float = 2F
+    val borderColor: Int = -0x919192
     fun setCanvas(drawContext: DrawContext) {
         canvas = drawContext.canvas.nativeCanvas
         bounds = canvas.clipBounds
