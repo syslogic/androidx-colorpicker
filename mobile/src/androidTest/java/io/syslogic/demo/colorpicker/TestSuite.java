@@ -66,14 +66,14 @@ public class TestSuite {
 
         /* initialize UiDevice */
         this.mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        Assert.assertThat(this.mDevice, notNullValue());
+        Assert.assertNotNull(this.mDevice);
 
         /* Start from the home screen */
         this.mDevice.pressHome();
 
         /* Obtain the launcher package */
         String launcherPackage = getLauncherPackageName();
-        Assert.assertThat(launcherPackage, notNullValue());
+        Assert.assertNotNull(launcherPackage);
 
         /* Wait for launcher */
         this.mDevice.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)), LAUNCH_TIMEOUT);

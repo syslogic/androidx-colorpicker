@@ -20,6 +20,7 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntSize
@@ -82,6 +83,7 @@ fun ColorPickerComponent(
                     it.setColor(initialColor)
                 },
                 modifier = Modifier
+                    .testTag("hue")
                     .layoutId(Hue)
                     .pointerInput(Unit) {
                         detectTapGestures(
@@ -110,6 +112,7 @@ fun ColorPickerComponent(
                     it.setColor(initialColor)
                 },
                 modifier = Modifier
+                    .testTag("sat")
                     .layoutId(Sat)
                     .pointerInput(Unit) {
                         detectTapGestures(
@@ -143,6 +146,7 @@ fun ColorPickerComponent(
                             it.setAlpha(initialColor)
                         },
                         modifier = Modifier
+                            .testTag("alpha")
                             .layoutId(Alpha)
                             .pointerInput(Unit) {
                                 detectTapGestures(
@@ -172,7 +176,8 @@ fun ColorPickerComponent(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Hex Value: ${convertToARGB(currentColor)}"
+                        text = "Hex Value: ${convertToARGB(currentColor)}",
+                        modifier = Modifier.testTag("hex")
                     )
                 }
             }
@@ -189,14 +194,15 @@ fun ColorPickerComponent(
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    contentDescription = "Old Color Panel",
+                    contentDescription = "Old Color",
                     contentScale = ContentScale.FillBounds,
                     painter = ColorPainter(Size(400F, 120F)).also {
                         it.setColor(initialColor)
                     },
                     modifier = Modifier
-                        .padding(all = rowPadding)
+                        .testTag("old")
                         .layoutId(OldColor)
+                        .padding(all = rowPadding)
                         .pointerInput(Unit) {
                             detectTapGestures(
                                 onPress = {
@@ -220,14 +226,15 @@ fun ColorPickerComponent(
             ) {
 
                 Image(
-                    contentDescription = "New Color Panel",
+                    contentDescription = "New Color",
                     contentScale = ContentScale.FillBounds,
                     painter = ColorPainter(Size(400F, 120F)).also {
                         it.setColor(currentColor)
                     },
                     modifier = Modifier
-                        .padding(all = rowPadding)
+                        .testTag("new")
                         .layoutId(NewColor)
+                        .padding(all = rowPadding)
                         .pointerInput(Unit) {
                             detectTapGestures(
                                 onPress = {
