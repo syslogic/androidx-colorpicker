@@ -1,11 +1,15 @@
 package io.syslogic.colorpicker.compose
 
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
 
+/**
+ * Jetpack Compose Color Painter
+ *
+ * @author Martin Zeitler
+ */
 class ColorPainter(override val intrinsicSize: Size) : Painter() {
 
     private var color: Int = Color.Black.hashCode()
@@ -17,9 +21,7 @@ class ColorPainter(override val intrinsicSize: Size) : Painter() {
     override fun DrawScope.onDraw() {
         drawRect(
             size = size,
-            brush = Brush.linearGradient(
-                colors = listOf(Color(color), Color(color))
-            )
+            color = Color(color)
         )
     }
 

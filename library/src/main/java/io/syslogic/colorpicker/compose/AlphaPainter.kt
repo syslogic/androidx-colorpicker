@@ -9,6 +9,11 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.painter.Painter
 
+/**
+ * Jetpack Compose Alpha Painter
+ *
+ * @author Martin Zeitler
+ */
 class AlphaPainter(override val intrinsicSize: Size) : Painter() {
 
     private lateinit var mRect: RectF
@@ -19,25 +24,27 @@ class AlphaPainter(override val intrinsicSize: Size) : Painter() {
      * internally within [draw] after the positioning and configuring the [Painter]
      */
     override fun DrawScope.onDraw() {
-
-        val canvas = drawContext.canvas.nativeCanvas
-        val bounds = canvas.clipBounds
-        mRect = RectF(
-            bounds.left.toFloat(),
-            bounds.top.toFloat(),
-            bounds.right.toFloat(),
-            bounds.bottom.toFloat()
-        )
-
         drawRect(
             size = size,
             brush = Brush.linearGradient(
                 colors = listOf(Color.Transparent, Color.Black)
             )
-        )
+        ).also {
+
+            /* required for setting the initial value */
+            val canvas = drawContext.canvas.nativeCanvas
+            val bounds = canvas.clipBounds
+            mRect = RectF(
+                bounds.left.toFloat(),
+                bounds.top.toFloat(),
+                bounds.right.toFloat(),
+                bounds.bottom.toFloat()
+            )
+
+
+        }
     }
 
-    @Suppress("unused")
     private fun valueToPoint(value: Float): Point {
         val width = mRect.width()
         val p = Point()

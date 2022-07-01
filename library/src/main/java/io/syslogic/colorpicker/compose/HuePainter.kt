@@ -11,6 +11,11 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.painter.Painter
 
+/**
+ * Jetpack Compose Hue Painter
+ *
+ * @author Martin Zeitler
+ */
 class HuePainter(override val intrinsicSize: Size) : Painter() {
 
     private lateinit var mRect: RectF
@@ -24,9 +29,9 @@ class HuePainter(override val intrinsicSize: Size) : Painter() {
      */
     override fun DrawScope.onDraw() {
 
+        /* required for setting the initial value */
         val canvas = drawContext.canvas.nativeCanvas
         val bounds = canvas.clipBounds
-
         mRect = RectF(
             bounds.left.toFloat(),
             bounds.top.toFloat(),

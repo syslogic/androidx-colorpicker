@@ -6,8 +6,14 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.painter.Painter
 
+/**
+ * Jetpack Compose Sat Painter
+ *
+ * @author Martin Zeitler
+ */
 class SatPainter(override val intrinsicSize: Size) : Painter() {
 
     private lateinit var mRect: RectF
@@ -23,23 +29,33 @@ class SatPainter(override val intrinsicSize: Size) : Painter() {
             brush = Brush.verticalGradient(
                 colors = getValues()
             )
-        )
+        ).also {
+
+            /* required for setting the initial value */
+            val canvas = drawContext.canvas.nativeCanvas
+            val bounds = canvas.clipBounds
+            mRect = RectF(
+                bounds.left.toFloat(),
+                bounds.top.toFloat(),
+                bounds.right.toFloat(),
+                bounds.bottom.toFloat()
+            )
+
+
+        }
     }
 
     private fun getValues(): List<Color> {
+        var i = 0
         val list: MutableList<Color> = MutableList(361) { Color.Black }
-        val arr = IntArray(361)
-        var i = arr.size - 1
-        var count = 0
-        while (i >= 0) {
-            list[count] = Color(android.graphics.Color.HSVToColor(floatArrayOf(i.toFloat(), 1f, 1f)))
-            i--
-            count++
+        while (i < list.size) {
+            val value = (list.size - i).toFloat()
+            list[i] = Color(android.graphics.Color.HSVToColor(floatArrayOf(value, 1f, 1f)))
+            i++
         }
         return list
     }
 
-    @Suppress("unused")
     private fun valueToPoint(sat: Float, value: Float): Point {
         val height = mRect.height()
         val width = mRect.width()
