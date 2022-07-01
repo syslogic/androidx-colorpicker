@@ -47,11 +47,11 @@ fun ColorPickerComponent(
     val context = LocalContext.current
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
 
-    var currentColor: Int by remember { mutableStateOf(0) }
     var currentAlpha: Int by remember { mutableStateOf(255) }
     var currentHue: Float by remember { mutableStateOf(0F) }
     var currentSat: Float by remember { mutableStateOf(0F) }
     var currentVal: Float by remember { mutableStateOf(0F) }
+    var currentColor: Int by remember { mutableStateOf(0) }
 
     @Suppress("UNUSED_VARIABLE")
     var listener: OnColorChangedListener? = onColorChanged
@@ -59,8 +59,8 @@ fun ColorPickerComponent(
     var offsetHue by remember { mutableStateOf(Offset.Zero) }
     var sizeHue by remember { mutableStateOf(IntSize.Zero) }
 
-    var offsetSat by remember { mutableStateOf(Offset.Zero) }
-    var sizeSat by remember { mutableStateOf(IntSize.Zero) }
+    var offsetSatVal by remember { mutableStateOf(Offset.Zero) }
+    var sizeSatVal by remember { mutableStateOf(IntSize.Zero) }
 
     var offsetAlpha by remember { mutableStateOf(Offset.Zero) }
     var sizeAlpha by remember { mutableStateOf(IntSize.Zero) }
@@ -87,7 +87,6 @@ fun ColorPickerComponent(
                 Text(
                     modifier = Modifier.testTag("value_val"),
                     text = "Val: $currentVal"
-
                 )
                 Text(
                     modifier = Modifier.testTag("value_alpha"),
@@ -113,11 +112,42 @@ fun ColorPickerComponent(
             modifier = Modifier.padding(all = rowPadding)
         ) {
 
-            /* Hue Panel ? */
+            /* Sat/Val Panel */
+            Image(
+                contentDescription = "Sat/Val",
+                contentScale = ContentScale.FillBounds,
+                painter = SatValPainter(Size(900F, 900F)).also {
+                    it.setValue(currentSat, currentVal)
+                },
+                modifier = Modifier
+                    .layoutId(SatVal)
+                    .testTag("sat_val")
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onPress = { event ->
+                                val rect: RectF = getLayoutBounds(offsetSatVal, sizeSatVal)
+                                currentSat = pointToSat(rect, event.x)
+                                currentVal = pointToVal(rect, event.y)
+                                currentColor = toColor(currentAlpha, currentHue, currentSat, currentVal)
+                                println("Sat: $currentSat, Val: $currentVal (${event.x.toInt()} x ${event.y.toInt()})")
+                            }
+                        )
+                    }
+                    .onGloballyPositioned { coordinates ->
+                        offsetSatVal = coordinates.positionInRoot()
+                        sizeSatVal = coordinates.size
+                    }
+            )
+
+            Spacer(
+                modifier = Modifier.padding(all = rowPadding)
+            )
+
+            /* Hue Panel */
             Image(
                 contentDescription = "Hue",
                 contentScale = ContentScale.FillBounds,
-                painter = HuePainter(Size(900F, 900F)).also {
+                painter = HuePainter(Size(100F, 900F)).also {
                     it.setValue(currentHue)
                 },
                 modifier = Modifier
@@ -126,48 +156,16 @@ fun ColorPickerComponent(
                     .pointerInput(Unit) {
                         detectTapGestures(
                             onPress = { event ->
-                                val rect: RectF = getLayoutBounds(offsetHue, sizeHue);
+                                val rect: RectF = getLayoutBounds(offsetHue, sizeHue)
                                 currentHue = pointToHue(rect, event.y)
                                 currentColor = toColor(currentAlpha, currentHue, currentSat, currentVal)
-                                println("Hue: $currentHue (${event.y.toInt()})")
+                                println("Val: $currentHue (${event.y.toInt()})")
                             }
                         )
                     }
                     .onGloballyPositioned { coordinates ->
                         offsetHue = coordinates.positionInRoot()
                         sizeHue = coordinates.size
-                    }
-            )
-
-            Spacer(
-                modifier = Modifier.padding(all = rowPadding)
-            )
-
-            /* Sat Panel ? */
-            Image(
-                contentDescription = "Sat",
-                contentScale = ContentScale.FillBounds,
-                painter = SatPainter(Size(100F, 900F)).also {
-                    it.setValue(currentSat, currentVal)
-                },
-                modifier = Modifier
-                    .layoutId(Sat)
-                    .testTag("sat")
-                    .pointerInput(Unit) {
-                        detectTapGestures(
-                            onPress = { event ->
-                                val rect: RectF = getLayoutBounds(offsetSat, sizeSat);
-                                currentSat = pointToSat(rect, event.x)
-                                currentVal = pointToVal(rect, event.y)
-                                currentColor = toColor(currentAlpha, currentHue, currentSat, currentVal)
-                                println("Sat: $currentSat (${event.x.toInt()})")
-                                println("Val: $currentVal (${event.y.toInt()})")
-                            }
-                        )
-                    }
-                    .onGloballyPositioned { coordinates ->
-                        offsetSat = coordinates.positionInRoot()
-                        sizeSat = coordinates.size
                     }
             )
         }
@@ -194,16 +192,8 @@ fun ColorPickerComponent(
                             .pointerInput(Unit) {
                                 detectTapGestures(
                                     onPress = { event ->
-                                        currentAlpha = pointToAlpha(
-                                            getLayoutBounds(offsetAlpha, sizeAlpha),
-                                            event.x.toInt()
-                                        )
-                                        currentColor = toColor(
-                                            currentAlpha,
-                                            currentHue,
-                                            currentSat,
-                                            currentVal
-                                        )
+                                        currentAlpha = pointToAlpha(getLayoutBounds(offsetAlpha, sizeAlpha), event.x.toInt())
+                                        currentColor = toColor(currentAlpha, currentHue, currentSat, currentVal)
                                         println("Alpha: $currentAlpha (${event.x.toInt()})")
                                     }
                                 )

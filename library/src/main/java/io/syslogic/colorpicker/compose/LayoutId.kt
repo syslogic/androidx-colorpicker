@@ -2,7 +2,7 @@ package io.syslogic.colorpicker.compose
 
 enum class LayoutId {
     Hue,
-    Sat,
+    SatVal,
     Alpha,
     OldColor,
     NewColor

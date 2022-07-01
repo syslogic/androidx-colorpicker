@@ -33,7 +33,7 @@ class TestComposeActivity {
 
     @Test
     fun satPanelTest() {
-        composeTestRule.onNodeWithTag(testTag = "sat").assertIsDisplayed()
+        composeTestRule.onNodeWithTag(testTag = "sat_val").assertIsDisplayed()
     }
 
     @Test
