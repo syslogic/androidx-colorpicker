@@ -21,7 +21,7 @@ class HuePainter(override val intrinsicSize: Size) : Painter() {
     private lateinit var mRect: RectF
     private var radius: Float = 20F
 
-    private var mHue: Float = 360f
+    private var value: Float = 360f
 
     /**
      * Implementation of drawing logic for instances of [Painter].
@@ -39,20 +39,20 @@ class HuePainter(override val intrinsicSize: Size) : Painter() {
             bounds.bottom.toFloat()
         )
 
-        /* Contrast Shader */
-        val mContrastShader = LinearGradientShader(
-            from     = Offset(mRect.left, mRect.bottom),
-            to       = Offset(mRect.left, mRect.top),
-            tileMode = androidx.compose.ui.graphics.TileMode.Clamp,
-            colors   = listOf(Color.Black, Color.White)
-        )
-
         /* Saturation Shader */
         val mSaturationShader = LinearGradientShader(
             from     = Offset(mRect.right, mRect.top),
             to       = Offset(mRect.left, mRect.top),
             tileMode = androidx.compose.ui.graphics.TileMode.Clamp,
             colors   = getValues()
+        )
+
+        /* Contrast Shader */
+        val mContrastShader = LinearGradientShader(
+            from     = Offset(mRect.left, mRect.bottom),
+            to       = Offset(mRect.left, mRect.top),
+            tileMode = androidx.compose.ui.graphics.TileMode.Clamp,
+            colors   = listOf(Color.Black, Color.White)
         )
 
         /* Compose Shader */
@@ -68,7 +68,7 @@ class HuePainter(override val intrinsicSize: Size) : Painter() {
         tracker.strokeWidth = 4f * density
 
         /* Tracker */
-        val p: Point = valueToPoint(mHue)
+        val p: Point = valueToPoint(value)
         canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), radius, tracker)
     }
 
@@ -91,7 +91,7 @@ class HuePainter(override val intrinsicSize: Size) : Painter() {
         return p
     }
 
-    fun setColor(value: Int) {
-        this.mHue = value.toFloat()
+    fun setValue(value: Float) {
+        this.value = value
     }
 }

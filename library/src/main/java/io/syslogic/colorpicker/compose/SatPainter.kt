@@ -50,11 +50,12 @@ class SatPainter(override val intrinsicSize: Size) : Painter() {
             /* Tracker */
             val p: Point = valueToPoint(value[0], value[1])
             val rectHeight: Float = 4 * density
+            val offset = Offset(mRect.left, p.y - (rectHeight / 2));
 
             drawRoundRect(
                 color = Color.Black,
-                topLeft = Offset(mRect.left, p.y - (rectHeight / 2)),
                 size = Size(mRect.width(), rectHeight),
+                topLeft = offset,
                 style = Stroke(width = 4f,
                     pathEffect = PathEffect.cornerPathEffect(borderRadius)
                 )

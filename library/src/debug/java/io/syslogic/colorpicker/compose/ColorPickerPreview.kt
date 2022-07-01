@@ -27,10 +27,11 @@ import androidx.compose.ui.tooling.preview.Preview
 fun ColorPickerPreview() {
     MaterialTheme {
         ColorPickerComponent(
-            initialColor = Color.DarkGray.hashCode(),
-            showAlphaSlider = true,
-            showHexValue = true,
-            onColorChanged = null
+            initialColor = Color.DarkGray,
+            onColorChanged = null,
+            showAlpha = true,
+            showHex = true,
+            showHSV = true
         )
     }
 }

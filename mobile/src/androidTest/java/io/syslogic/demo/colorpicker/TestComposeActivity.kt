@@ -48,11 +48,11 @@ class TestComposeActivity {
 
     @Test
     fun oldColorTest() {
-        composeTestRule.onNodeWithTag(testTag = "old").assertIsDisplayed()
+        composeTestRule.onNodeWithTag(testTag = "old_color").assertIsDisplayed()
     }
 
     @Test
     fun newColorTest() {
-        composeTestRule.onNodeWithTag(testTag = "new").assertIsDisplayed()
+        composeTestRule.onNodeWithTag(testTag = "new_color").assertIsDisplayed()
     }
 }

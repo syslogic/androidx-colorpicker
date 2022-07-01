@@ -1,12 +1,14 @@
 package io.syslogic.demo.colorpicker.activity
 
 import android.content.SharedPreferences
-import android.graphics.Color
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.graphics.Color
 import androidx.preference.PreferenceManager
+
 import io.syslogic.colorpicker.OnColorChangedListener
 
 import io.syslogic.colorpicker.compose.ColorPickerComponent
@@ -23,13 +25,15 @@ class ComposeActivity : ComponentActivity(), OnColorChangedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val initialColor: Color = Color.Blue
         this.setContent {
             MaterialTheme {
                 ColorPickerComponent(
-                    initialColor = prefs.getInt("color_code_01", Color.BLACK),
+                    initialColor = initialColor,
                     onColorChanged = this@ComposeActivity,
-                    showAlphaSlider = true,
-                    showHexValue = true
+                    showAlpha = true,
+                    showHex = true,
+                    showHSV = true
                 )
             }
         }
