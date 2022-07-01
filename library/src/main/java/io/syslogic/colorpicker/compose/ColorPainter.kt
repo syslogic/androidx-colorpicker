@@ -10,22 +10,23 @@ import androidx.compose.ui.graphics.painter.Painter
  *
  * @author Martin Zeitler
  */
-class ColorPainter(override val intrinsicSize: Size) : Painter() {
+class ColorPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
-    private var color: Int = Color.Black.hashCode()
+    private var value: Int = Color.Black.hashCode()
 
     /**
      * Implementation of drawing logic for instances of [Painter]. This is invoked
      * internally within [draw] after the positioning and configuring the [Painter]
      */
     override fun DrawScope.onDraw() {
+        setCanvas(drawContext)
         drawRect(
             size = size,
-            color = Color(color)
+            color = Color(value)
         )
     }
 
-    fun setColor(value: Int) {
-        this.color = value
+    fun setValue(value: Int) {
+        this.value = value
     }
 }

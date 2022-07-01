@@ -1,7 +1,6 @@
 package io.syslogic.colorpicker.compose
 
 import android.graphics.Point
-import android.graphics.RectF
 import androidx.compose.ui.geometry.Offset
 
 import androidx.compose.ui.geometry.Size
@@ -10,8 +9,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.painter.Painter
+
 import kotlin.properties.Delegates
 
 /**
@@ -19,19 +18,21 @@ import kotlin.properties.Delegates
  *
  * @author Martin Zeitler
  */
-class HuePainter(override val intrinsicSize: Size) : Painter() {
+class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
-    private var value: Float = 360f
+    private var borderRadius by Delegates.notNull<Float>()
     private var trackerHeight by Delegates.notNull<Float>()
-    private var borderRadius: Float = 2F
-    private lateinit var mRect: RectF
+    private var value: Float = 360f
 
     /**
      * Implementation of drawing logic for instances of [Painter]. This is invoked
      * internally within [draw] after the positioning and configuring the [Painter]
      */
     override fun DrawScope.onDraw() {
+        borderRadius = 2F
         trackerHeight = 4 * density
+        setCanvas(drawContext)
+
         drawRect(
             size = size,
             brush = Brush.verticalGradient(
@@ -39,24 +40,13 @@ class HuePainter(override val intrinsicSize: Size) : Painter() {
             )
         ).also {
 
-            /* required for setting the initial value */
-            val canvas = drawContext.canvas.nativeCanvas
-            val bounds = canvas.clipBounds
-
-            mRect = RectF(
-                bounds.left.toFloat(),
-                bounds.top.toFloat(),
-                bounds.right.toFloat(),
-                bounds.bottom.toFloat()
-            )
-
             /* Tracker */
             val p: Point = valueToPoint(value)
-            val offset = Offset(mRect.left, p.y - (trackerHeight / 2))
+            val offset = Offset(rect.left, p.y - (trackerHeight / 2))
 
             drawRoundRect(
                 color = Color.Black,
-                size = Size(mRect.width(), trackerHeight),
+                size = Size(rect.width(), trackerHeight),
                 topLeft = offset,
                 style = Stroke(width = 4f,
                     pathEffect = PathEffect.cornerPathEffect(borderRadius)
@@ -76,11 +66,11 @@ class HuePainter(override val intrinsicSize: Size) : Painter() {
         return list
     }
 
-    private fun valueToPoint(hue: Float): Point {
-        val height = mRect.height()
+    private fun valueToPoint(value: Float): Point {
+        val height = rect.height()
         val p = Point()
-        p.y = (height - hue * height / 360f + mRect.top).toInt()
-        p.x = mRect.left.toInt()
+        p.y = (height - value * height / 360f + rect.top).toInt()
+        p.x = rect.left.toInt()
         return p
     }
 

@@ -47,20 +47,20 @@ fun ColorPickerComponent(
     val context = LocalContext.current
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
 
+    var currentColor: Int by remember { mutableStateOf(-16777216) }
     var currentAlpha: Int by remember { mutableStateOf(255) }
-    var currentHue: Float by remember { mutableStateOf(0F) }
     var currentSat: Float by remember { mutableStateOf(0F) }
     var currentVal: Float by remember { mutableStateOf(0F) }
-    var currentColor: Int by remember { mutableStateOf(0) }
+    var currentHue: Float by remember { mutableStateOf(180F) }
 
     @Suppress("UNUSED_VARIABLE")
     var listener: OnColorChangedListener? = onColorChanged
 
-    var offsetHue by remember { mutableStateOf(Offset.Zero) }
-    var sizeHue by remember { mutableStateOf(IntSize.Zero) }
-
     var offsetSatVal by remember { mutableStateOf(Offset.Zero) }
     var sizeSatVal by remember { mutableStateOf(IntSize.Zero) }
+
+    var offsetHue by remember { mutableStateOf(Offset.Zero) }
+    var sizeHue by remember { mutableStateOf(IntSize.Zero) }
 
     var offsetAlpha by remember { mutableStateOf(Offset.Zero) }
     var sizeAlpha by remember { mutableStateOf(IntSize.Zero) }
@@ -240,7 +240,7 @@ fun ColorPickerComponent(
                     contentDescription = "Old Color",
                     contentScale = ContentScale.FillBounds,
                     painter = ColorPainter(Size(400F, 120F)).also {
-                        it.setColor(initialColor.value.toInt())
+                        it.setValue(initialColor.value.toInt())
                     },
                     modifier = Modifier
                         .layoutId(OldColor)
@@ -272,7 +272,7 @@ fun ColorPickerComponent(
                     contentDescription = "New Color",
                     contentScale = ContentScale.FillBounds,
                     painter = ColorPainter(Size(400F, 120F)).also {
-                        it.setColor(currentColor)
+                        it.setValue(currentColor)
                     },
                     modifier = Modifier
                         .layoutId(NewColor)
@@ -331,6 +331,11 @@ fun getLayoutBounds(position: Offset, size: IntSize): RectF {
     )
 }
 
+fun toColor(alpha: Int, hue: Float, sat: Float, value: Float) : Int {
+    println("alpha: $alpha, hue: $hue, saturation: $sat, contrast: $value")
+    return android.graphics.Color.HSVToColor(alpha, floatArrayOf(hue, sat, value))
+}
+
 /**
  * @param color the color value to convert.
  */
@@ -346,16 +351,12 @@ fun convertToARGB(color: Int): String {
     return String.format("#%s%s%s%s", alpha, red, green, blue)
 }
 
-fun toColor(alpha: Int, hue: Float, sat: Float, value: Float) : Int {
-    println("alpha: $alpha, hue: $hue, saturation: $sat, contrast: $value")
-    return android.graphics.Color.HSVToColor(alpha, floatArrayOf(hue, sat, value))
-}
-
 private fun pointToHue(rect: RectF, y: Float): Float {
     val height = rect.height()
     val y2 = if (y < rect.top) { 0f }
     else if (y > rect.bottom) { height }
     else { y - rect.top }
+
     return 360f - y2 * 360f / height
 }
 

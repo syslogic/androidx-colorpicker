@@ -55,4 +55,39 @@ class TestComposeActivity {
     fun newColorTest() {
         composeTestRule.onNodeWithTag(testTag = "new_color").assertIsDisplayed()
     }
+
+    @Test
+    fun valueHueTest() {
+        composeTestRule.onNodeWithTag(testTag = "value_hue").assertIsDisplayed()
+    }
+
+    @Test
+    fun valueSatTest() {
+        composeTestRule.onNodeWithTag(testTag = "value_sat").assertIsDisplayed()
+    }
+
+    @Test
+    fun valueValTest() {
+        composeTestRule.onNodeWithTag(testTag = "value_val").assertIsDisplayed()
+    }
+
+    @Test
+    fun valueAlphaTest() {
+        composeTestRule.onNodeWithTag(testTag = "value_alpha").assertIsDisplayed()
+    }
+
+    @Test
+    fun valueBlueTest() {
+        composeTestRule.onNodeWithTag(testTag = "value_blue").assertIsDisplayed()
+    }
+
+    @Test
+    fun valueRedTest() {
+        composeTestRule.onNodeWithTag(testTag = "value_red").assertIsDisplayed()
+    }
+
+    @Test
+    fun valueGreenTest() {
+        composeTestRule.onNodeWithTag(testTag = "value_green").assertIsDisplayed()
+    }
 }

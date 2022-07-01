@@ -1,7 +1,7 @@
 package io.syslogic.colorpicker.compose
 
 import android.graphics.Point
-import android.graphics.RectF
+
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
@@ -9,8 +9,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.painter.Painter
+
 import kotlin.properties.Delegates
 
 /**
@@ -18,12 +18,11 @@ import kotlin.properties.Delegates
  *
  * @author Martin Zeitler
  */
-class AlphaPainter(override val intrinsicSize: Size) : Painter() {
+class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
-    private var value: Float = 1F
     private var trackerWidth by Delegates.notNull<Float>()
-    private var borderRadius: Float = 2F
-    private lateinit var mRect: RectF
+    private var borderRadius by Delegates.notNull<Float>()
+    private var value: Float = 1F
 
     /**
      * Implementation of drawing logic for instances of [Painter]. This is invoked
@@ -31,6 +30,8 @@ class AlphaPainter(override val intrinsicSize: Size) : Painter() {
      */
     override fun DrawScope.onDraw() {
         trackerWidth = 2 * density
+        borderRadius = 2 * density
+        setCanvas(drawContext)
         drawRect(
             size = size,
             brush = Brush.linearGradient(
@@ -38,25 +39,13 @@ class AlphaPainter(override val intrinsicSize: Size) : Painter() {
             )
         ).also {
 
-            /* required for setting the initial value */
-            val canvas = drawContext.canvas.nativeCanvas
-            val bounds = canvas.clipBounds
-            mRect = RectF(
-                bounds.left.toFloat(),
-                bounds.top.toFloat(),
-                bounds.right.toFloat(),
-                bounds.bottom.toFloat()
-            )
-
             /* Tracker */
             val p: Point = valueToPoint(value)
-
-            // TODO:
-            val offset = Offset(p.x - (trackerWidth / 2), mRect.height())
+            val offset = Offset(p.x - (trackerWidth / 2), rect.top)
 
             drawRoundRect(
                 color = Color.Black,
-                size = Size(trackerWidth, mRect.height()),
+                size = Size(trackerWidth, rect.height()),
                 topLeft = offset,
                 style = Stroke(width = 4f,
                     pathEffect = PathEffect.cornerPathEffect(borderRadius)
@@ -66,10 +55,10 @@ class AlphaPainter(override val intrinsicSize: Size) : Painter() {
     }
 
     private fun valueToPoint(value: Float): Point {
-        val width = mRect.width()
+        val width = rect.width()
         val p = Point()
-        p.x = (width - value * width / 0xff + mRect.left).toInt()
-        p.y = mRect.top.toInt()
+        p.x = (width - value * width / 0xff + rect.left).toInt()
+        p.y = rect.top.toInt()
         return p
     }
 
