@@ -48,6 +48,7 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
         super();
     }
 
+    @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 

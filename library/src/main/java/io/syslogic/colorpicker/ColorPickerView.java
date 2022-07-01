@@ -20,6 +20,7 @@ import android.view.View;
 
 import androidx.annotation.DimenRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import java.util.Objects;
@@ -108,15 +109,15 @@ public class ColorPickerView extends View {
 
     private Point mStartTouchPoint = null;
 
-    public ColorPickerView(Context context) {
+    public ColorPickerView(@NonNull Context context) {
         this(context, null);
     }
 
-    public ColorPickerView(Context context, AttributeSet attrs) {
+    public ColorPickerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ColorPickerView(Context context, AttributeSet attrs, int defStyle) {
+    public ColorPickerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
@@ -313,7 +314,7 @@ public class ColorPickerView extends View {
     }
 
     @NonNull
-    private float[] pointToSaturation(float x, float y) {
+    private float[] pointToSat(float x, float y) {
 
         final RectF rect = mSatRect;
         float[] result = new float[2];
@@ -447,7 +448,7 @@ public class ColorPickerView extends View {
             update = true;
         } else if (mSatRect.contains(startX, startY)) {
             mLastTouchedPanel = PANEL_SAT;
-            float[] result = pointToSaturation(event.getX(), event.getY());
+            float[] result = pointToSat(event.getX(), event.getY());
             mSaturation = result[0];
             mValue = result[1];
             update = true;
@@ -698,7 +699,7 @@ public class ColorPickerView extends View {
      * Set the text that should be shown in the alpha slider. Set to null to disable text.
      * @param text Text that should be shown.
      */
-    public void setAlphaSliderText(String text) {
+    public void setAlphaSliderText(@NonNull String text) {
         this.mAlphaSliderText = text;
         invalidate();
     }
@@ -708,6 +709,7 @@ public class ColorPickerView extends View {
      * @return Text that is being shown.
      */
     @SuppressWarnings("unused")
+    @NonNull
     public String getAlphaSliderText() {
         return this.mAlphaSliderText;
     }

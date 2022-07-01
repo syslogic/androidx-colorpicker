@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.VectorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -15,11 +14,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
 import org.jetbrains.annotations.Contract;
+
+import java.util.Locale;
 
 /**
  * The Color-Picker {@link Preference}
@@ -45,24 +46,24 @@ public class ColorPickerPreference extends Preference implements
     private SharedPreferences prefs;
 
     @SuppressWarnings("unused")
-    public ColorPickerPreference(Context context) {
+    public ColorPickerPreference(@NonNull Context context) {
         super(context);
         init(context, null);
     }
 
     @SuppressWarnings("unused")
-    public ColorPickerPreference(Context context, AttributeSet attrs) {
+    public ColorPickerPreference(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
     @SuppressWarnings("unused")
-    public ColorPickerPreference(Context context, AttributeSet attrs, int defStyle) {
+    public ColorPickerPreference(@NonNull Context context, @NonNull AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
 
-    private void init(@NonNull Context context, AttributeSet attrs) {
+    private void init(@NonNull Context context, @Nullable AttributeSet attrs) {
 
         if (attrs != null) {
             this.mShowAlphaSlider = attrs.getAttributeBooleanValue(null, "alphaSlider", false);
@@ -83,6 +84,7 @@ public class ColorPickerPreference extends Preference implements
      * @param a resource typed array
      * @param index the index to get
      */
+    @NonNull
     @Override
     protected Object onGetDefaultValue(@NonNull TypedArray a, int index) {
         int colorInt;
@@ -96,7 +98,7 @@ public class ColorPickerPreference extends Preference implements
     }
 
     @Override
-    protected void onSetInitialValue(Object defaultValue) {
+    protected void onSetInitialValue(@Nullable Object defaultValue) {
         if(defaultValue != null) {
             this.onColorChanged((Integer) defaultValue);
             super.onSetInitialValue(defaultValue);
@@ -181,10 +183,10 @@ public class ColorPickerPreference extends Preference implements
      */
     @NonNull
     static String convertToARGB(int color) {
-        String alpha = Integer.toHexString(Color.alpha(color)).toUpperCase();
-        String red   = Integer.toHexString(Color.red(color)).toUpperCase();
-        String green = Integer.toHexString(Color.green(color)).toUpperCase();
-        String blue  = Integer.toHexString(Color.blue(color)).toUpperCase();
+        String alpha = Integer.toHexString(Color.alpha(color)).toUpperCase(Locale.ROOT);
+        String red   = Integer.toHexString(Color.red(color)).toUpperCase(Locale.ROOT);
+        String green = Integer.toHexString(Color.green(color)).toUpperCase(Locale.ROOT);
+        String blue  = Integer.toHexString(Color.blue(color)).toUpperCase(Locale.ROOT);
         if (alpha.length() == 1) {alpha = String.format("0%s", alpha);}
         if (red.length()   == 1) {red   = String.format("0%s", red);}
         if (green.length() == 1) {green = String.format("0%s", green);}
@@ -200,9 +202,9 @@ public class ColorPickerPreference extends Preference implements
      */
     @NonNull
     static String convertToRGB(int color) {
-        String red = Integer.toHexString(Color.red(color)).toUpperCase();
-        String green = Integer.toHexString(Color.green(color)).toUpperCase();
-        String blue = Integer.toHexString(Color.blue(color)).toUpperCase();
+        String red = Integer.toHexString(Color.red(color)).toUpperCase(Locale.ROOT);
+        String green = Integer.toHexString(Color.green(color)).toUpperCase(Locale.ROOT);
+        String blue = Integer.toHexString(Color.blue(color)).toUpperCase(Locale.ROOT);
         if (red.length()   == 1) {red   = String.format("0%s", red);}
         if (green.length() == 1) {green = String.format("0%s", green);}
         if (blue.length()  == 1) {blue  = String.format("0%s", blue);}
@@ -220,6 +222,7 @@ public class ColorPickerPreference extends Preference implements
         return Color.parseColor(argb);
     }
 
+    @Nullable
     @Override
     protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
@@ -230,7 +233,7 @@ public class ColorPickerPreference extends Preference implements
     }
 
     @Override
-    protected void onRestoreInstanceState(Parcelable state) {
+    protected void onRestoreInstanceState(@Nullable Parcelable state) {
         if (!(state instanceof SavedState)) {
             // didn't save state in onSaveInstanceState
             super.onRestoreInstanceState(state);

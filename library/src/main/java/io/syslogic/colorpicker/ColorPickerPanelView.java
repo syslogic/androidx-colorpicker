@@ -9,6 +9,7 @@ import android.view.View;
 
 import androidx.annotation.DimenRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * The Color-Picker Panel {@link View}
@@ -35,15 +36,15 @@ public class ColorPickerPanelView extends View {
 
     private AlphaPatternDrawable mAlphaPattern;
 
-    public ColorPickerPanelView(Context context) {
+    public ColorPickerPanelView(@NonNull Context context) {
         this(context, null);
     }
 
-    public ColorPickerPanelView(Context context, AttributeSet attrs) {
+    public ColorPickerPanelView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ColorPickerPanelView(Context context, AttributeSet attrs, int defStyle) {
+    public ColorPickerPanelView(@NonNull Context context, @NonNull AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
@@ -96,12 +97,14 @@ public class ColorPickerPanelView extends View {
     }
 
     private void setUpColorRect() {
+
         final RectF dRect = mDrawingRect;
         float left = dRect.left + BORDER_WIDTH_PX;
         float top = dRect.top + BORDER_WIDTH_PX;
         float bottom = dRect.bottom - BORDER_WIDTH_PX;
         float right = dRect.right - BORDER_WIDTH_PX;
         mColorRect = new RectF(left, top, right, bottom);
+
         mAlphaPattern = new AlphaPatternDrawable((int) (5 * mDensity));
         mAlphaPattern.setBounds(
             Math.round(mColorRect.left),
