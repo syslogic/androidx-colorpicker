@@ -2,10 +2,14 @@ package io.syslogic.colorpicker.compose
 
 import android.graphics.Point
 import android.graphics.RectF
+import androidx.compose.ui.geometry.Offset
+
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.painter.Painter
 
@@ -16,8 +20,9 @@ import androidx.compose.ui.graphics.painter.Painter
  */
 class SatPainter(override val intrinsicSize: Size) : Painter() {
 
+    private var borderRadius: Float = 2F
+    private var value: FloatArray = FloatArray(2)
     private lateinit var mRect: RectF
-    private var color: Int = Color.Black.hashCode()
 
     /**
      * Implementation of drawing logic for instances of [Painter]. This is invoked
@@ -34,6 +39,7 @@ class SatPainter(override val intrinsicSize: Size) : Painter() {
             /* required for setting the initial value */
             val canvas = drawContext.canvas.nativeCanvas
             val bounds = canvas.clipBounds
+
             mRect = RectF(
                 bounds.left.toFloat(),
                 bounds.top.toFloat(),
@@ -41,7 +47,18 @@ class SatPainter(override val intrinsicSize: Size) : Painter() {
                 bounds.bottom.toFloat()
             )
 
+            /* Tracker */
+            val p: Point = valueToPoint(value[0], value[1])
+            val rectHeight: Float = 4 * density
 
+            drawRoundRect(
+                color = Color.Black,
+                topLeft = Offset(mRect.left, p.y - (rectHeight / 2)),
+                size = Size(mRect.width(), rectHeight),
+                style = Stroke(width = 4f,
+                    pathEffect = PathEffect.cornerPathEffect(borderRadius)
+                )
+            )
         }
     }
 
@@ -56,16 +73,17 @@ class SatPainter(override val intrinsicSize: Size) : Painter() {
         return list
     }
 
-    private fun valueToPoint(sat: Float, value: Float): Point {
+    private fun valueToPoint(saturation: Float, contrast: Float): Point {
         val height = mRect.height()
         val width = mRect.width()
         val p = Point()
-        p.x = (sat * width + mRect.left).toInt()
-        p.y = ((1f - value) * height + mRect.top).toInt()
+        p.x = (saturation * width + mRect.left).toInt()
+        p.y = ((1f - contrast) * height + mRect.top).toInt()
         return p
     }
 
-    fun setColor(value: Int) {
-        this.color = value
+    fun setValue(sat: Float, value: Float) {
+        this.value[0] = sat
+        this.value[1] = value
     }
 }

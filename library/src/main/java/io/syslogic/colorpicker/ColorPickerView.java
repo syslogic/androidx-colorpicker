@@ -79,7 +79,7 @@ public class ColorPickerView extends View {
 
     private Paint mBorderPaint;
 
-    private Shader mValueShader;
+    private Shader mContrastShader;
     private Shader mSaturationShader;
     private Shader mHueShader;
     private Shader mAlphaShader;
@@ -87,7 +87,7 @@ public class ColorPickerView extends View {
     private int mAlpha = 0xff;
     private float mHue = 360f;
     private float mSaturation = 0f;
-    private float mValue = 0f;
+    private float mContrast = 0f;
 
     private String mAlphaSliderText = "";
     private boolean mShowAlphaPanel = false;
@@ -205,19 +205,19 @@ public class ColorPickerView extends View {
         mBorderPaint.setColor(mBorderColor);
         canvas.drawRect(mDrawingRect.left, mDrawingRect.top, rect.right + BORDER_WIDTH_PX, rect.bottom + BORDER_WIDTH_PX, mBorderPaint);
 
-        if (mValueShader == null) {
-            mValueShader = new LinearGradient(rect.left, rect.top, rect.left, rect.bottom,
+        if (mContrastShader == null) {
+            mContrastShader = new LinearGradient(rect.left, rect.top, rect.left, rect.bottom,
                     0xffffffff, 0xff000000, TileMode.CLAMP);
         }
 
         int rgb = Color.HSVToColor(new float[]{mHue, 1f, 1f});
 
         mSaturationShader = new LinearGradient(rect.left, rect.top, rect.right, rect.top, 0xffffffff, rgb, TileMode.CLAMP);
-        ComposeShader mShader = new ComposeShader(mValueShader, mSaturationShader, PorterDuff.Mode.MULTIPLY);
+        ComposeShader mShader = new ComposeShader(mContrastShader, mSaturationShader, PorterDuff.Mode.MULTIPLY);
         mSaturationPaint.setShader(mShader);
 
         canvas.drawRect(rect, mSaturationPaint);
-        Point p = satToPoint(mSaturation, mValue);
+        Point p = satToPoint(mSaturation, mContrast);
 
         mSaturationTrackerPaint.setColor(0xff000000);
         canvas.drawCircle(p.x, p.y, PALETTE_CIRCLE_TRACKER_RADIUS - mDensity, mSaturationTrackerPaint);
@@ -257,7 +257,7 @@ public class ColorPickerView extends View {
         canvas.drawRect(rect.left - BORDER_WIDTH_PX, rect.top - BORDER_WIDTH_PX, rect.right + BORDER_WIDTH_PX, rect.bottom + BORDER_WIDTH_PX, mBorderPaint);
         mAlphaPattern.draw(canvas);
 
-        float[] hsv = new float[]{mHue, mSaturation, mValue};
+        float[] hsv = new float[]{mHue, mSaturation, mContrast};
         int color = Color.HSVToColor(hsv);
         int aColor = Color.HSVToColor(0, hsv);
 
@@ -367,13 +367,13 @@ public class ColorPickerView extends View {
                 case PANEL_SAT:
                     float sat, val;
                     sat = mSaturation + x / 50f;
-                    val = mValue - y / 50f;
+                    val = mContrast - y / 50f;
                     if (sat < 0f) {sat = 0f;}
                     else if (sat > 1f) {sat = 1f;}
                     if (val < 0f) {val = 0f;}
                     else if (val > 1f) {val = 1f;}
                     mSaturation = sat;
-                    mValue = val;
+                    mContrast = val;
                     update = true;
                     break;
 
@@ -398,7 +398,7 @@ public class ColorPickerView extends View {
         }
         if (update) {
             if (mListener != null) {
-                mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mValue}));
+                mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mContrast}));
             }
             invalidate();
             return true;
@@ -429,7 +429,7 @@ public class ColorPickerView extends View {
 
         if (update) {
             if (mListener != null) {
-                mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mValue}));
+                mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mContrast}));
             }
             invalidate();
             return true;
@@ -450,7 +450,7 @@ public class ColorPickerView extends View {
             mLastTouchedPanel = PANEL_SAT;
             float[] result = pointToSat(event.getX(), event.getY());
             mSaturation = result[0];
-            mValue = result[1];
+            mContrast = result[1];
             update = true;
         } else if (mAlphaRect != null && mAlphaRect.contains(startX, startY)) {
             mLastTouchedPanel = PANEL_ALPHA;
@@ -609,7 +609,7 @@ public class ColorPickerView extends View {
      * @return the current color.
      */
     public int getColor() {
-        return Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mValue});
+        return Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mContrast});
     }
 
     /**
@@ -632,9 +632,9 @@ public class ColorPickerView extends View {
         mAlpha      = alpha;
         mHue        = hsv[0];
         mSaturation = hsv[1];
-        mValue      = hsv[2];
+        mContrast   = hsv[2];
         if (callback && mListener != null) {
-            mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mValue}));
+            mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSaturation, mContrast}));
         }
         invalidate();
     }
@@ -661,7 +661,7 @@ public class ColorPickerView extends View {
             mShowAlphaPanel = visible;
 
             /* reset all shader to force a recreation - otherwise they will not look right after the size of the view has changed. */
-            mValueShader = null;
+            mContrastShader = null;
             mSaturationShader = null;
             mHueShader = null;
             mAlphaShader = null;

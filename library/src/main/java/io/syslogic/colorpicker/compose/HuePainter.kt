@@ -19,8 +19,8 @@ import androidx.compose.ui.graphics.painter.Painter
 class HuePainter(override val intrinsicSize: Size) : Painter() {
 
     private lateinit var mRect: RectF
-    private val mTrackerOffset = 2 // dp
-    private val mTrackerColor = -0xe3e3e4
+    private var radius: Float = 20F
+
     private var mHue: Float = 360f
 
     /**
@@ -40,7 +40,7 @@ class HuePainter(override val intrinsicSize: Size) : Painter() {
         )
 
         /* Contrast Shader */
-        val mValueShader = LinearGradientShader(
+        val mContrastShader = LinearGradientShader(
             from     = Offset(mRect.left, mRect.bottom),
             to       = Offset(mRect.left, mRect.top),
             tileMode = androidx.compose.ui.graphics.TileMode.Clamp,
@@ -57,26 +57,19 @@ class HuePainter(override val intrinsicSize: Size) : Painter() {
 
         /* Compose Shader */
         val paint = Paint()
-        paint.shader = ComposeShader(mValueShader, mSaturationShader, PorterDuff.Mode.MULTIPLY)
+        paint.shader = ComposeShader(mContrastShader, mSaturationShader, PorterDuff.Mode.MULTIPLY)
         canvas.drawRect(mRect, paint)
 
         /* Tracker */
         val tracker = Paint()
         tracker.isAntiAlias = true
-        tracker.color = mTrackerColor
+        tracker.color = -0xe3e3e4
         tracker.style = Paint.Style.STROKE
-        tracker.strokeWidth = 2f * density
+        tracker.strokeWidth = 4f * density
 
         /* Tracker */
-        val rectHeight: Float = 4 * density / 2
         val p: Point = valueToPoint(mHue)
-        val r = RectF()
-        r.left = (mRect.left - mTrackerOffset)
-        r.right = (mRect.right + mTrackerOffset)
-        r.top = p.y - rectHeight
-        r.bottom = p.y + rectHeight
-
-        canvas.drawRoundRect(r, 2f, 2f, tracker)
+        canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), radius, tracker)
     }
 
     private fun getValues(): List<Color> {

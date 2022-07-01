@@ -47,10 +47,13 @@ fun ColorPickerComponent(
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
 
     var currentColor: Int by remember { mutableStateOf(initialColor) }
-    var currentAlpha: Int by remember { mutableStateOf(255) }
-    var currentHue: Float by remember { mutableStateOf(0F) }
-    var currentSat: Float by remember { mutableStateOf(0F) }
-    var currentVal: Float by remember { mutableStateOf(0F) }
+    var currentAlpha: Int by remember { mutableStateOf(android.graphics.Color.alpha(initialColor)) }
+
+    val hsv = FloatArray(3)
+    android.graphics.Color.colorToHSV(initialColor, hsv)
+    var currentHue: Float by remember { mutableStateOf(hsv[0]) }
+    var currentSat: Float by remember { mutableStateOf(hsv[1]) }
+    var currentVal: Float by remember { mutableStateOf(hsv[2]) }
 
     @Suppress("UNUSED_VARIABLE")
     var listener: OnColorChangedListener? = onColorChanged
@@ -88,9 +91,11 @@ fun ColorPickerComponent(
                     .pointerInput(Unit) {
                         detectTapGestures(
                             onPress = { event ->
-                                currentHue = pointToHue(getLayoutBounds(offsetHue, sizeHue), event.y)
-                                log(context,"Hue: ${currentHue}\n${event.x.toInt()} x ${event.y.toInt()}")
-                                toColor(currentAlpha, currentHue, currentSat, currentVal)
+                                currentHue =
+                                    pointToHue(getLayoutBounds(offsetHue, sizeHue), event.y)
+                                currentColor =
+                                    toColor(currentAlpha, currentHue, currentSat, currentVal)
+                                println("Hue: $currentHue (${event.x.toInt()} x ${event.y.toInt()})")
                             }
                         )
                     }
@@ -109,7 +114,7 @@ fun ColorPickerComponent(
                 contentDescription = "Saturation",
                 contentScale = ContentScale.FillBounds,
                 painter = SatPainter(Size(100F, 900F)).also {
-                    it.setColor(initialColor)
+                    it.setValue(currentSat, currentVal)
                 },
                 modifier = Modifier
                     .testTag("sat")
@@ -117,8 +122,14 @@ fun ColorPickerComponent(
                     .pointerInput(Unit) {
                         detectTapGestures(
                             onPress = { event ->
-                                currentSat = pointToSat(getLayoutBounds(offsetSat, sizeSat), event.x, event.y)
-                                log(context,"Sat: ${currentSat}\n${event.x.toInt()} x ${event.y.toInt()}")
+                                currentSat = pointToSat(
+                                    getLayoutBounds(offsetSat, sizeSat),
+                                    event.x,
+                                    event.y
+                                )
+                                currentColor =
+                                    toColor(currentAlpha, currentHue, currentSat, currentVal)
+                                println("Sat: $currentSat (${event.x.toInt()} x ${event.y.toInt()})")
                             }
                         )
                     }
@@ -151,8 +162,17 @@ fun ColorPickerComponent(
                             .pointerInput(Unit) {
                                 detectTapGestures(
                                     onPress = { event ->
-                                        currentAlpha = pointToAlpha(getLayoutBounds(offsetAlpha, sizeAlpha), event.x.toInt())
-                                        log(context,"Alpha: ${currentAlpha}\n${event.x.toInt()} x ${event.y.toInt()}")
+                                        currentAlpha = pointToAlpha(
+                                            getLayoutBounds(offsetAlpha, sizeAlpha),
+                                            event.x.toInt()
+                                        )
+                                        currentColor = toColor(
+                                            currentAlpha,
+                                            currentHue,
+                                            currentSat,
+                                            currentVal
+                                        )
+                                        println("Alpha: $currentAlpha (${event.x.toInt()})")
                                     }
                                 )
                             }
@@ -206,7 +226,7 @@ fun ColorPickerComponent(
                         .pointerInput(Unit) {
                             detectTapGestures(
                                 onPress = {
-                                    onButtonClick(context, OldColor)
+                                    onButtonClick(context, OldColor, initialColor)
                                 }
                             )
                         }
@@ -238,7 +258,11 @@ fun ColorPickerComponent(
                         .pointerInput(Unit) {
                             detectTapGestures(
                                 onPress = {
-                                    onButtonClick(context, NewColor)
+                                    onButtonClick(
+                                        context,
+                                        NewColor,
+                                        toColor(currentAlpha, currentHue, currentSat, currentVal)
+                                    )
                                 }
                             )
                         }
@@ -248,22 +272,11 @@ fun ColorPickerComponent(
     }
 }
 
-fun log(context: Context, message: String) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    println(message)
-}
-
-fun onButtonClick(context: Context, layoutId: LayoutId) {
+fun onButtonClick(context: Context, layoutId: LayoutId, value: Int) {
     val message: String = when (layoutId) {
-        OldColor -> {
-            "OldColor: ?"
-        }
-        NewColor -> {
-            "NewColor: ?"
-        }
-        else -> {
-            return
-        }
+        OldColor -> { "OldColor:\n${convertToARGB(value)}" }
+        NewColor -> { "NewColor:\n${convertToARGB(value)}" }
+        else -> { return }
     }
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     println(message)
@@ -295,6 +308,7 @@ fun convertToARGB(color: Int): String {
 }
 
 fun toColor(alpha: Int, hue: Float, sat: Float, value: Float) : Int {
+    println("alpha: $alpha, hue: $hue, saturation: $sat, contrast: $value")
     return android.graphics.Color.HSVToColor(alpha, floatArrayOf(hue, sat, value))
 }
 
@@ -330,5 +344,5 @@ private fun pointToAlpha(rect: RectF, x: Int): Int {
     val x2 = if (x < rect.left) { 0 }
     else if (x > rect.right) { width }
     else { x - rect.left.toInt() }
-    return 0xff - x2 * 0xff / width
+    return 0xff + x2 * 0xff / width
 }
