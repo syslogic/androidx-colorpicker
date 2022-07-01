@@ -118,6 +118,7 @@ fun ColorPickerComponent(
                 contentScale = ContentScale.FillBounds,
                 painter = SatValPainter(Size(900F, 900F)).also {
                     it.setValue(currentSat, currentVal)
+                    it.setHue(currentHue)
                 },
                 modifier = Modifier
                     .layoutId(SatVal)
@@ -335,24 +336,15 @@ private fun pointToHue(rect: RectF, y: Float): Float {
 }
 
 private fun pointToSat(rect: RectF, x: Float): Float {
-    val x2 = if (x < rect.left) { 0f }
-    else if (x > rect.right) { rect.width() }
-    else { x - rect.left }
-    return 1f / rect.width() * x2
+    return 1f / rect.width() * x
 }
 
 private fun pointToVal(rect: RectF, y: Float): Float {
-    val y2 = if (y < rect.top) { 0f }
-    else if (y > rect.bottom) { rect.height() }
-    else { y - rect.top }
-    return 1f - 1f / rect.height() * y2
+    return 1f - 1f / rect.height() * y
 }
 
 private fun pointToAlpha(rect: RectF, x: Int): Int {
-    val x2 = if (x < rect.left) { 0 }
-    else if (x > rect.right) { rect.width().toInt() }
-    else { x - rect.left.toInt() }
-    return 0xff + x2 * 0xff / rect.width().toInt()
+    return 0xff + x * 0xff / rect.width().toInt()
 }
 
 fun toColor(alpha: Int, hue: Float, sat: Float, value: Float) : Int {

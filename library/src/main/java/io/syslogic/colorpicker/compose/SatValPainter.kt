@@ -2,6 +2,10 @@ package io.syslogic.colorpicker.compose
 
 import android.graphics.*
 import android.graphics.Color.HSVToColor
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -19,6 +23,7 @@ import kotlin.properties.Delegates
  */
 class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
+    private var currentHue: Float = 180F
     private var trackerRadius by Delegates.notNull<Float>()
     private var value: FloatArray = FloatArray(2)
 
@@ -31,11 +36,12 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         setCanvas(drawContext)
 
         /* Saturation Shader */
+        val rgb = Color(HSVToColor(floatArrayOf(currentHue, 1f, 1f)))
         val mSaturationShader = LinearGradientShader(
             from     = Offset(rect.right, rect.top),
             to       = Offset(rect.left, rect.top),
             tileMode = androidx.compose.ui.graphics.TileMode.Clamp,
-            colors   = getColors() // ??
+            colors   = listOf(Color.White, rgb)
         )
 
         /* Contrast Shader */
@@ -86,5 +92,8 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
     fun setValue(sat: Float, value: Float) {
         this.value[0] = sat
         this.value[1] = value
+    }
+    fun setHue(value: Float) {
+        this.currentHue = value
     }
 }
