@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="Theme.ColorPicker" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.ColorPicker" parent="Theme.Material3.DayNight">
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
@@ -15,7 +15,7 @@
         <item name="colorOnSecondary">@color/black</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorSecondaryVariant</item>
 
         <!-- Customize your theme here. -->
 
