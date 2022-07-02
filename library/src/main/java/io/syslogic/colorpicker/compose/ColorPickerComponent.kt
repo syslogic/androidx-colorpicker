@@ -235,7 +235,7 @@ fun ColorPickerComponent(
                                 val rect: RectF = getLayoutBounds(offsetSatVal, sizeSatVal)
                                 currentSat = pointToSat(rect, event.x)
                                 currentVal = pointToVal(rect, event.y)
-                                currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal, listener)
+                                currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal)
                                 println("Sat: $currentSat, Val: $currentVal (${event.x.toInt()} x ${event.y.toInt()})")
                             }
                         )
@@ -265,7 +265,7 @@ fun ColorPickerComponent(
                             onPress = { event ->
                                 val rect: RectF = getLayoutBounds(offsetHue, sizeHue)
                                 currentHue = pointToHue(rect, event.y)
-                                currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal, listener)
+                                currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal)
                                 println("Val: $currentHue (${event.y.toInt()})")
                             }
                         )
@@ -301,7 +301,7 @@ fun ColorPickerComponent(
                                     onPress = { event ->
                                         val rect: RectF = getLayoutBounds(offsetAlpha, sizeAlpha)
                                         currentAlpha = pointToAlpha(rect, event.x)
-                                        currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal, listener)
+                                        currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal)
                                         println("Alpha: $currentAlpha (${event.x.toInt()})")
                                     }
                                 )
@@ -356,7 +356,7 @@ fun ColorPickerComponent(
                         .pointerInput(Unit) {
                             detectTapGestures(
                                 onPress = {
-                                    onButtonClick(context, OldColor, initialColor.value.toInt())
+                                    onButtonClick(context, OldColor, initialColor.value.toInt(), listener)
                                 }
                             )
                         }
@@ -391,7 +391,8 @@ fun ColorPickerComponent(
                                     onButtonClick(
                                         context,
                                         NewColor,
-                                        toIntColor(currentAlpha, currentHue, currentSat, currentVal, listener)
+                                        toIntColor(currentAlpha, currentHue, currentSat, currentVal),
+                                        listener
                                     )
                                 }
                             )
@@ -402,17 +403,7 @@ fun ColorPickerComponent(
     }
 }
 
-fun onButtonClick(context: Context, layoutId: LayoutId, value: Int) {
-    val message: String = when (layoutId) {
-        OldColor -> { "OldColor:\n${toARGB(value)}" }
-        NewColor -> { "NewColor:\n${toARGB(value)}" }
-        else -> { return }
-    }
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    println(message)
-}
-
-/* left, top, right, bottom */
+/** left, top, right, bottom */
 fun getLayoutBounds(position: Offset, size: IntSize): RectF {
     return RectF(
         /* left */ position.x,
@@ -422,13 +413,27 @@ fun getLayoutBounds(position: Offset, size: IntSize): RectF {
     )
 }
 
-fun toIntColor(alpha: Float, hue: Float, sat: Float, value: Float, listener: OnColorChangedListener?) : Int {
-    println("alpha: $alpha, hue: $hue, saturation: $sat, contrast: $value")
-    val colorCode: Int = android.graphics.Color.HSVToColor(
+fun onButtonClick(context: Context, layoutId: LayoutId, value: Int, listener: OnColorChangedListener?) {
+    val message: String
+    when (layoutId) {
+        OldColor -> {
+            message = "Old: ${toARGB(value)}"
+        }
+        NewColor -> {
+            message = "New: ${toARGB(value)}"
+            listener?.onColorChanged(value)
+        }
+        else -> { return }
+    }
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    println(message)
+}
+
+fun toIntColor(alpha: Float, hue: Float, sat: Float, value: Float): Int {
+    println("alpha: $alpha, hue: $hue, saturation: $sat, value: $value")
+    return android.graphics.Color.HSVToColor(
         (alpha * 255).toInt(), floatArrayOf(hue, sat, value)
     )
-    listener?.onColorChanged(colorCode)
-    return colorCode
 }
 
 /**
