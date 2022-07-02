@@ -8,7 +8,7 @@ It is generally available on JitPack; either by version tag or `master-SNAPSHOT`
 The JitPack repository URL would be: `maven { url 'https://jitpack.io' }`
 
     dependencies {
-        implementation "io.syslogic:androidx-colorpicker:1.0.5"
+        implementation "io.syslogic:androidx-colorpicker:1.0.6"
     }
 
 Alternatively, one can also depend on the local `:library` module:
@@ -51,6 +51,9 @@ can be added as XML node; into eg. [`preferences.xml`](https://github.com/syslog
     android:key="color_code_01"/>
 ````
 
+c) [`ColorPickerComponent`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/compose/ColorPickerComponent.kt) is a `Composable`.
+
 Screenshots:
 
-  ![Screenshot 01](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_01.png)
+  ![DialogFragment](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_01.png)
+  ![Composable](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_02.png)
