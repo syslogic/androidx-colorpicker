@@ -28,11 +28,11 @@ class ColorPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             color = Color(value)
         ).also {
 
-            /* Border */
+            /* Borderline */
             drawRect(
-                color = Color(borderStrokeColor),
                 size = size,
-                topLeft = Offset(bounds.left.toFloat(), bounds.top.toFloat()),
+                color = Color(borderStrokeColor),
+                topLeft = Offset(rect.left, rect.top),
                 style = Stroke(width = borderStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(borderCornerRadius)
                 )

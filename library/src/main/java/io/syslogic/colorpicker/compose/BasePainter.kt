@@ -1,5 +1,6 @@
 package io.syslogic.colorpicker.compose
 
+import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.RectF
 
@@ -18,26 +19,40 @@ import kotlin.properties.Delegates
  */
 abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
 
-    /* Tracker Dimensions */
-    var satValTrackerRadius by Delegates.notNull<Float>()
-    var alphaTrackerWidth by Delegates.notNull<Float>()
-    var hueTrackerHeight by Delegates.notNull<Float>()
-
-    /* Tracker Styles */
-    var trackerCornerRadius by Delegates.notNull<Float>()
-    var trackerStrokeWidth by Delegates.notNull<Float>()
-    var trackerStrokeColor by Delegates.notNull<Int>()
-
-    /* Borders Styles */
+    /** Border Style: Corner Radius */
     var borderCornerRadius by Delegates.notNull<Float>()
+
+    /** Border Style: Stroke Width */
     var borderStrokeWidth by Delegates.notNull<Float>()
+
+    /** Border Style: Stroke Color */
     var borderStrokeColor by Delegates.notNull<Int>()
 
-    /* Canvas */
-    protected lateinit var canvas: NativeCanvas
-    protected lateinit var rect: RectF
-    lateinit var bounds: Rect
+    /** Tracker Dimension: Sat/Val Tracker Radius */
+    var satValTrackerRadius by Delegates.notNull<Float>()
 
+    /** Tracker Dimension: Alpha Tracker Width */
+    var alphaTrackerWidth by Delegates.notNull<Float>()
+
+    /** Tracker Dimension: Hue Tracker Height */
+    var hueTrackerHeight by Delegates.notNull<Float>()
+
+    /** Tracker Style: Corner Radius */
+    var trackerCornerRadius by Delegates.notNull<Float>()
+
+    /** Tracker Style: Stroke Width */
+    var trackerStrokeWidth by Delegates.notNull<Float>()
+
+    /** Tracker Style: Stroke Color */
+    var trackerStrokeColor by Delegates.notNull<Int>()
+
+    /** Native Canvas */
+    protected lateinit var canvas: NativeCanvas
+
+    /** Boundaries */
+    protected lateinit var rect: RectF
+
+    /** Being called by all implementations onDraw. */
     fun setCanvas(drawContext: DrawContext, density: Float) {
 
         /* Tracker Dimensions */
@@ -50,19 +65,56 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
         trackerStrokeWidth = 1F * density
         trackerStrokeColor = -0xe3e3e4
 
-        /* Borders */
+        /* Border Styles */
         borderCornerRadius = 2F * density
         borderStrokeWidth = 2F * density
         borderStrokeColor = -0x919192
 
-        /* Canvas */
+        /* Native Canvas */
         canvas = drawContext.canvas.nativeCanvas
-        bounds = canvas.clipBounds
+        val bounds: Rect = canvas.clipBounds
         rect = RectF(
             bounds.left.toFloat(),
             bounds.top.toFloat(),
             bounds.right.toFloat(),
             bounds.bottom.toFloat()
+        )
+    }
+
+    /**
+     * AlphaPainter {@link Float} to {@link Point} value conversion.
+     * @param value a Float representation of the current alpha.
+     * @return the {@link Point} where AlphaPainter shall draw the tracker rectangle.
+     */
+    fun alphaToPoint(value: Float): Point {
+        return Point(
+            (value * rect.width()).toInt(),
+            rect.top.toInt()
+        )
+    }
+
+    /**
+     * HuePainter {@link Float} to {@link Point} value conversion.
+     * @param value a Float representation of the current hue.
+     * @return the {@link Point} where HuePainter shall draw the tracker rectangle.
+     */
+    fun hueToPoint(value: Float): Point {
+        return Point(
+            rect.left.toInt(),
+            (rect.height() - value * rect.height() / 360f + rect.top).toInt()
+        )
+    }
+
+    /**
+     * SatValPainter {@link Float} to {@link Point} value conversion.
+     * @param saturation a Float representation of the current saturation.
+     * @param value a Float representation of the current value.
+     * @return the Point where SatValPainter shall draw the tracker circle.
+     */
+    fun satValToPoint(saturation: Float, value: Float): Point {
+        return Point(
+            (saturation * rect.width() + rect.left).toInt(),
+            ((1f - value) * rect.height() + rect.top).toInt()
         )
     }
 }

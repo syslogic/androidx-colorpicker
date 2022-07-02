@@ -40,9 +40,10 @@ import java.util.*
 fun ColorPickerComponent(
     initialColor: Color = Color.Transparent,
     onColorChanged: OnColorChangedListener?,
-    showAlpha: Boolean = false,
-    showHex: Boolean = true,
-    showHSV: Boolean = true
+    showAlpha: Boolean = true,
+    showARGB: Boolean = true,
+    showHSV: Boolean = true,
+    showHex: Boolean = true
 ) {
     val context = LocalContext.current
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
@@ -70,40 +71,58 @@ fun ColorPickerComponent(
         modifier = Modifier.fillMaxWidth()
     ) {
 
-        /* Debug Info */
-        if (showHSV) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+        /* HSV & ARGB */
+        if (showHSV || showARGB) {
+            Row(
+                verticalAlignment = Alignment.Top,
                 modifier = Modifier.padding(all = rowPadding)
             ) {
-                Text(
-                    modifier = Modifier.testTag("value_hue"),
-                    text = "Hue: $currentHue"
-                )
-                Text(
-                    modifier = Modifier.testTag("value_sat"),
-                    text = "Sat: $currentSat"
-                )
-                Text(
-                    modifier = Modifier.testTag("value_val"),
-                    text = "Val: $currentVal"
-                )
-                Text(
-                    modifier = Modifier.testTag("value_alpha"),
-                    text = "Alpha: ${getAlphaChannel(currentColor)}"
-                )
-                Text(
-                    modifier = Modifier.testTag("value_blue"),
-                    text = "Blue: ${getBlueChannel(currentColor)}"
-                )
-                Text(
-                    modifier = Modifier.testTag("value_red"),
-                    text = "Red: ${getRedChannel(currentColor)}"
-                )
-                Text(
-                    modifier = Modifier.testTag("value_green"),
-                    text = "Green: ${getGreenChannel(currentColor)}"
-                )
+                if (showHSV) {
+                    Column(
+                        horizontalAlignment = Alignment.Start,
+                        modifier = Modifier
+                            .padding(all = rowPadding)
+                            .weight(0.5F)
+                    ) {
+                        Text(
+                            modifier = Modifier.testTag("value_hue"),
+                            text = "Hue: $currentHue"
+                        )
+                        Text(
+                            modifier = Modifier.testTag("value_sat"),
+                            text = "Sat: $currentSat"
+                        )
+                        Text(
+                            modifier = Modifier.testTag("value_val"),
+                            text = "Val: $currentVal"
+                        )
+                    }
+                }
+                if (showARGB) {
+                    Column(
+                        horizontalAlignment = Alignment.End,
+                        modifier = Modifier
+                            .padding(all = rowPadding)
+                            .weight(0.5F)
+                    ) {
+                        Text(
+                            modifier = Modifier.testTag("value_alpha"),
+                            text = "Alpha: ${getAlphaChannel(currentColor)}"
+                        )
+                        Text(
+                            modifier = Modifier.testTag("value_blue"),
+                            text = "Blue: ${getBlueChannel(currentColor)}"
+                        )
+                        Text(
+                            modifier = Modifier.testTag("value_red"),
+                            text = "Red: ${getRedChannel(currentColor)}"
+                        )
+                        Text(
+                            modifier = Modifier.testTag("value_green"),
+                            text = "Green: ${getGreenChannel(currentColor)}"
+                        )
+                    }
+                }
             }
         }
 

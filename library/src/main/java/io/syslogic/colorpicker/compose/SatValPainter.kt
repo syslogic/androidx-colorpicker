@@ -49,7 +49,14 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         paint.shader = ComposeShader(mContrastShader, mSaturationShader, PorterDuff.Mode.MULTIPLY)
         canvas.drawRect(rect, paint)
 
-        /* TODO: How about border paint? */
+        /* Borderline Paint */
+        val border = Paint()
+        border.style = Paint.Style.STROKE
+        border.strokeWidth = borderStrokeWidth
+        border.color = borderStrokeColor
+
+        /* Borderline */
+        canvas.drawRect(rect, border)
 
         /* Tracker Paint */
         val tracker = Paint()
@@ -59,15 +66,8 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         tracker.isAntiAlias = true
 
         /* Circular Tracker */
-        val p: Point = valueToPoint(value[0], value[1])
+        val p: Point = satValToPoint(value[0], value[1])
         canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), satValTrackerRadius, tracker)
-    }
-
-    private fun valueToPoint(saturation: Float, value: Float): Point {
-        return Point(
-            (saturation * rect.width() + rect.left).toInt(),
-            ((1f - value) * rect.height() + rect.top).toInt()
-        )
     }
 
     fun setValue(saturation: Float, value: Float) {

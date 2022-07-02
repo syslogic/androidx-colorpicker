@@ -29,22 +29,22 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         drawRect(
             size = size,
             brush = Brush.verticalGradient(
-                colors = getValues()
+                colors = getHueValues()
             )
         ).also {
 
-            /* Border */
+            /* Borderline */
             drawRect(
-                color = Color(borderStrokeColor),
                 size = size,
-                topLeft = Offset(bounds.left.toFloat(), bounds.top.toFloat()),
+                color = Color(borderStrokeColor),
+                topLeft = Offset(rect.left, rect.top),
                 style = Stroke(width = borderStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(borderCornerRadius)
                 )
             )
 
             /* Vertical Tracker */
-            val p: Point = valueToPoint(value)
+            val p: Point = hueToPoint(value)
             val offset = Offset(rect.left, p.y - (hueTrackerHeight / 2))
             drawRoundRect(
                 color = Color(trackerStrokeColor),
@@ -57,7 +57,7 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         }
     }
 
-    private fun getValues(): List<Color> {
+    private fun getHueValues(): List<Color> {
         var i = 0
         val list: MutableList<Color> = MutableList(361) { Color.Black }
         while (i < list.size) {
@@ -66,13 +66,6 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             i++
         }
         return list
-    }
-
-    private fun valueToPoint(value: Float): Point {
-        return Point(
-            (rect.height() - value * rect.height() / 360f + rect.top).toInt(),
-            rect.left.toInt()
-        )
     }
 
     fun setValue(value: Float) {

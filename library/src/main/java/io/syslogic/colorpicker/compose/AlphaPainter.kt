@@ -35,21 +35,19 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             )
         ).also {
 
-            /* Border */
-            var offset = Offset(bounds.left.toFloat(), bounds.top.toFloat())
+            /* Borderline */
             drawRect(
-                color = Color(borderStrokeColor),
                 size = size,
-                topLeft = offset,
+                color = Color(borderStrokeColor),
+                topLeft = Offset(rect.left, rect.top),
                 style = Stroke(width = borderStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(borderCornerRadius)
                 )
             )
 
             /* Horizontal Tracker */
-            val p: Point = valueToPoint(value)
-            offset = Offset(p.x - (alphaTrackerWidth / 2), rect.top)
-
+            val p: Point = alphaToPoint(value)
+            val offset = Offset(p.x - (alphaTrackerWidth / 2), rect.top)
             drawRoundRect(
                 color = Color(trackerStrokeColor),
                 size = Size(alphaTrackerWidth, rect.height()),
@@ -59,13 +57,6 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
                 )
             )
         }
-    }
-
-    private fun valueToPoint(value: Float): Point {
-        return Point(
-            (value * rect.width()).toInt(),
-            rect.top.toInt()
-        )
     }
 
     fun setAlphaByColor(color: Int) {
