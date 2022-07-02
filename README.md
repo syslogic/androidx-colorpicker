@@ -40,6 +40,9 @@ Then define `ColorPickerDialogFragmentImpl` as navigation destination in [`nav_g
     <argument app:argType="boolean" android:name="hexValue" android:defaultValue="false"/>
 </dialog>
 ````
+Screenshot:
+
+![DialogFragment](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_01.png)
 
 b) [`ColorPickerPreference`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerPreference.java)
 can be added as XML node; into eg. [`preferences.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/xml/preferences.xml):
@@ -53,7 +56,7 @@ can be added as XML node; into eg. [`preferences.xml`](https://github.com/syslog
 
 c) [`ColorPickerComponent`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/compose/ColorPickerComponent.kt) is a `Composable`.
 
-Screenshots:
+Screenshot:
 
-  ![DialogFragment](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_01.png)
-  ![Composable](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_02.png)
+![Composable](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_02.png)
+
