@@ -3,15 +3,15 @@
 [![](https://jitci.com/gh/syslogic/androidx-colorpicker/svg)](https://jitci.com/gh/syslogic/androidx-colorpicker) [![Release](https://jitpack.io/v/syslogic/androidx-colorpicker.svg)](https://jitpack.io/#io.syslogic/androidx-colorpicker)
 [![MIT License](https://img.shields.io/github/license/syslogic/androidx-colorpicker)](https://github.com/syslogic/androidx-colorpicker/blob/master/LICENSE)
 
-A color-picker library for Android, which is compatible with Navigation Component and Jetpack Compose.<br/><br/>
-It is generally available on JitPack; either by version tag or `master-SNAPSHOT`.<br/>
+A modern color-picker library for Android, which is compatible with Navigation Component and Jetpack Compose.<br/><br/>
+The library is generally available on JitPack; either by version tag or `master-SNAPSHOT`.<br/>
 The JitPack repository URL would be: `maven { url 'https://jitpack.io' }`
 
     dependencies {
         implementation "io.syslogic:androidx-colorpicker:1.0.8"
     }
 
-Alternatively, one can also depend on the local `:library` module:
+Alternatively, one can also check out the repository and depend on the local `:library` module:
 
     dependencies {
         implementation project(path: ':library')
