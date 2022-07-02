@@ -28,14 +28,13 @@ import io.syslogic.colorpicker.databinding.DialogFragmentColorPickerBinding;
  *
  * @author Martin Zeitler
  */
-public abstract class ColorPickerDialogFragment extends DialogFragment implements
+public class ColorPickerDialogFragment extends DialogFragment implements
         ViewTreeObserver.OnGlobalLayoutListener,
         OnColorChangedListener,
         View.OnClickListener {
 
+    private OnColorChangedListener listener = null;
     private ColorStateList mHexDefaultTextColor;
-    private boolean mShowAlphaSlider = false;
-    private boolean mShowHexValue = false;
     private int mOrientation;
 
     /**
@@ -46,6 +45,11 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
 
     public ColorPickerDialogFragment() {
         super();
+    }
+
+    public ColorPickerDialogFragment(@NonNull OnColorChangedListener listener) {
+        super();
+        this.listener = listener;
     }
 
     @NonNull
@@ -119,22 +123,31 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
 
     @Override
     public void onColorChanged(int color) {
-        if (this.mShowHexValue) {this.updateHexValue(color);}
+        if (this.mDataBinding.getShowHexValue()) {this.updateHexValue(color);}
         this.mDataBinding.newColorPanel.setColor(color);
-    }
-
-    void setShowHexValue(boolean value) {
-        this.mDataBinding.setShowHexValue(value);
-        this.mShowHexValue = value;
-        if (this.mShowHexValue) {
-            this.updateHexLengthFilter();
-            this.updateHexValue(getColor());
+        if (this.listener != null) {
+            this.listener.onColorChanged(color);
         }
     }
 
-    @SuppressWarnings("unused")
-    public boolean getHexValueEnabled() {
-        return this.mShowHexValue;
+    void setShowAlphaSlider(boolean value) {
+        if (this.mDataBinding != null) {
+            this.mDataBinding.setShowAlphaSlider(value);
+        }
+        if (value) {
+            updateHexLengthFilter();
+            updateHexValue(getColor());
+        }
+    }
+
+    void setShowHexValue(boolean value) {
+        if (this.mDataBinding != null) {
+            this.mDataBinding.setShowHexValue(value);
+        }
+        if (value) {
+            this.updateHexLengthFilter();
+            this.updateHexValue(getColor());
+        }
     }
 
     private void updateHexLengthFilter() {
@@ -156,15 +169,6 @@ public abstract class ColorPickerDialogFragment extends DialogFragment implement
             this.mDataBinding.hexadecimalValue.setText(ColorPickerPreference.convertToRGB(color).toUpperCase(Locale.getDefault()));
         }
         this.mDataBinding.hexadecimalValue.setTextColor(mHexDefaultTextColor);
-    }
-
-    void setShowAlphaSlider(boolean value) {
-        this.mDataBinding.setShowAlphaSlider(value);
-        this.mShowAlphaSlider = value;
-        if (this.mShowAlphaSlider) {
-            updateHexLengthFilter();
-            updateHexValue(getColor());
-        }
     }
 
     public int getColor() {

@@ -9,7 +9,6 @@ import android.view.View;
 
 import androidx.annotation.DimenRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 /**
  * The Color-Picker Panel {@link View}
@@ -36,11 +35,7 @@ public class ColorPickerPanelView extends View {
 
     private AlphaPatternDrawable mAlphaPattern;
 
-    public ColorPickerPanelView(@NonNull Context context) {
-        this(context, null);
-    }
-
-    public ColorPickerPanelView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public ColorPickerPanelView(@NonNull Context context, @NonNull AttributeSet attrs) {
         this(context, attrs, 0);
     }
 

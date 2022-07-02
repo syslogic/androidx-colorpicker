@@ -15,6 +15,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
@@ -41,8 +43,7 @@ public class ColorPickerPreference extends Preference implements
     private int mCurrentValue = Color.BLACK;
     private boolean mShowAlphaSlider = false;
     private boolean mShowHexValue = false;
-    
-    private ColorPickerDialog mDialog;
+
     private SharedPreferences prefs;
 
     @SuppressWarnings("unused")
@@ -99,7 +100,7 @@ public class ColorPickerPreference extends Preference implements
 
     @Override
     protected void onSetInitialValue(@Nullable Object defaultValue) {
-        if(defaultValue != null) {
+        if (defaultValue != null) {
             this.onColorChanged((Integer) defaultValue);
             super.onSetInitialValue(defaultValue);
         } else {
@@ -111,11 +112,11 @@ public class ColorPickerPreference extends Preference implements
 
     @Override
     public boolean onPreferenceClick(@NonNull Preference preference) {
-        this.mDialog = new ColorPickerDialog(getContext(), this.mCurrentValue);
-        if (this.mShowAlphaSlider) {this.mDialog.setAlphaSliderVisible(true);}
-        if (this.mShowHexValue) {this.mDialog.setHexValueEnabled(true);}
-        this.mDialog.setOnColorChangedListener((OnColorChangedListener) this);
-        this.mDialog.show();
+        FragmentManager fm = ((FragmentActivity) getContext()).getSupportFragmentManager();
+        ColorPickerDialogFragment fragment = new ColorPickerDialogFragment(this);
+        fragment.setShowAlphaSlider(mShowAlphaSlider);
+        fragment.setShowHexValue(mShowHexValue);
+        fragment.show(fm, ColorPickerDialogFragmentImpl.LOG_TAG);
         return false;
     }
 
@@ -146,16 +147,6 @@ public class ColorPickerPreference extends Preference implements
         } catch (NullPointerException e) {
             if(mDebug) {Log.e(LOG_TAG, String.format("%s", e.getMessage()));}
         }
-    }
-
-    /** it crashes the preferences screen */
-    private void showDialog(Bundle state) {
-        this.mDialog = new ColorPickerDialog(getContext(), this.mCurrentValue);
-        this.mDialog.setOnColorChangedListener((OnColorChangedListener) this);
-        if (this.mShowAlphaSlider) {this.mDialog.setAlphaSliderVisible(true);}
-        if (this.mShowHexValue) {this.mDialog.setHexValueEnabled(true);}
-        if (state != null) {this.mDialog.onRestoreInstanceState(state);}
-        this.mDialog.show();
     }
 
     /**
@@ -226,10 +217,7 @@ public class ColorPickerPreference extends Preference implements
     @Override
     protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
-        if (this.mDialog == null || !this.mDialog.isShowing()) {return superState;}
-        final SavedState myState = new SavedState(superState);
-        myState.dialogBundle = this.mDialog.onSaveInstanceState();
-        return myState;
+        return new SavedState(superState);
     }
 
     @Override
@@ -241,7 +229,6 @@ public class ColorPickerPreference extends Preference implements
         }
         SavedState myState = (SavedState) state;
         super.onRestoreInstanceState(myState.getSuperState());
-        showDialog(myState.dialogBundle);
     }
 
     private static class SavedState extends BaseSavedState {

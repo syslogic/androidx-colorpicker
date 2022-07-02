@@ -8,7 +8,6 @@ import io.syslogic.colorpicker.ColorPickerDialogFragment;
  * @author Martin Zeitler
  */
 public class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
-
     public ColorPickerDialogFragmentImpl() {
         super();
     }
