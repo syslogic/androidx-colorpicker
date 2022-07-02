@@ -20,7 +20,6 @@ import kotlin.properties.Delegates
  */
 class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
-    private var borderRadius by Delegates.notNull<Float>()
     private var trackerHeight by Delegates.notNull<Float>()
     private var value: Float = 360f
 
@@ -29,9 +28,8 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
      * internally within [draw] after the positioning and configuring the [Painter]
      */
     override fun DrawScope.onDraw() {
-        borderRadius = 2F
-        trackerHeight = 4 * density
-        setCanvas(drawContext)
+        trackerHeight = 4F * density
+        setCanvas(drawContext, density)
 
         drawRect(
             size = size,
@@ -41,26 +39,24 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         ).also {
 
             /* Border */
-            var offset = Offset(bounds.left.toFloat(), bounds.top.toFloat())
             drawRect(
-                color = Color(borderColor),
+                color = Color(borderStrokeColor),
                 size = size,
-                topLeft = offset,
-                style = Stroke(width = 4f,
-                    pathEffect = PathEffect.cornerPathEffect(borderRadius)
+                topLeft = Offset(bounds.left.toFloat(), bounds.top.toFloat()),
+                style = Stroke(width = borderStrokeWidth,
+                    pathEffect = PathEffect.cornerPathEffect(borderStrokeRadius)
                 )
             )
 
             /* Tracker */
             val p: Point = valueToPoint(value)
-            offset = Offset(rect.left, p.y - (trackerHeight / 2))
-
+            val offset = Offset(rect.left, p.y - (trackerHeight / 2))
             drawRoundRect(
-                color = Color.Black,
+                color = Color(trackerStrokeColor),
                 size = Size(rect.width(), trackerHeight),
                 topLeft = offset,
-                style = Stroke(width = 4f,
-                    pathEffect = PathEffect.cornerPathEffect(borderRadius)
+                style = Stroke(width = trackerStrokeWidth,
+                    pathEffect = PathEffect.cornerPathEffect(trackerStrokeRadius)
                 )
             )
         }

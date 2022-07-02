@@ -21,7 +21,7 @@ import kotlin.properties.Delegates
 class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
     private var trackerWidth by Delegates.notNull<Float>()
-    private var borderRadius by Delegates.notNull<Float>()
+
     private var value: Float = 1.0F
 
     /**
@@ -29,9 +29,9 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
      * internally within [draw] after the positioning and configuring the [Painter]
      */
     override fun DrawScope.onDraw() {
-        trackerWidth = 2 * density
-        borderRadius = 2 * density
-        setCanvas(drawContext)
+        trackerWidth = 4F * density
+        setCanvas(drawContext, density)
+
         drawRect(
             size = size,
             brush = Brush.linearGradient(
@@ -42,11 +42,11 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             /* Border */
             var offset = Offset(bounds.left.toFloat(), bounds.top.toFloat())
             drawRect(
-                color = Color(borderColor),
-                size = Size(trackerWidth, rect.height()),
+                color = Color(borderStrokeColor),
+                size = size,
                 topLeft = offset,
-                style = Stroke(width = 4f,
-                    pathEffect = PathEffect.cornerPathEffect(borderRadius)
+                style = Stroke(width = borderStrokeWidth,
+                    pathEffect = PathEffect.cornerPathEffect(borderStrokeRadius)
                 )
             )
 
@@ -55,11 +55,11 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             offset = Offset(p.x - (trackerWidth / 2), rect.top)
 
             drawRoundRect(
-                color = Color.Black,
+                color = Color(trackerStrokeColor),
                 size = Size(trackerWidth, rect.height()),
                 topLeft = offset,
-                style = Stroke(width = 4f,
-                    pathEffect = PathEffect.cornerPathEffect(borderRadius)
+                style = Stroke(width = trackerStrokeWidth,
+                    pathEffect = PathEffect.cornerPathEffect(trackerStrokeRadius)
                 )
             )
         }

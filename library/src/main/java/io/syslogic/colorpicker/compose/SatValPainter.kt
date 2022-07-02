@@ -19,19 +19,18 @@ import kotlin.properties.Delegates
  */
 class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
-    private var trackerColor by Delegates.notNull<Int>()
     private var trackerRadius by Delegates.notNull<Float>()
     private var value: FloatArray = FloatArray(2)
-    private var hue: Float = 180F
+    private var hue: Float = 360F
 
     /**
      * Implementation of drawing logic for instances of [Painter].
      * This is invoked internally within [draw] after the positioning and configuring the [Painter].
      */
     override fun DrawScope.onDraw() {
-        trackerColor = -0xe3e3e4
-        trackerRadius = 10F * density
-        setCanvas(drawContext)
+
+        trackerRadius = 8F * density
+        setCanvas(drawContext, density)
 
         /* Saturation Shader */
         val mSaturationShader = LinearGradientShader(
@@ -54,11 +53,11 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         paint.shader = ComposeShader(mContrastShader, mSaturationShader, PorterDuff.Mode.MULTIPLY)
         canvas.drawRect(rect, paint)
 
-        /* Tracker */
+        /* Tracker Paint */
         val tracker = Paint()
-        tracker.color = trackerColor
         tracker.style = Paint.Style.STROKE
-        tracker.strokeWidth = 2f * density
+        tracker.strokeWidth = trackerStrokeWidth
+        tracker.color = trackerStrokeColor
         tracker.isAntiAlias = true
 
         /* Tracker */
