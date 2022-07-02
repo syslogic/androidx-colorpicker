@@ -7,22 +7,22 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk compile_sdk
     defaultConfig {
         applicationId "io.syslogic.demo.colorpicker"
-        minSdk 21
-        targetSdk 32
-        buildToolsVersion "32.0.0"
-        versionName "$version_name"
-        versionCode new Integer("$version_code")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildToolsVersion build_tools_version
+        versionCode version_code
+        versionName version_name
+        targetSdk target_sdk
+        minSdk min_sdk
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11.toString()
-        targetCompatibility JavaVersion.VERSION_11.toString()
+        sourceCompatibility java_version
+        targetCompatibility java_version
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = java_version
     }
     composeOptions {
         kotlinCompilerExtensionVersion "$compose_compiler"
@@ -57,10 +57,9 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:1.4.2"
     implementation "androidx.preference:preference-ktx:1.2.0"
-
-    implementation "androidx.navigation:navigation-runtime-ktx:2.5.0"
-    implementation "androidx.navigation:navigation-fragment-ktx:2.5.0"
-    implementation "androidx.navigation:navigation-ui-ktx:2.5.0"
+    implementation "androidx.navigation:navigation-runtime-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // https://mvnrepository.com/artifact/androidx.compose
     implementation 'androidx.activity:activity-compose:1.5.0'
@@ -73,7 +72,7 @@ dependencies {
 
     testImplementation "junit:junit:4.13.2"
     androidTestImplementation "androidx.test.ext:junit:1.1.3"
-    androidTestImplementation "androidx.navigation:navigation-testing:2.5.0"
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:2.2.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
 
