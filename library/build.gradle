@@ -159,7 +159,7 @@ afterEvaluate {
                 groupId = "io.syslogic"
                 artifactId = "androidx-colorpicker"
                 from components.getByName('release')
-                version = android.defaultConfig.versionName
+                version = "$version_name"
                 pom {
                     name = 'Color Picker'
                     description = 'A simple color-picker library for Android'
