@@ -3,7 +3,7 @@
 [![](https://jitci.com/gh/syslogic/androidx-colorpicker/svg)](https://jitci.com/gh/syslogic/androidx-colorpicker) [![Release](https://jitpack.io/v/syslogic/androidx-colorpicker.svg)](https://jitpack.io/#io.syslogic/androidx-colorpicker)
 [![MIT License](https://img.shields.io/github/license/syslogic/androidx-colorpicker)](https://github.com/syslogic/androidx-colorpicker/blob/master/LICENSE)
 
-A simple color-picker library for Android, which works with Navigation Component.<br/><br/>
+A color-picker library for Android, which is compatible with Navigation Component and Jetpack Compose.<br/><br/>
 It is generally available on JitPack; either by version tag or `master-SNAPSHOT`.<br/>
 The JitPack repository URL would be: `maven { url 'https://jitpack.io' }`
 
@@ -40,7 +40,7 @@ Then define `ColorPickerDialogFragmentImpl` as navigation destination in [`nav_g
     <argument app:argType="boolean" android:name="hexValue" android:defaultValue="false"/>
 </dialog>
 ````
-Screenshot:
+Screenshot `ColorPickerDialogFragment`:
 
 ![DialogFragment](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_01.png)
 
@@ -56,7 +56,7 @@ can be added as XML node; into eg. [`preferences.xml`](https://github.com/syslog
 
 c) [`ColorPickerComponent`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/compose/ColorPickerComponent.kt) is a `Composable`.
 
-Screenshot:
+Screenshot `ColorPickerComponent`:
 
 ![Composable](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_02.png)
 
