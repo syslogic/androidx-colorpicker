@@ -25,7 +25,7 @@ android {
         jvmTarget = java_version
     }
     composeOptions {
-        kotlinCompilerExtensionVersion "$compose_compiler"
+        kotlinCompilerExtensionVersion compose_compiler_version
     }
     buildFeatures {
         dataBinding true
