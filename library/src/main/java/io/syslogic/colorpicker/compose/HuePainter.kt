@@ -11,8 +11,6 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.painter.Painter
 
-import kotlin.properties.Delegates
-
 /**
  * Jetpack Compose Hue Painter
  *
@@ -20,7 +18,6 @@ import kotlin.properties.Delegates
  */
 class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
-    private var trackerHeight by Delegates.notNull<Float>()
     private var value: Float = 360f
 
     /**
@@ -28,9 +25,7 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
      * internally within [draw] after the positioning and configuring the [Painter]
      */
     override fun DrawScope.onDraw() {
-        trackerHeight = 4F * density
         setCanvas(drawContext, density)
-
         drawRect(
             size = size,
             brush = Brush.verticalGradient(
@@ -44,19 +39,19 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
                 size = size,
                 topLeft = Offset(bounds.left.toFloat(), bounds.top.toFloat()),
                 style = Stroke(width = borderStrokeWidth,
-                    pathEffect = PathEffect.cornerPathEffect(borderStrokeRadius)
+                    pathEffect = PathEffect.cornerPathEffect(borderCornerRadius)
                 )
             )
 
-            /* Tracker */
+            /* Vertical Tracker */
             val p: Point = valueToPoint(value)
-            val offset = Offset(rect.left, p.y - (trackerHeight / 2))
+            val offset = Offset(rect.left, p.y - (hueTrackerHeight / 2))
             drawRoundRect(
                 color = Color(trackerStrokeColor),
-                size = Size(rect.width(), trackerHeight),
+                size = Size(rect.width(), hueTrackerHeight),
                 topLeft = offset,
                 style = Stroke(width = trackerStrokeWidth,
-                    pathEffect = PathEffect.cornerPathEffect(trackerStrokeRadius)
+                    pathEffect = PathEffect.cornerPathEffect(trackerCornerRadius)
                 )
             )
         }
@@ -74,11 +69,10 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
     }
 
     private fun valueToPoint(value: Float): Point {
-        val height = rect.height()
-        val p = Point()
-        p.y = (height - value * height / 360f + rect.top).toInt()
-        p.x = rect.left.toInt()
-        return p
+        return Point(
+            (rect.height() - value * rect.height() / 360f + rect.top).toInt(),
+            rect.left.toInt()
+        )
     }
 
     fun setValue(value: Float) {

@@ -18,15 +18,20 @@ import kotlin.properties.Delegates
  */
 abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
 
-    /* Trackers */
-    var trackerStrokeRadius by Delegates.notNull<Float>()
+    /* Tracker Dimensions */
+    var satValTrackerRadius by Delegates.notNull<Float>()
+    var alphaTrackerWidth by Delegates.notNull<Float>()
+    var hueTrackerHeight by Delegates.notNull<Float>()
+
+    /* Tracker Styles */
+    var trackerCornerRadius by Delegates.notNull<Float>()
     var trackerStrokeWidth by Delegates.notNull<Float>()
     var trackerStrokeColor by Delegates.notNull<Int>()
 
-    /* Borders */
-    var borderStrokeRadius by Delegates.notNull<Float>()
-    var borderStrokeWidth  by Delegates.notNull<Float>()
-    var borderStrokeColor  by Delegates.notNull<Int>()
+    /* Borders Styles */
+    var borderCornerRadius by Delegates.notNull<Float>()
+    var borderStrokeWidth by Delegates.notNull<Float>()
+    var borderStrokeColor by Delegates.notNull<Int>()
 
     /* Canvas */
     protected lateinit var canvas: NativeCanvas
@@ -35,14 +40,19 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
 
     fun setCanvas(drawContext: DrawContext, density: Float) {
 
-        /* Trackers */
+        /* Tracker Dimensions */
+        satValTrackerRadius = 8F * density
+        alphaTrackerWidth = 4F * density
+        hueTrackerHeight = 4F * density
+
+        /* Tracker Styles */
+        trackerCornerRadius = 2F * density
         trackerStrokeWidth = 1F * density
-        trackerStrokeRadius = 2F * density
         trackerStrokeColor = -0xe3e3e4
 
         /* Borders */
+        borderCornerRadius = 2F * density
         borderStrokeWidth = 2F * density
-        borderStrokeRadius = 2F * density
         borderStrokeColor = -0x919192
 
         /* Canvas */

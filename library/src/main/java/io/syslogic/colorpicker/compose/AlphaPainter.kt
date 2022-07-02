@@ -11,16 +11,12 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.painter.Painter
 
-import kotlin.properties.Delegates
-
 /**
  * Jetpack Compose Alpha Painter
  *
  * @author Martin Zeitler
  */
 class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
-
-    private var trackerWidth by Delegates.notNull<Float>()
 
     private var value: Float = 1.0F
 
@@ -29,7 +25,7 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
      * internally within [draw] after the positioning and configuring the [Painter]
      */
     override fun DrawScope.onDraw() {
-        trackerWidth = 4F * density
+
         setCanvas(drawContext, density)
 
         drawRect(
@@ -46,31 +42,30 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
                 size = size,
                 topLeft = offset,
                 style = Stroke(width = borderStrokeWidth,
-                    pathEffect = PathEffect.cornerPathEffect(borderStrokeRadius)
+                    pathEffect = PathEffect.cornerPathEffect(borderCornerRadius)
                 )
             )
 
-            /* Tracker */
+            /* Horizontal Tracker */
             val p: Point = valueToPoint(value)
-            offset = Offset(p.x - (trackerWidth / 2), rect.top)
+            offset = Offset(p.x - (alphaTrackerWidth / 2), rect.top)
 
             drawRoundRect(
                 color = Color(trackerStrokeColor),
-                size = Size(trackerWidth, rect.height()),
+                size = Size(alphaTrackerWidth, rect.height()),
                 topLeft = offset,
                 style = Stroke(width = trackerStrokeWidth,
-                    pathEffect = PathEffect.cornerPathEffect(trackerStrokeRadius)
+                    pathEffect = PathEffect.cornerPathEffect(trackerCornerRadius)
                 )
             )
         }
     }
 
     private fun valueToPoint(value: Float): Point {
-        val width = rect.width()
-        val p = Point()
-        p.x = (value * width).toInt()
-        p.y = rect.top.toInt()
-        return p
+        return Point(
+            (value * rect.width()).toInt(),
+            rect.top.toInt()
+        )
     }
 
     fun setAlphaByColor(color: Int) {

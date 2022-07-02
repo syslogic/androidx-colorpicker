@@ -34,7 +34,7 @@ class ColorPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
                 size = size,
                 topLeft = Offset(bounds.left.toFloat(), bounds.top.toFloat()),
                 style = Stroke(width = borderStrokeWidth,
-                    pathEffect = PathEffect.cornerPathEffect(borderStrokeRadius)
+                    pathEffect = PathEffect.cornerPathEffect(borderCornerRadius)
                 )
             )
         }
