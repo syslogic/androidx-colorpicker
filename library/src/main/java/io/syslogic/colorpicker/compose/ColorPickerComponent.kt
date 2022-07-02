@@ -48,9 +48,9 @@ fun ColorPickerComponent(
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
 
     var currentColor: Int by remember { mutableStateOf(-16777216) }
-    var currentAlpha: Int by remember { mutableStateOf(255) }
-    var currentSat: Float by remember { mutableStateOf(0F) }
-    var currentVal: Float by remember { mutableStateOf(0F) }
+    var currentAlpha: Float by remember { mutableStateOf(1.0F) }
+    var currentSat: Float by remember { mutableStateOf(0.0F) }
+    var currentVal: Float by remember { mutableStateOf(0.0F) }
     var currentHue: Float by remember { mutableStateOf(180F) }
 
     @Suppress("UNUSED_VARIABLE")
@@ -185,7 +185,7 @@ fun ColorPickerComponent(
                         contentDescription = "Alpha Slider",
                         contentScale = ContentScale.FillBounds,
                         painter = AlphaPainter(Size(1030F, 80F)).also {
-                            it.setAlpha(currentColor)
+                            it.setAlphaByColor(currentColor)
                         },
                         modifier = Modifier
                             .layoutId(Alpha)
@@ -193,7 +193,7 @@ fun ColorPickerComponent(
                             .pointerInput(Unit) {
                                 detectTapGestures(
                                     onPress = { event ->
-                                        currentAlpha = pointToAlpha(getLayoutBounds(offsetAlpha, sizeAlpha), event.x.toInt())
+                                        currentAlpha = pointToAlpha(getLayoutBounds(offsetAlpha, sizeAlpha), event.x)
                                         currentColor = toColor(currentAlpha, currentHue, currentSat, currentVal)
                                         println("Alpha: $currentAlpha (${event.x.toInt()})")
                                     }
@@ -219,7 +219,7 @@ fun ColorPickerComponent(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Hex Value: ${convertToARGB(currentColor)}",
+                        text = "Hex Value: ${toARGB(currentColor)}",
                         modifier = Modifier.testTag("hex")
                     )
                 }
@@ -313,8 +313,8 @@ fun getBlueChannel(color: Int): String {
 
 fun onButtonClick(context: Context, layoutId: LayoutId, value: Int) {
     val message: String = when (layoutId) {
-        OldColor -> { "OldColor:\n${convertToARGB(value)}" }
-        NewColor -> { "NewColor:\n${convertToARGB(value)}" }
+        OldColor -> { "OldColor:\n${toARGB(value)}" }
+        NewColor -> { "NewColor:\n${toARGB(value)}" }
         else -> { return }
     }
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -343,19 +343,19 @@ private fun pointToVal(rect: RectF, y: Float): Float {
     return 1f - 1f / rect.height() * y
 }
 
-private fun pointToAlpha(rect: RectF, x: Int): Int {
-    return 0xff + x * 0xff / rect.width().toInt()
+private fun pointToAlpha(rect: RectF, x: Float): Float {
+    return x / rect.width()
 }
 
-fun toColor(alpha: Int, hue: Float, sat: Float, value: Float) : Int {
+fun toColor(alpha: Float, hue: Float, sat: Float, value: Float) : Int {
     println("alpha: $alpha, hue: $hue, saturation: $sat, contrast: $value")
-    return android.graphics.Color.HSVToColor(alpha, floatArrayOf(hue, sat, value))
+    return android.graphics.Color.HSVToColor((alpha * 255).toInt(), floatArrayOf(hue, sat, value))
 }
 
 /**
  * @param color the color value to convert.
  */
-fun convertToARGB(color: Int): String {
+fun toARGB(color: Int): String {
     var alpha = Integer.toHexString(Color(color).alpha.times(255).toInt()).uppercase(Locale.ROOT)
     var red = Integer.toHexString(Color(color).red.times(255).toInt()).uppercase(Locale.ROOT)
     var green = Integer.toHexString(Color(color).green.times(255).toInt()).uppercase(Locale.ROOT)

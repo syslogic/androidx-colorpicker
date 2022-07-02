@@ -22,7 +22,7 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
     private var trackerWidth by Delegates.notNull<Float>()
     private var borderRadius by Delegates.notNull<Float>()
-    private var value: Float = 1F
+    private var value: Float = 1.0F
 
     /**
      * Implementation of drawing logic for instances of [Painter]. This is invoked
@@ -68,12 +68,12 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
     private fun valueToPoint(value: Float): Point {
         val width = rect.width()
         val p = Point()
-        p.x = (width - value * width / 0xff + rect.left).toInt()
+        p.x = (value * width).toInt()
         p.y = rect.top.toInt()
         return p
     }
 
-    fun setAlpha(color: Int) {
+    fun setAlphaByColor(color: Int) {
         this.value = Color(color).alpha
     }
 }
