@@ -8,7 +8,7 @@ It is generally available on JitPack; either by version tag or `master-SNAPSHOT`
 The JitPack repository URL would be: `maven { url 'https://jitpack.io' }`
 
     dependencies {
-        implementation "io.syslogic:androidx-colorpicker:1.0.7"
+        implementation "io.syslogic:androidx-colorpicker:1.0.8"
     }
 
 Alternatively, one can also depend on the local `:library` module:
