@@ -38,7 +38,7 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             from     = Offset(rect.right, rect.top),
             to       = Offset(rect.left, rect.top),
             tileMode = androidx.compose.ui.graphics.TileMode.Clamp,
-            colors   = listOf(Color.White, Color(HSVToColor(floatArrayOf(hue, 1f, 1f))))
+            colors   = listOf(Color(HSVToColor(floatArrayOf(hue, 1f, 1f))), Color.White)
         )
 
         /* Contrast Shader */
