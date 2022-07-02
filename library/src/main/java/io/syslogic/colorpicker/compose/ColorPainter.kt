@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.painter.Painter
  */
 class ColorPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
-    private var value: Int = Color.Black.hashCode()
+    private var value: Color = Color.Transparent
 
     /**
      * Implementation of drawing logic for instances of [Painter]. This is invoked
@@ -25,7 +25,7 @@ class ColorPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         setCanvas(drawContext, density)
         drawRect(
             size = size,
-            color = Color(value)
+            color = value
         ).also {
 
             /* Borderline */
@@ -41,6 +41,10 @@ class ColorPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
     }
 
     fun setValue(value: Int) {
+        this.value = Color(value)
+    }
+
+    fun setValue(value: Color) {
         this.value = value
     }
 }

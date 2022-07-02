@@ -23,6 +23,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 
 import io.syslogic.colorpicker.OnColorChangedListener
@@ -49,7 +51,7 @@ fun ColorPickerComponent(
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
 
     var currentColor: Int by remember { mutableStateOf(-16777216) }
-    var currentAlpha: Float by remember { mutableStateOf(1.0F) }
+    var currentAlpha: Float by remember { mutableStateOf(.5F) }
     var currentSat: Float by remember { mutableStateOf(0.0F) }
     var currentVal: Float by remember { mutableStateOf(0.0F) }
     var currentHue: Float by remember { mutableStateOf(180F) }
@@ -77,6 +79,7 @@ fun ColorPickerComponent(
                 verticalAlignment = Alignment.Top,
                 modifier = Modifier.padding(all = rowPadding)
             ) {
+
                 if (showHSV) {
                     Column(
                         horizontalAlignment = Alignment.Start,
@@ -84,20 +87,57 @@ fun ColorPickerComponent(
                             .padding(all = rowPadding)
                             .weight(0.5F)
                     ) {
-                        Text(
-                            modifier = Modifier.testTag("value_hue"),
-                            text = "Hue: $currentHue"
-                        )
-                        Text(
-                            modifier = Modifier.testTag("value_sat"),
-                            text = "Sat: $currentSat"
-                        )
-                        Text(
-                            modifier = Modifier.testTag("value_val"),
-                            text = "Val: $currentVal"
-                        )
+                        Row(
+                            verticalAlignment = Alignment.Top,
+                            modifier = Modifier.padding(all = rowPadding)
+                        ) {
+                            Text(
+                                text = "Hue:",
+                                textAlign = TextAlign.End,
+                                modifier = Modifier
+                                    .defaultMinSize(minWidth = Dp(42F))
+                                    .testTag("text_hue")
+                            )
+                            Text(
+                                modifier = Modifier.testTag("value_hue"),
+                                text = "$currentHue"
+                            )
+                        }
+                        Row(
+                            verticalAlignment = Alignment.Top,
+                            modifier = Modifier.padding(all = rowPadding)
+                        ) {
+                            Text(
+                                text = "Sat:",
+                                textAlign = TextAlign.End,
+                                modifier = Modifier
+                                    .defaultMinSize(minWidth = Dp(42F))
+                                    .testTag("text_sat")
+                            )
+                            Text(
+                                modifier = Modifier.testTag("value_sat"),
+                                text = "$currentSat"
+                            )
+                        }
+                        Row(
+                            verticalAlignment = Alignment.Top,
+                            modifier = Modifier.padding(all = rowPadding)
+                        ) {
+                            Text(
+                                text = "Val:",
+                                textAlign = TextAlign.End,
+                                modifier = Modifier
+                                    .defaultMinSize(minWidth = Dp(42F))
+                                    .testTag("text_val")
+                            )
+                            Text(
+                                modifier = Modifier.testTag("value_val"),
+                                text = "$currentVal"
+                            )
+                        }
                     }
                 }
+
                 if (showARGB) {
                     Column(
                         horizontalAlignment = Alignment.End,
@@ -105,22 +145,70 @@ fun ColorPickerComponent(
                             .padding(all = rowPadding)
                             .weight(0.5F)
                     ) {
-                        Text(
-                            modifier = Modifier.testTag("value_alpha"),
-                            text = "Alpha: ${getAlphaChannel(currentColor)}"
-                        )
-                        Text(
-                            modifier = Modifier.testTag("value_blue"),
-                            text = "Blue: ${getBlueChannel(currentColor)}"
-                        )
-                        Text(
-                            modifier = Modifier.testTag("value_red"),
-                            text = "Red: ${getRedChannel(currentColor)}"
-                        )
-                        Text(
-                            modifier = Modifier.testTag("value_green"),
-                            text = "Green: ${getGreenChannel(currentColor)}"
-                        )
+                        Row(
+                            verticalAlignment = Alignment.Top,
+                            modifier = Modifier.padding(all = rowPadding)
+                        ) {
+                            Text(
+                                text = "Alpha:",
+                                modifier = Modifier.testTag("text_alpha")
+                            )
+                            Text(
+                                text = getAlphaChannel(currentColor),
+                                textAlign = TextAlign.End,
+                                modifier = Modifier
+                                    .defaultMinSize(minWidth = Dp(30F))
+                                    .testTag("value_alpha")
+                            )
+                        }
+                        Row(
+                            verticalAlignment = Alignment.Top,
+                            modifier = Modifier.padding(all = rowPadding)
+                        ) {
+                            Text(
+                                text = "Blue:",
+                                modifier = Modifier.testTag("text_blue")
+                            )
+                            Text(
+                                text = getBlueChannel(currentColor),
+                                textAlign = TextAlign.End,
+                                modifier = Modifier
+                                    .defaultMinSize(minWidth = Dp(30F))
+                                    .testTag("value_blue")
+                            )
+                        }
+                        Row(
+                            verticalAlignment = Alignment.Top,
+                            modifier = Modifier.padding(all = rowPadding)
+                        ) {
+                            Text(
+                                text = "Red:",
+                                modifier = Modifier.testTag("text_red")
+                            )
+                            Text(
+                                text = getRedChannel(currentColor),
+                                textAlign = TextAlign.End,
+                                modifier = Modifier
+                                    .defaultMinSize(minWidth = Dp(30F))
+                                    .testTag("value_red")
+                            )
+                        }
+                        Row(
+                            verticalAlignment = Alignment.Top,
+                            modifier = Modifier.padding(all = rowPadding)
+                        ) {
+                            Text(
+                                text = "Green:",
+                                modifier = Modifier.testTag("text_green")
+                            )
+                            Text(
+                                text = getGreenChannel(currentColor),
+                                textAlign = TextAlign.End,
+                                modifier = Modifier
+                                    .defaultMinSize(minWidth = Dp(30F))
+                                    .testTag("value_green")
+                            )
+                        }
                     }
                 }
             }
@@ -259,7 +347,7 @@ fun ColorPickerComponent(
                     contentDescription = "Old Color",
                     contentScale = ContentScale.FillBounds,
                     painter = ColorPainter(Size(400F, 120F)).also {
-                        it.setValue(initialColor.value.toInt())
+                        it.setValue(initialColor)
                     },
                     modifier = Modifier
                         .layoutId(OldColor)

@@ -25,15 +25,16 @@ class ComposeActivity : ComponentActivity(), OnColorChangedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val initialColor: Color = Color.Blue
+        val initialColor = prefs.getInt("color_code_01", 0xFF444444.toInt())
         this.setContent {
             MaterialTheme {
                 ColorPickerComponent(
-                    initialColor = initialColor,
                     onColorChanged = this@ComposeActivity,
+                    initialColor = Color(initialColor),
                     showAlpha = true,
-                    showHex = true,
-                    showHSV = true
+                    showARGB = true,
+                    showHSV = true,
+                    showHex = true
                 )
             }
         }

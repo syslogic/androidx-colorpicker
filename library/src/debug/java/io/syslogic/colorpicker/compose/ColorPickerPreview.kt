@@ -21,8 +21,9 @@ fun ColorPickerPreview() {
             initialColor = Color.DarkGray,
             onColorChanged = null,
             showAlpha = true,
-            showHex = true,
-            showHSV = true
+            showARGB = true,
+            showHSV = true,
+            showHex = true
         )
     }
 }
