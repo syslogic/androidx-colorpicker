@@ -14,7 +14,7 @@ import io.syslogic.colorpicker.OnColorChangedListener
 import io.syslogic.colorpicker.compose.ColorPickerComponent
 
 /**
- * Jetpack Compose Activity
+ * Jetpack Compose {@link ComponentActivity}
  *
  * @author Martin Zeitler
  */
@@ -23,9 +23,11 @@ class ComposeActivity : ComponentActivity(), OnColorChangedListener {
     private lateinit var prefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         this.prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val initialColor = prefs.getInt("color_code_01", 0xFF444444.toInt())
+
         this.setContent {
             MaterialTheme {
                 ColorPickerComponent(
@@ -40,6 +42,7 @@ class ComposeActivity : ComponentActivity(), OnColorChangedListener {
         }
     }
 
+    /** It overrides interface {@link OnColorChangedListener}. */
     override fun onColorChanged(color: Int) {
         this.prefs.edit().putInt("color_code_01", color).apply()
         println("onColorChanged: $color")

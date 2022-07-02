@@ -47,17 +47,16 @@ fun ColorPickerComponent(
     showHSV: Boolean = true,
     showHex: Boolean = true
 ) {
+
     val context = LocalContext.current
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
+    val listener: OnColorChangedListener? = onColorChanged
 
-    var currentColor: Int by remember { mutableStateOf(-16777216) }
     var currentAlpha: Float by remember { mutableStateOf(.5F) }
     var currentSat: Float by remember { mutableStateOf(0.0F) }
     var currentVal: Float by remember { mutableStateOf(0.0F) }
     var currentHue: Float by remember { mutableStateOf(180F) }
-
-    @Suppress("UNUSED_VARIABLE")
-    var listener: OnColorChangedListener? = onColorChanged
+    var currentColor: Int by remember { mutableStateOf(initialColor.hashCode()) }
 
     var offsetSatVal by remember { mutableStateOf(Offset.Zero) }
     var sizeSatVal by remember { mutableStateOf(IntSize.Zero) }
@@ -236,7 +235,7 @@ fun ColorPickerComponent(
                                 val rect: RectF = getLayoutBounds(offsetSatVal, sizeSatVal)
                                 currentSat = pointToSat(rect, event.x)
                                 currentVal = pointToVal(rect, event.y)
-                                currentColor = toColor(currentAlpha, currentHue, currentSat, currentVal)
+                                currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal, listener)
                                 println("Sat: $currentSat, Val: $currentVal (${event.x.toInt()} x ${event.y.toInt()})")
                             }
                         )
@@ -266,7 +265,7 @@ fun ColorPickerComponent(
                             onPress = { event ->
                                 val rect: RectF = getLayoutBounds(offsetHue, sizeHue)
                                 currentHue = pointToHue(rect, event.y)
-                                currentColor = toColor(currentAlpha, currentHue, currentSat, currentVal)
+                                currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal, listener)
                                 println("Val: $currentHue (${event.y.toInt()})")
                             }
                         )
@@ -300,8 +299,9 @@ fun ColorPickerComponent(
                             .pointerInput(Unit) {
                                 detectTapGestures(
                                     onPress = { event ->
-                                        currentAlpha = pointToAlpha(getLayoutBounds(offsetAlpha, sizeAlpha), event.x)
-                                        currentColor = toColor(currentAlpha, currentHue, currentSat, currentVal)
+                                        val rect: RectF = getLayoutBounds(offsetAlpha, sizeAlpha)
+                                        currentAlpha = pointToAlpha(rect, event.x)
+                                        currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal, listener)
                                         println("Alpha: $currentAlpha (${event.x.toInt()})")
                                     }
                                 )
@@ -391,7 +391,7 @@ fun ColorPickerComponent(
                                     onButtonClick(
                                         context,
                                         NewColor,
-                                        toColor(currentAlpha, currentHue, currentSat, currentVal)
+                                        toIntColor(currentAlpha, currentHue, currentSat, currentVal, listener)
                                     )
                                 }
                             )
@@ -400,22 +400,6 @@ fun ColorPickerComponent(
             }
         }
     }
-}
-
-fun getAlphaChannel(color: Int): String {
-    return String.format("%s", Color(color).alpha.times(255).toInt())
-}
-
-fun getRedChannel(color: Int): String {
-    return String.format("%s", Color(color).red.times(255).toInt())
-}
-
-fun getGreenChannel(color: Int): String {
-    return String.format("%s", Color(color).green.times(255).toInt())
-}
-
-fun getBlueChannel(color: Int): String {
-    return String.format("%s", Color(color).blue.times(255).toInt())
 }
 
 fun onButtonClick(context: Context, layoutId: LayoutId, value: Int) {
@@ -438,25 +422,13 @@ fun getLayoutBounds(position: Offset, size: IntSize): RectF {
     )
 }
 
-private fun pointToHue(rect: RectF, y: Float): Float {
-    return 360f - y * 360f / rect.height()
-}
-
-private fun pointToSat(rect: RectF, x: Float): Float {
-    return 1f / rect.width() * x
-}
-
-private fun pointToVal(rect: RectF, y: Float): Float {
-    return 1f - 1f / rect.height() * y
-}
-
-private fun pointToAlpha(rect: RectF, x: Float): Float {
-    return x / rect.width()
-}
-
-fun toColor(alpha: Float, hue: Float, sat: Float, value: Float) : Int {
+fun toIntColor(alpha: Float, hue: Float, sat: Float, value: Float, listener: OnColorChangedListener?) : Int {
     println("alpha: $alpha, hue: $hue, saturation: $sat, contrast: $value")
-    return android.graphics.Color.HSVToColor((alpha * 255).toInt(), floatArrayOf(hue, sat, value))
+    val colorCode: Int = android.graphics.Color.HSVToColor(
+        (alpha * 255).toInt(), floatArrayOf(hue, sat, value)
+    )
+    listener?.onColorChanged(colorCode)
+    return colorCode
 }
 
 /**
@@ -472,4 +444,72 @@ fun toARGB(color: Int): String {
     if (green.length == 1) {green = String.format("0%s", green)}
     if (blue.length  == 1) {blue  = String.format("0%s", blue)}
     return String.format("#%s%s%s%s", alpha, red, green, blue)
+}
+
+/**
+ * @param color the color value to convert.
+ * @return channel integer value as String.
+ */
+fun getAlphaChannel(color: Int): String {
+    return String.format("%s", Color(color).alpha.times(255).toInt())
+}
+
+/**
+ * @param color the color value to convert.
+ * @return channel integer value as String.
+ */
+fun getRedChannel(color: Int): String {
+    return String.format("%s", Color(color).red.times(255).toInt())
+}
+
+/**
+ * @param color the color value to convert.
+ * @return channel integer value as String.
+ */
+fun getGreenChannel(color: Int): String {
+    return String.format("%s", Color(color).green.times(255).toInt())
+}
+
+/**
+ * @param color the color value to convert.
+ * @return channel integer value as String.
+ */
+fun getBlueChannel(color: Int): String {
+    return String.format("%s", Color(color).blue.times(255).toInt())
+}
+
+/**
+ * @param rect boundaries of the hue rectangle.
+ * @param y the value on the y axis.
+ * @return float hue.
+ */
+private fun pointToHue(rect: RectF, y: Float): Float {
+    return 360f - y * 360f / rect.height()
+}
+
+/**
+ * @param rect boundaries of the sat/val rectangle.
+ * @param x the value on the x axis.
+ * @return float sat.
+ */
+private fun pointToSat(rect: RectF, x: Float): Float {
+    return 1f / rect.width() * x
+}
+
+/**
+ * @param rect boundaries of the sat/val rectangle.
+ * @param y the value on the x axis.
+ * @return float value.
+ */
+private fun pointToVal(rect: RectF, y: Float): Float {
+    return 1f - 1f / rect.height() * y
+}
+
+/**
+ * @param rect boundaries of the alpha rectangle.
+ * @param x the value on the x axis.
+ * @return float alpha.
+ */
+private fun pointToAlpha(rect: RectF, x: Float): Float {
+    return x / rect.width()
 }
