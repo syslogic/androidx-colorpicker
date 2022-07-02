@@ -2,10 +2,6 @@ package io.syslogic.colorpicker.compose
 
 import android.graphics.*
 import android.graphics.Color.HSVToColor
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -23,25 +19,26 @@ import kotlin.properties.Delegates
  */
 class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
-    private var currentHue: Float = 180F
+    private var trackerColor by Delegates.notNull<Int>()
     private var trackerRadius by Delegates.notNull<Float>()
     private var value: FloatArray = FloatArray(2)
+    private var hue: Float = 180F
 
     /**
      * Implementation of drawing logic for instances of [Painter].
      * This is invoked internally within [draw] after the positioning and configuring the [Painter].
      */
     override fun DrawScope.onDraw() {
+        trackerColor = -0xe3e3e4
         trackerRadius = 10F * density
         setCanvas(drawContext)
 
         /* Saturation Shader */
-        val rgb = Color(HSVToColor(floatArrayOf(currentHue, 1f, 1f)))
         val mSaturationShader = LinearGradientShader(
             from     = Offset(rect.right, rect.top),
             to       = Offset(rect.left, rect.top),
             tileMode = androidx.compose.ui.graphics.TileMode.Clamp,
-            colors   = listOf(Color.White, rgb)
+            colors   = listOf(Color.White, Color(HSVToColor(floatArrayOf(hue, 1f, 1f))))
         )
 
         /* Contrast Shader */
@@ -59,24 +56,14 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
         /* Tracker */
         val tracker = Paint()
+        tracker.color = trackerColor
         tracker.style = Paint.Style.STROKE
         tracker.strokeWidth = 2f * density
         tracker.isAntiAlias = true
-        tracker.color = -0xe3e3e4
 
         /* Tracker */
         val p: Point = valueToPoint(value[0], value[1])
         canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), trackerRadius, tracker)
-    }
-
-    private fun getColors(): List<Color> {
-        val list: MutableList<Color> = MutableList(361) { Color.Black }
-        var i = 0
-        while (i < list.size) {
-            list[i] = Color(HSVToColor(floatArrayOf(i.toFloat(), 1f, 1f)))
-            i++
-        }
-        return list
     }
 
     private fun valueToPoint(sat: Float, value: Float): Point {
@@ -84,8 +71,7 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         val width = rect.width()
         val p = Point()
         p.x = (sat * width + rect.left).toInt()
-        // p.y = ((1f - value) * height + rect.top).toInt()
-        p.y = (value * height + rect.top).toInt()
+        p.y = ((1f - value) * height + rect.top).toInt()
         return p
     }
 
@@ -94,6 +80,6 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         this.value[1] = value
     }
     fun setHue(value: Float) {
-        this.currentHue = value
+        this.hue = value
     }
 }

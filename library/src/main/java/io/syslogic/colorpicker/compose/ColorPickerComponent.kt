@@ -114,7 +114,7 @@ fun ColorPickerComponent(
 
             /* Sat/Val Panel */
             Image(
-                contentDescription = "Sat/Val",
+                contentDescription = "Sat/Val by Hue",
                 contentScale = ContentScale.FillBounds,
                 painter = SatValPainter(Size(900F, 900F)).also {
                     it.setValue(currentSat, currentVal)
