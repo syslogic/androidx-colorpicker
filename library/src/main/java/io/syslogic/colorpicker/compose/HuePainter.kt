@@ -21,8 +21,8 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
     private var value: Float = 360f
 
     /**
-     * Implementation of drawing logic for instances of [Painter]. This is invoked
-     * internally within [draw] after the positioning and configuring the [Painter]
+     * Implementation of drawing logic for instances of [Painter].
+     * This is invoked internally within [draw] after the positioning and configuring the [Painter].
      */
     override fun DrawScope.onDraw() {
         setCanvas(drawContext, density)
@@ -37,7 +37,7 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             drawRect(
                 size = size,
                 color = Color(borderStrokeColor),
-                topLeft = Offset(rect.left, rect.top),
+                topLeft = Offset(outline.left, outline.top),
                 style = Stroke(width = borderStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(borderCornerRadius)
                 )
@@ -62,7 +62,7 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         val list: MutableList<Color> = MutableList(360) { Color.Black }
         while (i < list.size) {
             val value = (list.size - i).toFloat()
-            list[i] = Color(android.graphics.Color.HSVToColor(255, floatArrayOf(value, 1f, 1f)))
+            list[i] = Color(android.graphics.Color.HSVToColor(255, floatArrayOf(value, 1F, 1F)))
             i++
         }
         return list

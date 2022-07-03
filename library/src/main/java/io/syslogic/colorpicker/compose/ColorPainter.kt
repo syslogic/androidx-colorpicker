@@ -18,8 +18,8 @@ class ColorPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
     private var value: Color = Color.Transparent
 
     /**
-     * Implementation of drawing logic for instances of [Painter]. This is invoked
-     * internally within [draw] after the positioning and configuring the [Painter]
+     * Implementation of drawing logic for instances of [Painter].
+     * This is invoked internally within [draw] after the positioning and configuring the [Painter].
      */
     override fun DrawScope.onDraw() {
         setCanvas(drawContext, density)
@@ -32,7 +32,7 @@ class ColorPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             drawRect(
                 size = size,
                 color = Color(borderStrokeColor),
-                topLeft = Offset(rect.left, rect.top),
+                topLeft = Offset(outline.left, outline.top),
                 style = Stroke(width = borderStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(borderCornerRadius)
                 )

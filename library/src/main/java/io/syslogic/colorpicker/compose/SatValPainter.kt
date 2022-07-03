@@ -30,7 +30,7 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
         /* Saturation Shader with Alpha */
         val alpha: Int = getAlpha().times(255).toInt()
-        val color: Int = HSVToColor(alpha, floatArrayOf(getHue(), 1.0F, 1.0F))
+        val color: Int = HSVToColor(alpha, floatArrayOf(getHue(), 1F, 1F))
         val mSaturationShader = LinearGradientShader (
             from = Offset(rect.right, rect.top),
             to = Offset(rect.left,  rect.top),
@@ -47,27 +47,31 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         )
 
         /* Compose Shader */
-        val compose = Paint()
-        compose.shader = ComposeShader(mContrastShader, mSaturationShader, PorterDuff.Mode.MULTIPLY)
-        canvas.drawRect(rect, compose)
+        val composition = Paint()
+        composition.shader = ComposeShader(mContrastShader, mSaturationShader, PorterDuff.Mode.MULTIPLY)
+        canvas.drawRect(rect, composition)
 
         /* Borderline */
         val border = Paint()
         border.style = Paint.Style.STROKE
         border.strokeWidth = borderStrokeWidth
         border.color = borderStrokeColor
-        canvas.drawRect(rect, border)
+        canvas.drawRect(outline, border)
 
-        /* Tracker Paint */
+        /* Tracker */
+        val p: Point = satValToPoint(getSat(), getValue())
         val tracker = Paint()
         tracker.style = Paint.Style.STROKE
         tracker.strokeWidth = trackerStrokeWidth
-        tracker.color = trackerStrokeColor
         tracker.isAntiAlias = true
 
-        /* Circular Tracker */
-        val p: Point = satValToPoint(getSat(), getValue())
-        canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), satValTrackerRadius, tracker)
+        /* Outer circle */
+        tracker.color = trackerStrokeColor
+        canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), satValTrackerRadius1, tracker)
+
+        /* Inner circle */
+        tracker.color = Color.White.hashCode()
+        canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), satValTrackerRadius2, tracker)
     }
 
     private fun getAlpha() : Float {
