@@ -33,8 +33,6 @@ import io.syslogic.colorpicker.OnColorChangedListener
 import io.syslogic.colorpicker.R
 import io.syslogic.colorpicker.compose.LayoutId.*
 
-import java.util.*
-
 /**
  * Jetpack Compose Color-Picker Component
  *
@@ -54,11 +52,12 @@ fun ColorPickerComponent(
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
     val listener: OnColorChangedListener? = onColorChanged
 
-    var currentColor: Int by remember { mutableStateOf( getColorValue(initialColor) ) }
-    var currentAlpha: Float by remember { mutableStateOf( getAlphaValue(initialColor) ) }
-    var currentSat: Float by remember { mutableStateOf( getSatValue(initialColor) ) }
-    var currentVal: Float by remember { mutableStateOf( getValValue(initialColor) ) }
-    var currentHue: Float by remember { mutableStateOf( getHueValue(initialColor) ) }
+    /* The initial value must be `initialColor` for all of them. */
+    var currentColor: Int by remember { mutableStateOf(initialColor.hashCode()) }
+    var currentAlpha: Float by remember { mutableStateOf(initialColor.alpha) }
+    var currentHue: Float by remember { mutableStateOf(getHSV(initialColor)[0]) }
+    var currentSat: Float by remember { mutableStateOf(getHSV(initialColor)[1]) }
+    var currentVal: Float by remember { mutableStateOf(getHSV(initialColor)[2]) }
 
     var offsetSatVal by remember { mutableStateOf(Offset.Zero) }
     var sizeSatVal by remember { mutableStateOf(IntSize.Zero) }
@@ -417,6 +416,13 @@ fun getLayoutBounds(position: Offset, size: IntSize): RectF {
     )
 }
 
+/**
+ * On button click.
+ * @param context the Context of the Composable
+ * @param layoutId either OldColor or NewColor
+ * @param value the selected integer color value
+ * @param listener {link OnColorChangedListener} or null
+ */
 fun onButtonClick(context: Context, layoutId: LayoutId, value: Int, listener: OnColorChangedListener?) {
     val message: String
     when (layoutId) {
@@ -433,55 +439,44 @@ fun onButtonClick(context: Context, layoutId: LayoutId, value: Int, listener: On
     println(message)
 }
 
-fun toIntColor(alpha: Float, hue: Float, sat: Float, value: Float): Int {
-    println("alpha: $alpha, hue: $hue, saturation: $sat, value: $value")
-    return HSVToColor(
-        (alpha * 255).toInt(), floatArrayOf(hue, sat, value)
-    )
-}
-
 /**
- * @param color the color value to convert.
+ * Initialize H/S/V "Float by remember" with a {@link Color}.
+ * @param value the color to convert.
+ * @return float-array HSV.
  */
-fun toARGB(color: Int): String {
-    var alpha = Integer.toHexString(Color(color).alpha.times(255).toInt()).uppercase(Locale.ROOT)
-    var red = Integer.toHexString(Color(color).red.times(255).toInt()).uppercase(Locale.ROOT)
-    var green = Integer.toHexString(Color(color).green.times(255).toInt()).uppercase(Locale.ROOT)
-    var blue = Integer.toHexString(Color(color).blue.times(255).toInt()).uppercase(Locale.ROOT)
-    if (alpha.length == 1) {alpha = String.format("0%s", alpha)}
-    if (red.length   == 1) {red   = String.format("0%s", red)}
-    if (green.length == 1) {green = String.format("0%s", green)}
-    if (blue.length  == 1) {blue  = String.format("0%s", blue)}
-    return String.format("#%s%s%s%s", alpha, red, green, blue)
-}
-
-fun getColorValue(value: Color): Int {
-    return value.hashCode()
-}
-
-fun getAlphaValue(value: Color): Float {
-    return value.alpha
-}
-
 fun getHSV(value: Color): FloatArray {
     val hsv = FloatArray(3)
-    RGBToHSV(value.red.times(255).toInt(), value.green.times(255).toInt(), value.blue.times(255).toInt(), hsv)
+    val red = value.red.times(255).toInt()
+    val green = value.green.times(255).toInt()
+    val blue = value.blue.times(255).toInt()
+    RGBToHSV(red, green, blue, hsv)
     return hsv
 }
 
-fun getHueValue(value: Color): Float {
-    return getHSV(value)[0]
-}
-
-fun getSatValue(value: Color): Float {
-    return getHSV(value)[1]
-}
-
-fun getValValue(value: Color): Float {
-    return getHSV(value)[2]
+/**
+ * Convert H/S/V to Int.
+ * @param alpha the color to convert.
+ * @param hue the color to convert.
+ * @param sat the color to convert.
+ * @param value the color to convert.
+ * @return integer color value.
+ */
+fun toIntColor(alpha: Float, hue: Float, sat: Float, value: Float): Int {
+    println("alpha: $alpha, hue: $hue, saturation: $sat, value: $value")
+    return HSVToColor((alpha * 255).toInt(), floatArrayOf(hue, sat, value))
 }
 
 /**
+ * Convert Int to A/R/G/B.
+ * @param color the color value to convert.
+ * @return an ARGB hexadecimal string.
+ */
+fun toARGB(color: Int): String {
+    return String.format("#%1$02X", color)
+}
+
+/**
+ * Alpha channel in numeric notation 0-255.
  * @param color the color value to convert.
  * @return channel integer value as String.
  */
@@ -490,6 +485,7 @@ fun getAlphaChannel(color: Int): String {
 }
 
 /**
+ * Red channel in numeric notation 0-255.
  * @param color the color value to convert.
  * @return channel integer value as String.
  */
@@ -498,6 +494,7 @@ fun getRedChannel(color: Int): String {
 }
 
 /**
+ * Green channel in numeric notation 0-255.
  * @param color the color value to convert.
  * @return channel integer value as String.
  */
@@ -506,6 +503,7 @@ fun getGreenChannel(color: Int): String {
 }
 
 /**
+ * Blue channel in numeric notation 0-255.
  * @param color the color value to convert.
  * @return channel integer value as String.
  */
@@ -515,8 +513,8 @@ fun getBlueChannel(color: Int): String {
 
 /**
  * @param rect boundaries of the hue rectangle.
- * @param y the value on the y axis.
- * @return float hue.
+ * @param y the relative position on the y axis.
+ * @return hue 0.0F to 360.0F.
  */
 private fun pointToHue(rect: RectF, y: Float): Float {
     return 360f - y * 360f / rect.height()
@@ -524,8 +522,8 @@ private fun pointToHue(rect: RectF, y: Float): Float {
 
 /**
  * @param rect boundaries of the sat/val rectangle.
- * @param x the value on the x axis.
- * @return float sat.
+ * @param x the relative position on the x axis.
+ * @return sat 0.0F to 1.0F.
  */
 private fun pointToSat(rect: RectF, x: Float): Float {
     return 1f / rect.width() * x
@@ -533,8 +531,8 @@ private fun pointToSat(rect: RectF, x: Float): Float {
 
 /**
  * @param rect boundaries of the sat/val rectangle.
- * @param y the value on the x axis.
- * @return float value.
+ * @param y the relative position on the x axis.
+ * @return value 0.0F to 1.0F.
  */
 private fun pointToVal(rect: RectF, y: Float): Float {
     return 1f - 1f / rect.height() * y
@@ -542,8 +540,8 @@ private fun pointToVal(rect: RectF, y: Float): Float {
 
 /**
  * @param rect boundaries of the alpha rectangle.
- * @param x the value on the x axis.
- * @return float alpha.
+ * @param x the relative position on the x axis.
+ * @return alpha 0.0F to 1.0F.
  */
 private fun pointToAlpha(rect: RectF, x: Float): Float {
     return x / rect.width()
