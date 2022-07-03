@@ -170,6 +170,8 @@ public class ColorPickerPreference extends Preference implements
     }
 
     /**
+     *  String.format("#%1$02X", color)
+     *
      * @param color the color value to convert.
      */
     @NonNull

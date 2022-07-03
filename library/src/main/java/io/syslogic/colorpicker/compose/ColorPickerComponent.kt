@@ -470,10 +470,10 @@ fun getHSV(value: Color): FloatArray {
 
 /**
  * Convert H/S/V to Int.
- * @param alpha the color to convert.
- * @param hue the color to convert.
- * @param sat the color to convert.
- * @param value the color to convert.
+ * @param alpha the alpha of the color.
+ * @param hue the hue of the color.
+ * @param sat the saturation of the color.
+ * @param value the value of the color.
  * @return integer color value.
  */
 fun toIntColor(alpha: Float, hue: Float, sat: Float, value: Float): Int {

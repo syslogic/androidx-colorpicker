@@ -23,17 +23,17 @@ public class ColorPickerPanelView extends View {
     private int mColor = 0xFF000000;
 
     /** the width in pixels of the border surrounding the color panel. */
-    private float BORDER_WIDTH_PX;
+    private final float BORDER_WIDTH_PX;
 
-    private float mDensity = 1f;
-
-    private Paint mBorderPaint;
-    private Paint mColorPaint;
+    private final Paint mBorderPaint;
+    private final Paint mColorPaint;
 
     private RectF mDrawingRect;
     private RectF mColorRect;
 
     private AlphaPatternDrawable mAlphaPattern;
+
+    private final float mDensity;
 
     public ColorPickerPanelView(@NonNull Context context, @NonNull AttributeSet attrs) {
         this(context, attrs, 0);
@@ -41,18 +41,10 @@ public class ColorPickerPanelView extends View {
 
     public ColorPickerPanelView(@NonNull Context context, @NonNull AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context);
-    }
-
-    private void init(@NonNull Context context) {
-        this.mDensity = getDisplayDensity(context);
         BORDER_WIDTH_PX = getDimension(context, R.dimen.border_width_px);
-        this.initPaintTools();
-    }
-
-    private void initPaintTools() {
-        mBorderPaint = new Paint();
-        mColorPaint = new Paint();
+        this.mDensity = getDisplayDensity(context);
+        this.mBorderPaint = new Paint();
+        this.mColorPaint = new Paint();
     }
 
     private static float getDimension(@NonNull Context context, @DimenRes int resId) {
@@ -111,7 +103,6 @@ public class ColorPickerPanelView extends View {
 
     /**
      * Set the color that should be shown by this view.
-     *
      * @param color the color value to set.
      */
     public void setColor(int color) {
@@ -121,7 +112,6 @@ public class ColorPickerPanelView extends View {
 
     /**
      * Get the color currently shown by this view.
-     *
      * @return the current color value.
      */
     public int getColor() {
@@ -130,7 +120,6 @@ public class ColorPickerPanelView extends View {
 
     /**
      * Set the color of the border surrounding the panel.
-     *
      * @param color the color value to set.
      */
     @SuppressWarnings("unused")
@@ -141,7 +130,6 @@ public class ColorPickerPanelView extends View {
 
     /**
      * Get the color of the border surrounding the panel.
-     *
      * @return the current border color value.
      */
     @SuppressWarnings("unused")
