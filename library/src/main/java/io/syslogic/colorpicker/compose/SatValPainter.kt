@@ -1,8 +1,10 @@
 package io.syslogic.colorpicker.compose
 
-import android.graphics.*
 import android.graphics.Color.HSVToColor
-
+import android.graphics.ComposeShader
+import android.graphics.Paint
+import android.graphics.Point
+import android.graphics.PorterDuff
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
