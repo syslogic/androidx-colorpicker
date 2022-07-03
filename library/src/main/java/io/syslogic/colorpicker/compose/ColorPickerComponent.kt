@@ -164,7 +164,7 @@ fun ColorPickerComponent(
                                 modifier = Modifier.testTag("text_label_alpha")
                             )
                             Text(
-                                text = getAlphaChannel(currentColor),
+                                text = getChannelValue(currentColor, "alpha"),
                                 textAlign = TextAlign.End,
                                 modifier = Modifier
                                     .defaultMinSize(minWidth = argbValueMinWidth)
@@ -180,7 +180,7 @@ fun ColorPickerComponent(
                                 modifier = Modifier.testTag("text_label_Blue")
                             )
                             Text(
-                                text = getBlueChannel(currentColor),
+                                text = getChannelValue(currentColor, "blue"),
                                 textAlign = TextAlign.End,
                                 modifier = Modifier
                                     .defaultMinSize(minWidth = argbValueMinWidth)
@@ -196,7 +196,7 @@ fun ColorPickerComponent(
                                 modifier = Modifier.testTag("text_label_red")
                             )
                             Text(
-                                text = getRedChannel(currentColor),
+                                text = getChannelValue(currentColor, "red"),
                                 textAlign = TextAlign.End,
                                 modifier = Modifier
                                     .defaultMinSize(minWidth = argbValueMinWidth)
@@ -212,7 +212,7 @@ fun ColorPickerComponent(
                                 modifier = Modifier.testTag("text_label_green")
                             )
                             Text(
-                                text = getGreenChannel(currentColor),
+                                text = getChannelValue(currentColor, "green"),
                                 textAlign = TextAlign.End,
                                 modifier = Modifier
                                     .defaultMinSize(minWidth = argbValueMinWidth)
@@ -493,37 +493,18 @@ fun toARGB(color: Int): String {
 /**
  * Alpha channel in numeric notation 0-255.
  * @param color the color value to convert.
+ * @param name the name of the channel.
  * @return channel integer value as String.
  */
-fun getAlphaChannel(color: Int): String {
-    return String.format("%s", Color(color).alpha.times(255).toInt())
-}
-
-/**
- * Red channel in numeric notation 0-255.
- * @param color the color value to convert.
- * @return channel integer value as String.
- */
-fun getRedChannel(color: Int): String {
-    return String.format("%s", Color(color).red.times(255).toInt())
-}
-
-/**
- * Green channel in numeric notation 0-255.
- * @param color the color value to convert.
- * @return channel integer value as String.
- */
-fun getGreenChannel(color: Int): String {
-    return String.format("%s", Color(color).green.times(255).toInt())
-}
-
-/**
- * Blue channel in numeric notation 0-255.
- * @param color the color value to convert.
- * @return channel integer value as String.
- */
-fun getBlueChannel(color: Int): String {
-    return String.format("%s", Color(color).blue.times(255).toInt())
+fun getChannelValue(color: Int, name: String): String {
+    val value: Float = when (name) {
+        "alpha" -> { Color(color).alpha }
+        "red"   -> { Color(color).red   }
+        "green" -> { Color(color).green }
+        "blue"  -> { Color(color).blue  }
+        else    -> { return "" }
+    }
+    return String.format("%s", value.times(255).toInt())
 }
 
 /**
