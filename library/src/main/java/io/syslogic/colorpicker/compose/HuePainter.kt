@@ -33,7 +33,7 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             )
         ).also {
 
-            /* Borderline */
+            /* Border */
             drawRect(
                 size = size,
                 color = Color(borderStrokeColor),

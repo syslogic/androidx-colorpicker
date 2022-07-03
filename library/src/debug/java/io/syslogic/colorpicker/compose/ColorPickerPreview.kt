@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 fun ColorPickerPreview() {
     MaterialTheme {
         ColorPickerComponent(
-            initialColor = Color.DarkGray,
+            initialColor = Color(0xD31A3D9A),
             onColorChanged = null,
             showAlpha = true,
             showARGB = true,

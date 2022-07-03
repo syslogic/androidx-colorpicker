@@ -40,7 +40,7 @@ import io.syslogic.colorpicker.compose.LayoutId.*
  */
 @Composable
 fun ColorPickerComponent(
-    initialColor: Color = Color.Transparent,
+    initialColor: Color = Color.Unspecified,
     onColorChanged: OnColorChangedListener?,
     showAlpha: Boolean = true,
     showHSV: Boolean = true,

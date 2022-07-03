@@ -25,9 +25,7 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
      * This is invoked internally within [draw] after the positioning and configuring the [Painter].
      */
     override fun DrawScope.onDraw() {
-
         setCanvas(drawContext, density)
-
         drawRect(
             size = size,
             brush = Brush.linearGradient(
@@ -35,7 +33,7 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             )
         ).also {
 
-            /* Borderline */
+            /* Border */
             drawRect(
                 size = size,
                 color = Color(borderStrokeColor),
@@ -47,11 +45,10 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
             /* Horizontal Tracker */
             val p: Point = alphaToPoint(value)
-            val offset = Offset(p.x - (alphaTrackerWidth / 2), rect.top)
             drawRoundRect(
                 color = Color(trackerStrokeColor),
                 size = Size(alphaTrackerWidth, rect.height()),
-                topLeft = offset,
+                topLeft = Offset(p.x - (alphaTrackerWidth / 2), rect.top),
                 style = Stroke(width = trackerStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(trackerCornerRadius)
                 )

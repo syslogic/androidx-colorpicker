@@ -25,7 +25,6 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
      * This is invoked internally within [draw] after the positioning and configuring the [Painter].
      */
     override fun DrawScope.onDraw() {
-
         setCanvas(drawContext, density)
 
         /* Saturation Shader with Alpha */
@@ -51,7 +50,7 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         composition.shader = ComposeShader(mContrastShader, mSaturationShader, PorterDuff.Mode.MULTIPLY)
         canvas.drawRect(rect, composition)
 
-        /* Borderline */
+        /* Border */
         val border = Paint()
         border.style = Paint.Style.STROKE
         border.strokeWidth = borderStrokeWidth
@@ -65,15 +64,16 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         tracker.strokeWidth = trackerStrokeWidth
         tracker.isAntiAlias = true
 
-        /* Outer circle */
+        /* Outer circle (dark) */
         tracker.color = trackerStrokeColor
         canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), satValTrackerRadius1, tracker)
 
-        /* Inner circle */
+        /* Inner circle (light) */
         tracker.color = Color.White.hashCode()
         canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), satValTrackerRadius2, tracker)
     }
 
+    /** Getters */
     private fun getAlpha() : Float {
         return this.value[0]
     }
@@ -87,6 +87,7 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         return this.value[3]
     }
 
+    /** Setters */
     fun setAlpha(value: Float) {
         this.value[0] = value
     }

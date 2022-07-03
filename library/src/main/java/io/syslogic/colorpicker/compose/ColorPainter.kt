@@ -28,7 +28,7 @@ class ColorPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             color = value
         ).also {
 
-            /* Borderline */
+            /* Border */
             drawRect(
                 size = size,
                 color = Color(borderStrokeColor),
