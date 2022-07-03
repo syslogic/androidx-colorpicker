@@ -59,10 +59,10 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
     private fun getHueValues(): List<Color> {
         var i = 0
-        val list: MutableList<Color> = MutableList(361) { Color.Black }
+        val list: MutableList<Color> = MutableList(360) { Color.Black }
         while (i < list.size) {
             val value = (list.size - i).toFloat()
-            list[i] = Color(android.graphics.Color.HSVToColor(floatArrayOf(value, 1f, 1f)))
+            list[i] = Color(android.graphics.Color.HSVToColor(255, floatArrayOf(value, 1f, 1f)))
             i++
         }
         return list

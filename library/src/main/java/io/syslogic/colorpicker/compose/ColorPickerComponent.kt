@@ -52,11 +52,11 @@ fun ColorPickerComponent(
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
     val listener: OnColorChangedListener? = onColorChanged
 
-    var currentAlpha: Float by remember { mutableStateOf(.5F) }
-    var currentSat: Float by remember { mutableStateOf(0.0F) }
-    var currentVal: Float by remember { mutableStateOf(0.0F) }
-    var currentHue: Float by remember { mutableStateOf(180F) }
     var currentColor: Int by remember { mutableStateOf(initialColor.hashCode()) }
+    var currentAlpha: Float by remember { mutableStateOf(.5F) }
+    var currentSat: Float by remember { mutableStateOf(.5F) }
+    var currentVal: Float by remember { mutableStateOf(.5F) }
+    var currentHue: Float by remember { mutableStateOf(180F) }
 
     var offsetSatVal by remember { mutableStateOf(Offset.Zero) }
     var sizeSatVal by remember { mutableStateOf(IntSize.Zero) }
@@ -94,7 +94,7 @@ fun ColorPickerComponent(
                                 text = "Hue:",
                                 textAlign = TextAlign.End,
                                 modifier = Modifier
-                                    .defaultMinSize(minWidth = Dp(42F))
+                                    .defaultMinSize(minWidth = Dp(44F))
                                     .testTag("text_hue")
                             )
                             Text(
@@ -110,7 +110,7 @@ fun ColorPickerComponent(
                                 text = "Sat:",
                                 textAlign = TextAlign.End,
                                 modifier = Modifier
-                                    .defaultMinSize(minWidth = Dp(42F))
+                                    .defaultMinSize(minWidth = Dp(44F))
                                     .testTag("text_sat")
                             )
                             Text(
@@ -126,7 +126,7 @@ fun ColorPickerComponent(
                                 text = "Val:",
                                 textAlign = TextAlign.End,
                                 modifier = Modifier
-                                    .defaultMinSize(minWidth = Dp(42F))
+                                    .defaultMinSize(minWidth = Dp(44F))
                                     .testTag("text_val")
                             )
                             Text(
@@ -223,7 +223,9 @@ fun ColorPickerComponent(
                 contentDescription = "Sat/Val by Hue",
                 contentScale = ContentScale.FillBounds,
                 painter = SatValPainter(Size(900F, 900F)).also {
-                    it.setValue(currentSat, currentVal)
+                    it.setAlpha(currentAlpha)
+                    it.setSat(currentSat)
+                    it.setValue(currentVal)
                     it.setHue(currentHue)
                 },
                 modifier = Modifier
