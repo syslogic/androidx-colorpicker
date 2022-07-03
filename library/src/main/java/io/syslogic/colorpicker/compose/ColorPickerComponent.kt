@@ -7,6 +7,7 @@ import android.graphics.RectF
 import android.widget.Toast
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
@@ -48,29 +50,37 @@ fun ColorPickerComponent(
     showHex: Boolean = true
 ) {
 
-    val context = LocalContext.current
-    val listener: OnColorChangedListener? = onColorChanged
-    val rowPadding = dimensionResource(R.dimen.compose_row_padding)
-    val colPadding = dimensionResource(R.dimen.compose_col_padding)
+    /* Loading dimension resources from dimens.xml */
     val hsvLabelMinWidth = dimensionResource(R.dimen.compose_hsv_label_min_width)
     val hsvLabelPaddingEnd = dimensionResource(R.dimen.compose_hsv_label_padding_end)
     val argbValueMinWidth = dimensionResource(R.dimen.compose_argb_value_min_width)
+    val rowPadding = dimensionResource(R.dimen.compose_row_padding)
+    val colPadding = dimensionResource(R.dimen.compose_col_padding)
 
-    /* The initial value must be `initialColor` for all of them. */
+    /* All the values are being initialized by the `initialColor`. */
     var currentColor: Int by remember { mutableStateOf(initialColor.hashCode()) }
     var currentAlpha: Float by remember { mutableStateOf(initialColor.alpha) }
     var currentHue: Float by remember { mutableStateOf(getHSV(initialColor)[0]) }
     var currentSat: Float by remember { mutableStateOf(getHSV(initialColor)[1]) }
     var currentVal: Float by remember { mutableStateOf(getHSV(initialColor)[2]) }
 
+    /* The measured position of the SatValPainter. */
     var offsetSatVal by remember { mutableStateOf(Offset.Zero) }
     var sizeSatVal by remember { mutableStateOf(IntSize.Zero) }
 
+    /* The measured position of the HuePainter. */
     var offsetHue by remember { mutableStateOf(Offset.Zero) }
     var sizeHue by remember { mutableStateOf(IntSize.Zero) }
 
+    /* The measured position of the AlphaPainter. */
     var offsetAlpha by remember { mutableStateOf(Offset.Zero) }
     var sizeAlpha by remember { mutableStateOf(IntSize.Zero) }
+
+    /* Callback listener */
+    val listener: OnColorChangedListener? = onColorChanged
+
+    /* Composable LocalContext */
+    val context = LocalContext.current
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -243,13 +253,23 @@ fun ColorPickerComponent(
                     .layoutId(SatVal)
                     .testTag("sat_val")
                     .pointerInput(Unit) {
-                        detectTapGestures(
-                            onPress = { event ->
+                        detectDragGestures(
+                            onDrag = { inputChange: PointerInputChange, _: Offset ->
                                 val rect: RectF = getLayoutBounds(offsetSatVal, sizeSatVal)
-                                currentSat = pointToSat(rect, event.x)
-                                currentVal = pointToVal(rect, event.y)
+                                currentSat = pointToSat(rect, inputChange.position.x)
+                                currentVal = pointToVal(rect, inputChange.position.y)
                                 currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal)
-                                println("Sat: $currentSat, Val: $currentVal (${event.x.toInt()} x ${event.y.toInt()})")
+                            }
+                        )
+                    }
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onPress = { offset: Offset ->
+                                val rect: RectF = getLayoutBounds(offsetSatVal, sizeSatVal)
+                                currentSat = pointToSat(rect, offset.x)
+                                currentVal = pointToVal(rect, offset.y)
+                                currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal)
+                                println("Hue: $currentHue, Sat: $currentSat, Val: $currentVal (${offset.x.toInt()} x ${offset.y.toInt()})")
                             }
                         )
                     }
@@ -274,12 +294,21 @@ fun ColorPickerComponent(
                     .layoutId(Hue)
                     .testTag("hue")
                     .pointerInput(Unit) {
-                        detectTapGestures(
-                            onPress = { event ->
+                        detectDragGestures(
+                            onDrag = { inputChange: PointerInputChange, _: Offset ->
                                 val rect: RectF = getLayoutBounds(offsetHue, sizeHue)
-                                currentHue = pointToHue(rect, event.y)
+                                currentHue = pointToHue(rect, inputChange.position.y)
                                 currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal)
-                                println("Val: $currentHue (${event.y.toInt()})")
+                            }
+                        )
+                    }
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onPress = { offset: Offset ->
+                                val rect: RectF = getLayoutBounds(offsetHue, sizeHue)
+                                currentHue = pointToHue(rect, offset.y)
+                                currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal)
+                                println("Val: $currentHue (${offset.y.toInt()})")
                             }
                         )
                     }
@@ -310,12 +339,21 @@ fun ColorPickerComponent(
                             .layoutId(Alpha)
                             .testTag("alpha")
                             .pointerInput(Unit) {
-                                detectTapGestures(
-                                    onPress = { event ->
+                                detectDragGestures(
+                                    onDrag = { inputChange: PointerInputChange, _: Offset ->
                                         val rect: RectF = getLayoutBounds(offsetAlpha, sizeAlpha)
-                                        currentAlpha = pointToAlpha(rect, event.x)
+                                        currentAlpha = pointToAlpha(rect,  inputChange.position.x)
                                         currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal)
-                                        println("Alpha: $currentAlpha (${event.x.toInt()})")
+                                    }
+                                )
+                            }
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onPress = { offset: Offset ->
+                                        val rect: RectF = getLayoutBounds(offsetAlpha, sizeAlpha)
+                                        currentAlpha = pointToAlpha(rect, offset.x)
+                                        currentColor = toIntColor(currentAlpha, currentHue, currentSat, currentVal)
+                                        println("Alpha: $currentAlpha (${offset.x.toInt()})")
                                     }
                                 )
                             }
@@ -367,7 +405,7 @@ fun ColorPickerComponent(
                         .padding(all = rowPadding)
                         .pointerInput(Unit) {
                             detectTapGestures(
-                                onPress = {
+                                onPress = { _: Offset ->
                                     /* reset to the previous color */
                                     onButtonClick(context, OldColor, initialColor.hashCode(), listener)
                                     currentColor = initialColor.hashCode()
@@ -405,7 +443,7 @@ fun ColorPickerComponent(
                         .padding(all = rowPadding)
                         .pointerInput(Unit) {
                             detectTapGestures(
-                                onPress = {
+                                onPress = { _: Offset ->
                                     onButtonClick(
                                         context,
                                         NewColor,
