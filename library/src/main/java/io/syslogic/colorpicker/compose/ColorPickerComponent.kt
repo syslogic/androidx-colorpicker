@@ -405,7 +405,7 @@ fun ColorPickerComponent(
                         .padding(all = rowPadding)
                         .pointerInput(Unit) {
                             detectTapGestures(
-                                onPress = { _: Offset ->
+                                onPress = {
                                     /* reset to the previous color */
                                     onButtonClick(context, OldColor, initialColor.hashCode(), listener)
                                     currentColor = initialColor.hashCode()
@@ -443,7 +443,7 @@ fun ColorPickerComponent(
                         .padding(all = rowPadding)
                         .pointerInput(Unit) {
                             detectTapGestures(
-                                onPress = { _: Offset ->
+                                onPress = {
                                     onButtonClick(
                                         context,
                                         NewColor,
