@@ -85,6 +85,7 @@ fun ColorPickerComponent(
                     .padding(all = rowPadding * 4)
             ) {
 
+                /* HSV */
                 if (showHSV) {
                     Column(
                         horizontalAlignment = Alignment.Start,
@@ -146,6 +147,7 @@ fun ColorPickerComponent(
                     }
                 }
 
+                /* ARGB */
                 if (showARGB) {
                     Column(
                         horizontalAlignment = Alignment.End,
@@ -366,7 +368,13 @@ fun ColorPickerComponent(
                         .pointerInput(Unit) {
                             detectTapGestures(
                                 onPress = {
-                                    onButtonClick(context, OldColor, initialColor.value.toInt(), listener)
+                                    /* reset to the previous color */
+                                    onButtonClick(context, OldColor, initialColor.hashCode(), listener)
+                                    currentColor = initialColor.hashCode()
+                                    currentAlpha = initialColor.alpha
+                                    currentHue = getHSV(initialColor)[0]
+                                    currentSat = getHSV(initialColor)[1]
+                                    currentVal = getHSV(initialColor)[2]
                                 }
                             )
                         }
