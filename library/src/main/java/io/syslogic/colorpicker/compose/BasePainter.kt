@@ -87,10 +87,9 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
      * @return the {@link Point} where AlphaPainter shall draw the tracker rectangle.
      */
     fun alphaToPoint(value: Float): Point {
-        return Point(
-            (value * rect.width()).toInt(),
-            rect.top.toInt()
-        )
+        val x: Int = (value * rect.width()).toInt()
+        val y: Int = rect.top.toInt()
+        return Point(x, y)
     }
 
     /**
@@ -99,10 +98,9 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
      * @return the {@link Point} where HuePainter shall draw the tracker rectangle.
      */
     fun hueToPoint(value: Float): Point {
-        return Point(
-            rect.left.toInt(),
-            (rect.height() - value * rect.height() / 360f + rect.top).toInt()
-        )
+        val x: Int = rect.left.toInt()
+        val y: Int = (rect.height() - value * rect.height() / 360f + rect.top).toInt()
+        return Point(x, y)
     }
 
     /**
@@ -112,9 +110,8 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
      * @return the Point where SatValPainter shall draw the tracker circle.
      */
     fun satValToPoint(saturation: Float, value: Float): Point {
-        return Point(
-            (saturation * rect.width() + rect.left).toInt(),
-            ((1f - value) * rect.height() + rect.top).toInt()
-        )
+        val x: Int = (saturation * rect.width() + rect.left).toInt()
+        val y: Int = ((1f - value) * rect.height() + rect.top).toInt()
+        return Point(x, y)
     }
 }

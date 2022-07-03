@@ -28,15 +28,14 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
         setCanvas(drawContext, density)
 
-        /* Saturation Shader */
+        /* Saturation Shader with Alpha */
+        val alpha: Int = getAlpha().times(255).toInt()
+        val color: Int = HSVToColor(alpha, floatArrayOf(getHue(), 1.0F, 1.0F))
         val mSaturationShader = LinearGradientShader (
             from = Offset(rect.right, rect.top),
             to = Offset(rect.left,  rect.top),
             tileMode = TileMode.Clamp,
-            colors = listOf(
-                Color(color = HSVToColor(getAlpha().times(255).toInt(), floatArrayOf(getHue(), 1.0F, 1.0F))),
-                Color.White
-            )
+            colors = listOf(Color(color), Color.White)
         )
 
         /* Value Shader */
@@ -44,24 +43,19 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             from = Offset(rect.left, rect.bottom),
             to = Offset(rect.left, rect.top),
             tileMode = TileMode.Clamp,
-            colors = listOf(
-                Color.Black,
-                Color.White
-            )
+            colors = listOf(Color.Black, Color.White)
         )
 
         /* Compose Shader */
-        val paint = Paint()
-        paint.shader = ComposeShader(mContrastShader, mSaturationShader, PorterDuff.Mode.MULTIPLY)
-        canvas.drawRect(rect, paint)
+        val compose = Paint()
+        compose.shader = ComposeShader(mContrastShader, mSaturationShader, PorterDuff.Mode.MULTIPLY)
+        canvas.drawRect(rect, compose)
 
-        /* Borderline Paint */
+        /* Borderline */
         val border = Paint()
         border.style = Paint.Style.STROKE
         border.strokeWidth = borderStrokeWidth
         border.color = borderStrokeColor
-
-        /* Borderline */
         canvas.drawRect(rect, border)
 
         /* Tracker Paint */
@@ -76,35 +70,36 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), satValTrackerRadius, tracker)
     }
 
-    private fun getHue() : Float {
+    private fun getAlpha() : Float {
         return this.value[0]
     }
 
-    private fun getSat() : Float {
+    private fun getHue() : Float {
         return this.value[1]
     }
 
-    private fun getValue() : Float {
+    private fun getSat() : Float {
         return this.value[2]
     }
 
-    private fun getAlpha() : Float {
+    private fun getValue() : Float {
         return this.value[3]
     }
 
-    fun setHue(value: Float) {
+    fun setAlpha(value: Float) {
         this.value[0] = value
     }
 
-    fun setSat(value: Float) {
+    fun setHue(value: Float) {
         this.value[1] = value
     }
 
-    fun setValue(value: Float) {
+    fun setSat(value: Float) {
         this.value[2] = value
     }
 
-    fun setAlpha(value: Float) {
+    fun setValue(value: Float) {
         this.value[3] = value
     }
+
 }
