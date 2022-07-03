@@ -23,8 +23,8 @@ class ComposeActivity : ComponentActivity(), OnColorChangedListener {
     private lateinit var prefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+
         this.prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val initialColor = prefs.getInt("color_code_01", 0xFF444444.toInt())
 
@@ -34,8 +34,8 @@ class ComposeActivity : ComponentActivity(), OnColorChangedListener {
                     onColorChanged = this@ComposeActivity,
                     initialColor = Color(initialColor),
                     showAlpha = true,
-                    showARGB = true,
                     showHSV = true,
+                    showARGB = true,
                     showHex = true
                 )
             }

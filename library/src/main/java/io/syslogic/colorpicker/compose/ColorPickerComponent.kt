@@ -1,6 +1,8 @@
 package io.syslogic.colorpicker.compose
 
 import android.content.Context
+import android.graphics.Color.HSVToColor
+import android.graphics.Color.RGBToHSV
 import android.graphics.RectF
 import android.widget.Toast
 
@@ -43,8 +45,8 @@ fun ColorPickerComponent(
     initialColor: Color = Color.Transparent,
     onColorChanged: OnColorChangedListener?,
     showAlpha: Boolean = true,
-    showARGB: Boolean = true,
     showHSV: Boolean = true,
+    showARGB: Boolean = true,
     showHex: Boolean = true
 ) {
 
@@ -52,11 +54,11 @@ fun ColorPickerComponent(
     val rowPadding = dimensionResource(R.dimen.compose_row_padding)
     val listener: OnColorChangedListener? = onColorChanged
 
-    var currentColor: Int by remember { mutableStateOf(initialColor.hashCode()) }
-    var currentAlpha: Float by remember { mutableStateOf(.5F) }
-    var currentSat: Float by remember { mutableStateOf(.5F) }
-    var currentVal: Float by remember { mutableStateOf(.5F) }
-    var currentHue: Float by remember { mutableStateOf(180F) }
+    var currentColor: Int by remember { mutableStateOf( getColorValue(initialColor) ) }
+    var currentAlpha: Float by remember { mutableStateOf( getAlphaValue(initialColor) ) }
+    var currentSat: Float by remember { mutableStateOf( getSatValue(initialColor) ) }
+    var currentVal: Float by remember { mutableStateOf( getValValue(initialColor) ) }
+    var currentHue: Float by remember { mutableStateOf( getHueValue(initialColor) ) }
 
     var offsetSatVal by remember { mutableStateOf(Offset.Zero) }
     var sizeSatVal by remember { mutableStateOf(IntSize.Zero) }
@@ -224,9 +226,9 @@ fun ColorPickerComponent(
                 contentScale = ContentScale.FillBounds,
                 painter = SatValPainter(Size(900F, 900F)).also {
                     it.setAlpha(currentAlpha)
+                    it.setHue(currentHue)
                     it.setSat(currentSat)
                     it.setValue(currentVal)
-                    it.setHue(currentHue)
                 },
                 modifier = Modifier
                     .layoutId(SatVal)
@@ -433,7 +435,7 @@ fun onButtonClick(context: Context, layoutId: LayoutId, value: Int, listener: On
 
 fun toIntColor(alpha: Float, hue: Float, sat: Float, value: Float): Int {
     println("alpha: $alpha, hue: $hue, saturation: $sat, value: $value")
-    return android.graphics.Color.HSVToColor(
+    return HSVToColor(
         (alpha * 255).toInt(), floatArrayOf(hue, sat, value)
     )
 }
@@ -451,6 +453,32 @@ fun toARGB(color: Int): String {
     if (green.length == 1) {green = String.format("0%s", green)}
     if (blue.length  == 1) {blue  = String.format("0%s", blue)}
     return String.format("#%s%s%s%s", alpha, red, green, blue)
+}
+
+fun getColorValue(value: Color): Int {
+    return value.hashCode()
+}
+
+fun getAlphaValue(value: Color): Float {
+    return value.alpha
+}
+
+fun getHSV(value: Color): FloatArray {
+    val hsv = FloatArray(3)
+    RGBToHSV(value.red.times(255).toInt(), value.green.times(255).toInt(), value.blue.times(255).toInt(), hsv)
+    return hsv
+}
+
+fun getHueValue(value: Color): Float {
+    return getHSV(value)[0]
+}
+
+fun getSatValue(value: Color): Float {
+    return getHSV(value)[1]
+}
+
+fun getValValue(value: Color): Float {
+    return getHSV(value)[2]
 }
 
 /**

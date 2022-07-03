@@ -73,15 +73,12 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
     private fun getAlpha() : Float {
         return this.value[0]
     }
-
     private fun getHue() : Float {
         return this.value[1]
     }
-
     private fun getSat() : Float {
         return this.value[2]
     }
-
     private fun getValue() : Float {
         return this.value[3]
     }
@@ -89,17 +86,13 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
     fun setAlpha(value: Float) {
         this.value[0] = value
     }
-
     fun setHue(value: Float) {
         this.value[1] = value
     }
-
     fun setSat(value: Float) {
         this.value[2] = value
     }
-
     fun setValue(value: Float) {
         this.value[3] = value
     }
-
 }
