@@ -9,6 +9,10 @@
 
     <dimen name="margin_double_arrow">4dp</dimen>
 
-    <dimen name="compose_row_padding">4dp</dimen>
+    <dimen name="compose_row_padding">2dp</dimen>
+    <dimen name="compose_col_padding">2dp</dimen>
+    <dimen name="compose_hsv_label_min_width">44dp</dimen>
+    <dimen name="compose_hsv_label_padding_end">4dp</dimen>
+    <dimen name="compose_argb_value_min_width">30dp</dimen>
 
 </resources>

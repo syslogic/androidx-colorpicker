@@ -2,4 +2,13 @@
 <resources>
     <string name="text_color_picker_dialog">Color Picker</string>
     <string name="text_hexadecimal_value">Hex Value</string>
+
+    <string name="text_label_hue">Hue:</string>
+    <string name="text_label_sat">Sat:</string>
+    <string name="text_label_val">Val:</string>
+    <string name="text_label_alpha">Alpha:</string>
+    <string name="text_label_red">Red:</string>
+    <string name="text_label_green">Green:</string>
+    <string name="text_label_Blue">Blue:</string>
+
 </resources>
