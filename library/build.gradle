@@ -61,13 +61,12 @@ android {
 
 dependencies {
 
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation "com.google.android.material:material:$material_version"
     // implementation "com.google.android.material:compose-theme-adapter-3:1.0.13"
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
-
+    implementation "androidx.core:core-ktx:$core_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.preference:preference-ktx:$preference_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     // implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2'
 
@@ -78,7 +77,7 @@ dependencies {
     // implementation "androidx.compose.material:material-icons-core:$compose_version"
     // implementation 'androidx.compose.material:material-icons-extended:$compose_version'
 
-    /* Compose Preview */
+    /* Composable Preview */
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.customview:customview-poolingcontainer:1.0.0-rc01"
 }
@@ -152,7 +151,7 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                groupId = 'io.syslogic'
+                groupId = group
                 artifactId = 'androidx-colorpicker'
                 from components.getByName('release')
                 version = version_name
