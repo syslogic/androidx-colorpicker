@@ -58,7 +58,7 @@ fun ColorPickerDialog(
             color = colorResource(id = R.color.cardview_light_background),
             modifier = Modifier
                 .layoutId(DialogSurface)
-                .testTag("surface")
+                .testTag("dialog_surface")
         ) {
             Column(
                 modifier = Modifier
@@ -76,7 +76,12 @@ fun ColorPickerDialog(
                             fontSize = toSp(dp = dimensionResource(R.dimen.compose_dialog_title_font_size)),
                             fontFamily = FontFamily.Default,
                             fontWeight = FontWeight.Bold
-                        )
+                        ),
+                        modifier = Modifier
+                            .padding(dimensionResource(R.dimen.compose_dialog_title_padding))
+                            .layoutId(DialogTitleText)
+                            .testTag("dialog_title")
+
                     )
                     Icon(
                         imageVector = Icons.Filled.Close,
@@ -86,6 +91,8 @@ fun ColorPickerDialog(
                             .width(dimensionResource(R.dimen.compose_dialog_close_icon_size))
                             .height(dimensionResource(R.dimen.compose_dialog_close_icon_size))
                             .clickable { showDialog(false) }
+                            .layoutId(DialogCloseIcon)
+                            .testTag("dialog_icon")
                     )
                 }
 
@@ -97,14 +104,15 @@ fun ColorPickerDialog(
                     modifier = Modifier
                         .wrapContentHeight()
                         .wrapContentWidth()
+                        .layoutId(EmbeddedColorPicker)
                 ) {
                     ColorPickerComponent(
                         initialColor = Color(currentColor),
                         onColorChanged = onColorChanged,
                         showAlpha = showAlpha,
-                        showHex = showHex,
                         showHSV = showHSV,
-                        showARGB = showARGB
+                        showARGB = showARGB,
+                        showHex = showHex
                     )
                 }
             }

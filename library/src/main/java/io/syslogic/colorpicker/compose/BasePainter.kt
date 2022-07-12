@@ -64,14 +64,14 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
         /* Tracker Dimensions */
         satValTrackerRadius1 = 9F * density
         satValTrackerRadius2 = 8F * density
-        alphaTrackerWidth = 4F * density
+        alphaTrackerWidth = 6F * density
         hueTrackerHeight = 4F * density
 
         /* Tracker Styles */
-        trackerCornerRadius = 2F * density
-        trackerStrokeWidth = 1F * density
         trackerStrokeColorOuter = Color.Black.hashCode()
         trackerStrokeColorInner = Color.White.hashCode()
+        trackerCornerRadius = 2F * density
+        trackerStrokeWidth = 1F * density
 
         /* Border Styles */
         borderCornerRadius = 2F

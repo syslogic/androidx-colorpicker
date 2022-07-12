@@ -9,9 +9,10 @@ enum class LayoutId {
     AlphaPanel,
     SatValPanel,
     HuePanel,
-
     OldColor,
     NewColor,
-
-    DialogSurface
+    EmbeddedColorPicker,
+    DialogSurface,
+    DialogTitleText,
+    DialogCloseIcon
 }
