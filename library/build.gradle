@@ -24,7 +24,7 @@ android {
         jvmTarget = java_version
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion kotlin_compiler_extension_version
     }
     packagingOptions {
         resources.pickFirsts.add('META-INF/LGPL2.1')
