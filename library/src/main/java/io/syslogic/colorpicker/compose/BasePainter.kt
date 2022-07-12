@@ -45,8 +45,11 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
     /** Tracker Style: Stroke Width */
     var trackerStrokeWidth by Delegates.notNull<Float>()
 
-    /** Tracker Style: Stroke Color */
-    var trackerStrokeColor by Delegates.notNull<Int>()
+    /** Tracker Style: Outer Stroke Color */
+    var trackerStrokeColorOuter by Delegates.notNull<Int>()
+
+    /** Tracker Style: Inner Stroke Color */
+    var trackerStrokeColorInner by Delegates.notNull<Int>()
 
     /** Native Canvas */
     protected lateinit var canvas: NativeCanvas
@@ -67,7 +70,8 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
         /* Tracker Styles */
         trackerCornerRadius = 2F * density
         trackerStrokeWidth = 1F * density
-        trackerStrokeColor = Color.Black.hashCode()
+        trackerStrokeColorOuter = Color.Black.hashCode()
+        trackerStrokeColorInner = Color.White.hashCode()
 
         /* Border Styles */
         borderCornerRadius = 2F

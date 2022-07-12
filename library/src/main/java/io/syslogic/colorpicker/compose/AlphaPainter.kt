@@ -45,10 +45,22 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
             /* Horizontal Tracker */
             val p: Point = alphaToPoint(value)
+
+            /* Outer rectangle (dark) */
             drawRoundRect(
-                color = Color(trackerStrokeColor),
+                color = Color(trackerStrokeColorOuter),
                 size = Size(alphaTrackerWidth, rect.height()),
                 topLeft = Offset(p.x - (alphaTrackerWidth / 2), rect.top),
+                style = Stroke(width = trackerStrokeWidth,
+                    pathEffect = PathEffect.cornerPathEffect(trackerCornerRadius)
+                )
+            )
+
+            /* Inner rectangle (light) */
+            drawRoundRect(
+                color = Color(trackerStrokeColorInner),
+                size = Size(alphaTrackerWidth - 2, rect.height() - 2),
+                topLeft = Offset(p.x - (alphaTrackerWidth / 2) + 1, rect.top + 1),
                 style = Stroke(width = trackerStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(trackerCornerRadius)
                 )

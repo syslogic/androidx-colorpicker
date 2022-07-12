@@ -47,7 +47,7 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             val p: Point = hueToPoint(value)
             val offset = Offset(rect.left, p.y - (hueTrackerHeight / 2))
             drawRoundRect(
-                color = Color(trackerStrokeColor),
+                color = Color(trackerStrokeColorOuter),
                 size = Size(rect.width(), hueTrackerHeight),
                 topLeft = offset,
                 style = Stroke(width = trackerStrokeWidth,

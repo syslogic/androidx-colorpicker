@@ -67,11 +67,11 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         tracker.isAntiAlias = true
 
         /* Outer circle (dark) */
-        tracker.color = trackerStrokeColor
+        tracker.color = trackerStrokeColorOuter
         canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), satValTrackerRadius1, tracker)
 
         /* Inner circle (light) */
-        tracker.color = Color.White.hashCode()
+        tracker.color = trackerStrokeColorInner
         canvas.drawCircle(p.x.toFloat(), p.y.toFloat(), satValTrackerRadius2, tracker)
     }
 
