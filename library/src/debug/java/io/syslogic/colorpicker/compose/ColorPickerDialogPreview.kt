@@ -24,9 +24,7 @@ fun ColorPickerDialogPreview() {
             showARGB = false,
             showHSV = false,
             showHex = true,
-            showDialog = {
-
-            }
+            showDialog = {}
         )
     }
 }

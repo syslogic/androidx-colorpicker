@@ -56,7 +56,12 @@ can be added as XML node; into eg. [`preferences.xml`](https://github.com/syslog
 
 c) [`ColorPickerComponent`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/compose/ColorPickerComponent.kt) is a `Composable`.
 
-Screenshot `ColorPickerComponent`:
+Preview of `@Composable fun ColorPickerComponent`:
 
 ![Composable](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_02.png)
 
+d) [`ColorPickerDialog`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/compose/ColorPickerDialog.kt) is a `Composable`.
+
+Preview of `@Composable fun ColorPickerDialog`:
+
+![Composable](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_03.png)
