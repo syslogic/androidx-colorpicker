@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ColorPickerComponent" type="ComposePreviewRunConfiguration" activateToolWindowBeforeRun="false">
+  <configuration default="false" name="ColorPickerDialog" type="ComposePreviewRunConfiguration" activateToolWindowBeforeRun="false">
     <module name="ColorPicker.library" />
     <option name="DEPLOY" value="true" />
     <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
@@ -9,7 +9,7 @@
     <option name="ALL_USERS" value="false" />
     <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
     <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
-    <option name="ACTIVITY_EXTRA_FLAGS" value="--es composable io.syslogic.colorpicker.compose.ColorPickerPreviewKt.ColorPickerPreview" />
+    <option name="ACTIVITY_EXTRA_FLAGS" value="--es composable io.syslogic.colorpicker.compose.ColorPickerDialogPreviewKt.ColorPickerDialogPreview" />
     <option name="MODE" value="specific_activity" />
     <option name="CLEAR_LOGCAT" value="false" />
     <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
@@ -52,7 +52,7 @@
     <option name="ACTIVITY_CLASS" value="androidx.compose.ui.tooling.PreviewActivity" />
     <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="true" />
     <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
-    <compose-preview-run-configuration composable-fqn="io.syslogic.colorpicker.compose.ColorPickerPreviewKt.ColorPickerPreview" />
+    <compose-preview-run-configuration composable-fqn="io.syslogic.colorpicker.compose.ColorPickerDialogPreviewKt.ColorPickerDialogPreview" />
     <method v="2">
       <option name="Make" enabled="true" />
       <option name="Android.Gradle.BeforeRunTask" enabled="true" />

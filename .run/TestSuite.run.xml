@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="TestSuite" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" nameIsGenerated="true">
+  <configuration default="false" name="TestSuite" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" singleton="true" nameIsGenerated="true">
     <module name="ColorPicker.mobile" />
     <option name="TESTING_TYPE" value="2" />
     <option name="METHOD_NAME" value="" />
