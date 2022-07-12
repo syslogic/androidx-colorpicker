@@ -33,16 +33,16 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         val alpha: Int = getAlpha().times(255).toInt()
         val color: Int = HSVToColor(alpha, floatArrayOf(getHue(), 1F, 1F))
         val mSaturationShader = LinearGradientShader (
-            from = Offset(rect.right, rect.top),
-            to = Offset(rect.left,  rect.top),
+            from = Offset(innerRect.right, innerRect.top),
+            to = Offset(innerRect.left,  innerRect.top),
             tileMode = TileMode.Clamp,
             colors = listOf(Color(color), Color.White)
         )
 
         /* Value Shader */
         val mContrastShader = LinearGradientShader(
-            from = Offset(rect.left, rect.bottom),
-            to = Offset(rect.left, rect.top),
+            from = Offset(innerRect.left, innerRect.bottom),
+            to = Offset(innerRect.left, innerRect.top),
             tileMode = TileMode.Clamp,
             colors = listOf(Color.Black, Color.White)
         )
@@ -50,14 +50,14 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
         /* Compose Shader */
         val composition = Paint()
         composition.shader = ComposeShader(mContrastShader, mSaturationShader, PorterDuff.Mode.MULTIPLY)
-        canvas.drawRect(rect, composition)
+        canvas.drawRect(innerRect, composition)
 
         /* Border */
         val border = Paint()
         border.style = Paint.Style.STROKE
         border.strokeWidth = borderStrokeWidth
         border.color = borderStrokeColor
-        canvas.drawRect(outline, border)
+        canvas.drawRect(outerRect, border)
 
         /* Tracker */
         val p: Point = satValToPoint(getSat(), getValue())

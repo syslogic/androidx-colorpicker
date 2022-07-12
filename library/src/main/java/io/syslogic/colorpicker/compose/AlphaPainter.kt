@@ -37,7 +37,7 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             drawRect(
                 size = size,
                 color = Color(borderStrokeColor),
-                topLeft = Offset(outline.left, outline.top),
+                topLeft = Offset(outerRect.left, outerRect.top),
                 style = Stroke(width = borderStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(borderCornerRadius)
                 )
@@ -49,8 +49,8 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             /* Outer rectangle (dark) */
             drawRoundRect(
                 color = Color(trackerStrokeColorOuter),
-                size = Size(alphaTrackerWidth, rect.height()),
-                topLeft = Offset(p.x - (alphaTrackerWidth / 2), rect.top),
+                size = Size(alphaTrackerWidth, innerRect.height()),
+                topLeft = Offset(p.x - (alphaTrackerWidth / 2), innerRect.top),
                 style = Stroke(width = trackerStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(trackerCornerRadius)
                 )
@@ -59,8 +59,8 @@ class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             /* Inner rectangle (light) */
             drawRoundRect(
                 color = Color(trackerStrokeColorInner),
-                size = Size(alphaTrackerWidth - 2, rect.height() - 2),
-                topLeft = Offset(p.x - (alphaTrackerWidth / 2) + 1, rect.top + 1),
+                size = Size(alphaTrackerWidth - 2, innerRect.height() - 2),
+                topLeft = Offset(p.x - (alphaTrackerWidth / 2) + 1, innerRect.top + 1),
                 style = Stroke(width = trackerStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(trackerCornerRadius)
                 )

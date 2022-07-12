@@ -55,8 +55,8 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
     protected lateinit var canvas: NativeCanvas
 
     /** Boundaries */
-    protected lateinit var outline: RectF
-    protected lateinit var rect: RectF
+    protected lateinit var outerRect: RectF
+    protected lateinit var innerRect: RectF
 
     /** Being called by all implementations onDraw. */
     fun setCanvas(drawContext: DrawContext, density: Float) {
@@ -81,13 +81,13 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
         /* Native Canvas */
         canvas = drawContext.canvas.nativeCanvas
         val bounds: Rect = canvas.clipBounds
-        outline = RectF(
+        outerRect = RectF(
             bounds.left.toFloat(),
             bounds.top.toFloat(),
             bounds.right.toFloat(),
             bounds.bottom.toFloat()
         )
-        rect = RectF(
+        innerRect = RectF(
             bounds.left.toFloat() + borderStrokeWidth,
             bounds.top.toFloat() + borderStrokeWidth,
             bounds.right.toFloat() - borderStrokeWidth,
@@ -101,8 +101,8 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
      * @return the {@link Point} where AlphaPainter shall draw the tracker rectangle.
      */
     fun alphaToPoint(value: Float): Point {
-        val x: Int = (value * rect.width()).toInt()
-        val y: Int = rect.top.toInt()
+        val x: Int = (value * innerRect.width()).toInt()
+        val y: Int = innerRect.top.toInt()
         return Point(x, y)
     }
 
@@ -112,8 +112,8 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
      * @return the {@link Point} where HuePainter shall draw the tracker rectangle.
      */
     fun hueToPoint(value: Float): Point {
-        val x: Int = rect.left.toInt()
-        val y: Int = (rect.height() - value * rect.height() / 360f + rect.top).toInt()
+        val x: Int = innerRect.left.toInt()
+        val y: Int = (innerRect.height() - value * innerRect.height() / 360f + innerRect.top).toInt()
         return Point(x, y)
     }
 
@@ -124,8 +124,8 @@ abstract class BasePainter(override val intrinsicSize: Size) : Painter() {
      * @return the Point where SatValPainter shall draw the tracker circle.
      */
     fun satValToPoint(saturation: Float, value: Float): Point {
-        val x: Int = (saturation * rect.width() + rect.left).toInt()
-        val y: Int = ((1f - value) * rect.height() + rect.top).toInt()
+        val x: Int = (saturation * innerRect.width() + innerRect.left).toInt()
+        val y: Int = ((1f - value) * innerRect.height() + innerRect.top).toInt()
         return Point(x, y)
     }
 }

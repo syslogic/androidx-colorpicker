@@ -37,7 +37,7 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             drawRect(
                 size = size,
                 color = Color(borderStrokeColor),
-                topLeft = Offset(outline.left, outline.top),
+                topLeft = Offset(outerRect.left, outerRect.top),
                 style = Stroke(width = borderStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(borderCornerRadius)
                 )
@@ -45,10 +45,10 @@ class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
             /* Vertical Tracker */
             val p: Point = hueToPoint(value)
-            val offset = Offset(rect.left, p.y - (hueTrackerHeight / 2))
+            val offset = Offset(innerRect.left, p.y - (hueTrackerHeight / 2))
             drawRoundRect(
                 color = Color(trackerStrokeColorOuter),
-                size = Size(rect.width(), hueTrackerHeight),
+                size = Size(innerRect.width(), hueTrackerHeight),
                 topLeft = offset,
                 style = Stroke(width = trackerStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(trackerCornerRadius)

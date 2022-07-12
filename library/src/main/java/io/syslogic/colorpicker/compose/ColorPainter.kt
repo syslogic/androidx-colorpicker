@@ -32,7 +32,7 @@ class ColorPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
             drawRect(
                 size = size,
                 color = Color(borderStrokeColor),
-                topLeft = Offset(outline.left, outline.top),
+                topLeft = Offset(outerRect.left, outerRect.top),
                 style = Stroke(width = borderStrokeWidth,
                     pathEffect = PathEffect.cornerPathEffect(borderCornerRadius)
                 )
