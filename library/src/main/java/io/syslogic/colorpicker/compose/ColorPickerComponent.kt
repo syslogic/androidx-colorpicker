@@ -87,7 +87,7 @@ fun ColorPickerComponent(
         modifier = Modifier.fillMaxWidth()
     ) {
 
-        /* HSV & ARGB */
+        /* HSV & ARGB Values */
         if (showHSV || showARGB) {
             Row(
                 verticalAlignment = Alignment.Top,
@@ -95,7 +95,7 @@ fun ColorPickerComponent(
                     .padding(all = rowPadding * 4)
             ) {
 
-                /* HSV */
+                /* HSV Values */
                 if (showHSV) {
                     Column(
                         horizontalAlignment = Alignment.Start,
@@ -157,7 +157,7 @@ fun ColorPickerComponent(
                     }
                 }
 
-                /* ARGB */
+                /* ARGB Values */
                 if (showARGB) {
                     Column(
                         horizontalAlignment = Alignment.End,
@@ -250,7 +250,7 @@ fun ColorPickerComponent(
                     it.setValue(currentVal)
                 },
                 modifier = Modifier
-                    .layoutId(SatVal)
+                    .layoutId(SatValPanel)
                     .testTag("sat_val")
                     .pointerInput(Unit) {
                         detectDragGestures(
@@ -291,7 +291,7 @@ fun ColorPickerComponent(
                     it.setValue(currentHue)
                 },
                 modifier = Modifier
-                    .layoutId(Hue)
+                    .layoutId(HuePanel)
                     .testTag("hue")
                     .pointerInput(Unit) {
                         detectDragGestures(
@@ -336,7 +336,7 @@ fun ColorPickerComponent(
                             it.setAlphaByColor(currentColor)
                         },
                         modifier = Modifier
-                            .layoutId(Alpha)
+                            .layoutId(AlphaPanel)
                             .testTag("alpha")
                             .pointerInput(Unit) {
                                 detectDragGestures(

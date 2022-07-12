@@ -6,9 +6,12 @@ package io.syslogic.colorpicker.compose
  * @author Martin Zeitler
  */
 enum class LayoutId {
-    Alpha,
-    SatVal,
-    Hue,
+    AlphaPanel,
+    SatValPanel,
+    HuePanel,
+
     OldColor,
-    NewColor
+    NewColor,
+
+    DialogSurface
 }

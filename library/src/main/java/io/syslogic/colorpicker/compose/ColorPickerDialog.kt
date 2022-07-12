@@ -3,27 +3,29 @@ package io.syslogic.colorpicker.compose
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-
 import androidx.compose.runtime.*
-
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 
 import io.syslogic.colorpicker.OnColorChangedListener
 import io.syslogic.colorpicker.R
+import io.syslogic.colorpicker.compose.LayoutId.*
 
 /**
  * Jetpack Compose Color-Picker Dialog
@@ -45,54 +47,64 @@ fun ColorPickerDialog(
     /* The value is being initialized by the `initialColor`. */
     val currentColor: Int by remember { mutableStateOf(initialColor.hashCode()) }
 
-    Dialog(onDismissRequest = { showDialog(false) }) {
+    Dialog(
+        onDismissRequest = {
+            showDialog(false)
+        },
+        properties = DialogProperties()
+    ) {
         Surface(
             shape = RoundedCornerShape(dimensionResource(R.dimen.compose_dialog_border_radius)),
-            color = Color.White
+            color = colorResource(id = R.color.cardview_light_background),
+            modifier = Modifier
+                .layoutId(DialogSurface)
+                .testTag("surface")
         ) {
-            Box(
-                contentAlignment = Alignment.Center
+            Column(
+                modifier = Modifier
+                    .padding(dimensionResource(R.dimen.compose_dialog_column_padding))
             ) {
-                Column(
-                    modifier = Modifier
-                        .padding(dimensionResource(R.dimen.compose_dialog_column_padding))
+
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = dialogTitle,
-                            style = TextStyle(
-                                fontSize = toSp(dp = dimensionResource(R.dimen.compose_dialog_title_font_size)),
-                                fontFamily = FontFamily.Default,
-                                fontWeight = FontWeight.Bold
-                            )
+                    Text(
+                        text = dialogTitle,
+                        style = TextStyle(
+                            fontSize = toSp(dp = dimensionResource(R.dimen.compose_dialog_title_font_size)),
+                            fontFamily = FontFamily.Default,
+                            fontWeight = FontWeight.Bold
                         )
-                        Icon(
-                            imageVector = Icons.Filled.Close,
-                            contentDescription = "",
-                            tint = Color.DarkGray,
-                            modifier = Modifier
-                                .width(dimensionResource(R.dimen.compose_dialog_close_icon_size))
-                                .height(dimensionResource(R.dimen.compose_dialog_close_icon_size))
-                                .clickable { showDialog(false) }
-                        )
-                    }
-
-                    Spacer(
-                        modifier = Modifier.height(dimensionResource(R.dimen.compose_dialog_spacer_height))
                     )
+                    Icon(
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = "",
+                        tint = Color.DarkGray,
+                        modifier = Modifier
+                            .width(dimensionResource(R.dimen.compose_dialog_close_icon_size))
+                            .height(dimensionResource(R.dimen.compose_dialog_close_icon_size))
+                            .clickable { showDialog(false) }
+                    )
+                }
 
+                Spacer(
+                    modifier = Modifier.height(dimensionResource(R.dimen.compose_dialog_spacer_height))
+                )
+
+                Box(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .wrapContentWidth()
+                ) {
                     ColorPickerComponent(
                         initialColor = Color(currentColor),
                         onColorChanged = onColorChanged,
                         showAlpha = showAlpha,
-                        showARGB = showARGB,
+                        showHex = showHex,
                         showHSV = showHSV,
-                        showHex = showHex
+                        showARGB = showARGB
                     )
                 }
             }
