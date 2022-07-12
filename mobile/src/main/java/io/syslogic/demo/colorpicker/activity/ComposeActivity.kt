@@ -37,8 +37,8 @@ class ComposeActivity : ComponentActivity(), OnColorChangedListener {
                     color = MaterialTheme.colors.background
                 ) {
                     ColorPickerComponent(
-                        onColorChanged = this@ComposeActivity,
                         initialColor = Color(initialColor),
+                        onColorChanged = this@ComposeActivity,
                         showAlpha = true,
                         showHSV = true,
                         showARGB = true,
