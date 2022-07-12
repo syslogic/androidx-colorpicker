@@ -1,16 +1,18 @@
 package io.syslogic.demo.colorpicker.activity
 
 import android.content.SharedPreferences
-
 import android.os.Bundle
+
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.preference.PreferenceManager
 
 import io.syslogic.colorpicker.OnColorChangedListener
-
 import io.syslogic.colorpicker.compose.ColorPickerComponent
 
 /**
@@ -30,14 +32,19 @@ class ComposeActivity : ComponentActivity(), OnColorChangedListener {
 
         this.setContent {
             MaterialTheme {
-                ColorPickerComponent(
-                    onColorChanged = this@ComposeActivity,
-                    initialColor = Color(initialColor),
-                    showAlpha = true,
-                    showHSV = true,
-                    showARGB = true,
-                    showHex = true
-                )
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+                    ColorPickerComponent(
+                        onColorChanged = this@ComposeActivity,
+                        initialColor = Color(initialColor),
+                        showAlpha = true,
+                        showHSV = true,
+                        showARGB = true,
+                        showHex = true
+                    )
+                }
             }
         }
     }
