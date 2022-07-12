@@ -21,8 +21,8 @@ fun ColorPickerPreview() {
             initialColor = Color(0xD31A3D9A),
             onColorChanged = null,
             showAlpha = true,
-            showARGB = true,
             showHSV = true,
+            showARGB = true,
             showHex = true
         )
     }
