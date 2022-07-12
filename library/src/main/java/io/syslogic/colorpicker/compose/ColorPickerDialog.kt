@@ -25,9 +25,11 @@ import androidx.compose.ui.window.Dialog
 import io.syslogic.colorpicker.OnColorChangedListener
 import io.syslogic.colorpicker.R
 
-@Composable
-fun toSp(dp: Dp) = with(LocalDensity.current) { dp.toSp() }
-
+/**
+ * Jetpack Compose Color-Picker Dialog
+ *
+ * @author Martin Zeitler
+ */
 @Composable
 fun ColorPickerDialog(
     dialogTitle: String = LocalContext.current.getString(R.string.text_select_color),
@@ -97,3 +99,6 @@ fun ColorPickerDialog(
         }
     }
 }
+
+@Composable
+fun toSp(dp: Dp) = with(LocalDensity.current) { dp.toSp() }
