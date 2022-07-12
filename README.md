@@ -54,10 +54,10 @@ can be added as XML node; into eg. [`preferences.xml`](https://github.com/syslog
     android:key="color_code_01"/>
 ````
 
-c) Preview: `@Composable fun` [`ColorPickerComponent`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/compose/ColorPickerComponent.kt):
+c) Preview: `@Composable fun` [`ColorPickerComponent`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/compose/ColorPickerComponent.kt)
 
 ![Composable](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_02.png)
 
-d) Preview: `@Composable fun` [`ColorPickerDialog`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/compose/ColorPickerDialog.kt):
+d) Preview: `@Composable fun` [`ColorPickerDialog`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/compose/ColorPickerDialog.kt)
 
 ![Composable](https://raw.githubusercontent.com/syslogic/androidx-colorpicker/master/screenshots/screenshot_03.png)
