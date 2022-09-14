@@ -125,6 +125,7 @@ task javadoc(type: Javadoc) {
         }
     }
 }
+
 javadoc.onlyIf {
     new File("$buildDir/intermediates/aar_main_jar").exists()
 }

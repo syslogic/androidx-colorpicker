@@ -105,7 +105,7 @@ public class HomeFragment extends Fragment implements FragmentResultListener {
      * The result of ColorPickerDialogFragment is being set as background color.
      *
      * @param requestKey key used to store the result
-     * @param result     result passed to the callback
+     * @param result result passed to the callback
      */
     @Override
     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {

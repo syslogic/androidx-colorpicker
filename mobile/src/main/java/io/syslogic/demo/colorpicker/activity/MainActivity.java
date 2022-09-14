@@ -14,7 +14,6 @@ import io.syslogic.demo.colorpicker.R;
 public class MainActivity extends AppCompatActivity {
 
     /** Kept for reference */
-    @SuppressWarnings("unused")
     private static final int resId = R.layout.fragment_nav_host;
 
     @Override
