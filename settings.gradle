@@ -20,5 +20,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ColorPicker"
+
 include ":library"
 include ":mobile"
