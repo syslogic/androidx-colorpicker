@@ -6,7 +6,7 @@ buildscript {
         target_sdk = 33
         min_sdk = 21
         agp_version = '8.0.1'
-        kotlin_version = '1.8.20'
+        kotlin_version = '1.8.10'
         kotlin_compiler_extension_version = '1.4.2'
         compose_version = '1.4.3'
         material_version = '1.9.0'

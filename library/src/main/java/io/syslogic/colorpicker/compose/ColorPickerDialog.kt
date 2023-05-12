@@ -55,7 +55,7 @@ fun ColorPickerDialog(
     ) {
         Surface(
             shape = RoundedCornerShape(dimensionResource(R.dimen.compose_dialog_border_radius)),
-            color = colorResource(id = R.color.cardview_light_background),
+            color = colorResource(id = com.google.android.material.R.color.cardview_light_background),
             modifier = Modifier
                 .layoutId(DialogSurface)
                 .testTag("dialog_surface")
