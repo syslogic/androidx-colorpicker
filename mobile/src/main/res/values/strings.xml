@@ -9,7 +9,7 @@
     <string name="button_preferences">Preferences</string>
 
     <!--  GitHub Sponsors  -->
-    <string name="text_git_hub_sponsors">Sponsor this project on GitHub</string>
+    <string name="text_git_hub_sponsors">Please sponsor this project on GitHub</string>
     <string name="url_git_hub_sponsors">https://github.com/sponsors/syslogic</string>
 
     <!--  Color Picker  -->
