@@ -1,19 +1,18 @@
 // Root project build.gradle
 buildscript {
     ext {
-        build_tools_version = '33.0.2'
-        compile_sdk = 33
-        target_sdk = 33
+        compile_sdk = 34
+        target_sdk = 34
         min_sdk = 21
-        agp_version = '8.0.1'
-        kotlin_version = '1.8.10'
-        kotlin_compiler_extension_version = '1.4.2'
+        agp_version = '8.0.2'
+        kotlin_version = '1.8.22'
+        kotlin_compiler_extension_version = '1.4.8'
         compose_version = '1.4.3'
         material_version = '1.9.0'
         appcompat_version = '1.6.1'
         preference_version = '1.2.0'
         core_version = '1.10.1'
-        nav_version = '2.5.3'
+        nav_version = '2.6.0'
         junit_version = '4.13.2'
         version_name = '1.1.6'
         version_code = 16

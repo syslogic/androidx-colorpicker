@@ -12,7 +12,6 @@ android {
         namespace "io.syslogic.demo.colorpicker"
         applicationId "io.syslogic.demo.colorpicker"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildToolsVersion build_tools_version
         versionCode version_code
         versionName version_name
         targetSdk target_sdk
@@ -26,6 +25,8 @@ android {
         jvmTarget = 17
     }
     composeOptions {
+        // See the "Compose to Kotlin Compatibility Map" for compatible versions:
+        // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
         kotlinCompilerExtensionVersion kotlin_compiler_extension_version
     }
     buildFeatures {
@@ -52,7 +53,7 @@ android {
 
 dependencies {
 
-    // Either Jitpack repository or project module :library.
+    // Use either Jitpack repository or project module :library (local).
     // implementation "io.syslogic:androidx-colorpicker:$version_name"
     implementation project(path: ':library')
 
@@ -62,12 +63,14 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.preference:preference-ktx:$preference_version"
 
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     implementation "androidx.navigation:navigation-runtime-ktx:$nav_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // https://mvnrepository.com/artifact/androidx.compose
-    implementation "androidx.activity:activity-compose:1.7.1"
+    // https://developer.android.com/jetpack/androidx/releases/compose
+    implementation "androidx.activity:activity-compose:1.7.2"
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.runtime:runtime:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
@@ -76,7 +79,6 @@ dependencies {
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:1.1.5"
-    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:2.2.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
 

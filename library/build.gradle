@@ -10,12 +10,11 @@ android {
     compileSdk compile_sdk
     namespace 'io.syslogic.colorpicker'
     defaultConfig {
-        minSdk min_sdk
-        targetSdk target_sdk
-        buildToolsVersion build_tools_version
         setProperty('archivesBaseName', 'colorpicker')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         consumerProguardFiles "${project.rootDir}/proguard/consumer.pro"
+        targetSdk target_sdk
+        minSdk min_sdk
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
