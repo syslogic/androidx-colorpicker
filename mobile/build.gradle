@@ -7,6 +7,7 @@ plugins {
 }
 
 android {
+
     compileSdk compile_sdk
     defaultConfig {
         namespace "io.syslogic.demo.colorpicker"
@@ -17,23 +18,28 @@ android {
         targetSdk target_sdk
         minSdk min_sdk
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = 17
     }
+
     composeOptions {
         // See the "Compose to Kotlin Compatibility Map" for compatible versions:
         // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
         kotlinCompilerExtensionVersion kotlin_compiler_extension_version
     }
+
     buildFeatures {
         buildConfig true
         dataBinding true
         compose true
     }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -42,6 +48,7 @@ android {
             minifyEnabled false
         }
     }
+
     lint {
         lintConfig file('../lint.xml')
         checkAllWarnings true
@@ -76,7 +83,6 @@ dependencies {
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.runtime:runtime:$compose_version"
     implementation "androidx.compose.ui:ui:$compose_version"
-
 
     // jUnit
     testImplementation "junit:junit:$junit_version"
