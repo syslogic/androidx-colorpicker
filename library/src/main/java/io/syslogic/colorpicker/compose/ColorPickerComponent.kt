@@ -546,37 +546,53 @@ fun getChannelValue(color: Int, name: String): String {
 }
 
 /**
+ * Excessive values may occur and must be limited.
  * @param rect boundaries of the hue rectangle.
  * @param y the relative position on the y axis.
  * @return hue 0.0F to 360.0F.
  */
 private fun pointToHue(rect: RectF, y: Float): Float {
-    return 360f - y * 360f / rect.height()
+    val value = 360f - y * 360f / rect.height()
+    if (value <= 0f) {return 0f}
+    if (value >= 360f) {return 360f}
+    return value
 }
 
 /**
+ * Excessive values may occur and must be limited.
  * @param rect boundaries of the sat/val rectangle.
  * @param x the relative position on the x axis.
  * @return sat 0.0F to 1.0F.
  */
 private fun pointToSat(rect: RectF, x: Float): Float {
-    return 1f / rect.width() * x
+    val value = 1f / rect.width() * x
+    if (value <= 0f) {return 0f}
+    if (value >= 1f) {return 1f}
+    return value
 }
 
 /**
+ * Excessive values may occur and must be limited.
  * @param rect boundaries of the sat/val rectangle.
  * @param y the relative position on the x axis.
  * @return value 0.0F to 1.0F.
  */
 private fun pointToVal(rect: RectF, y: Float): Float {
-    return 1f - 1f / rect.height() * y
+    val value = 1f - 1f / rect.height() * y
+    if (value <= 0f) {return 0f}
+    if (value >= 1f) {return 1f}
+    return value
 }
 
 /**
+ * Excessive values may occur and must be limited.
  * @param rect boundaries of the alpha rectangle.
  * @param x the relative position on the x axis.
  * @return alpha 0.0F to 1.0F.
  */
 private fun pointToAlpha(rect: RectF, x: Float): Float {
-    return x / rect.width()
+    val value = x / rect.width()
+    if (value <= 0f) {return 0f}
+    if (value >= 1f) {return 1f}
+    return value
 }

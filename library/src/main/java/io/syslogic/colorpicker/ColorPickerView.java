@@ -411,20 +411,15 @@ public class ColorPickerView extends View {
     public boolean onTouchEvent(@NonNull MotionEvent event) {
         boolean update = false;
         switch (event.getAction()) {
-
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN -> {
                 mStartTouchPoint = new Point((int) event.getX(), (int) event.getY());
                 update = moveTrackersIfNeeded(event);
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                update = moveTrackersIfNeeded(event);
-                break;
-
-            case MotionEvent.ACTION_UP:
+            }
+            case MotionEvent.ACTION_MOVE -> update = moveTrackersIfNeeded(event);
+            case MotionEvent.ACTION_UP -> {
                 mStartTouchPoint = null;
                 update = moveTrackersIfNeeded(event);
-                break;
+            }
         }
 
         if (update) {

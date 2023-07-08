@@ -124,12 +124,10 @@ public class ColorPickerPreference extends Preference implements
     public boolean onPreferenceChange(@NonNull Preference preference, @NonNull Object newValue) {
         this.mCurrentValue = Integer.parseInt(newValue.toString());
         this.setSummary(convertToARGB(this.mCurrentValue));
-        if (preference.getIcon() instanceof BitmapDrawable) {
-            BitmapDrawable drawable = (BitmapDrawable) preference.getIcon();
+        if (preference.getIcon() instanceof BitmapDrawable drawable) {
             drawable.setTintMode(PorterDuff.Mode.ADD);
             drawable.setTint(this.mCurrentValue);
-        } else if (preference.getIcon() instanceof VectorDrawable) {
-            VectorDrawable drawable = (VectorDrawable) preference.getIcon();
+        } else if (preference.getIcon() instanceof VectorDrawable drawable) {
             drawable.setTintMode(PorterDuff.Mode.ADD);
             drawable.setTint(this.mCurrentValue);
         } else if(mDebug) {
@@ -224,12 +222,11 @@ public class ColorPickerPreference extends Preference implements
 
     @Override
     protected void onRestoreInstanceState(@Nullable Parcelable state) {
-        if (!(state instanceof SavedState)) {
+        if (!(state instanceof SavedState myState)) {
             // didn't save state in onSaveInstanceState
             super.onRestoreInstanceState(state);
             return;
         }
-        SavedState myState = (SavedState) state;
         super.onRestoreInstanceState(myState.getSuperState());
     }
 

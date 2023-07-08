@@ -7,6 +7,7 @@ plugins {
 }
 
 android {
+
     compileSdk compile_sdk
     namespace 'io.syslogic.colorpicker'
     defaultConfig {
@@ -16,25 +17,28 @@ android {
         targetSdk target_sdk
         minSdk min_sdk
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = 17
     }
+
     composeOptions {
+        // See the "Compose to Kotlin Compatibility Map" for compatible versions:
+        // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
         kotlinCompilerExtensionVersion kotlin_compiler_extension_version
     }
-    packagingOptions {
-        resources.pickFirsts.add('META-INF/LGPL2.1')
-        resources.pickFirsts.add('META-INF/AL2.0')
-    }
+
     buildFeatures {
         buildConfig true
         dataBinding true
         compose true
     }
+
     buildTypes {
         debug {
             // it breaks the data-binding, eg. when running ./gradlew :library:publishToMavenLocal
@@ -45,6 +49,7 @@ android {
             minifyEnabled false
         }
     }
+
     lint {
         lintConfig file('../lint.xml')
         checkAllWarnings true
@@ -52,6 +57,12 @@ android {
         abortOnError false
         showAll false
     }
+
+    packagingOptions {
+        resources.pickFirsts.add('META-INF/LGPL2.1')
+        resources.pickFirsts.add('META-INF/AL2.0')
+    }
+
     publishing {
         singleVariant('release') {
             withSourcesJar()
