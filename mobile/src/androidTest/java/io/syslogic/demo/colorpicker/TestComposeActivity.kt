@@ -46,13 +46,13 @@ class TestComposeActivity : TestSuite() {
     @OptIn(ExperimentalTestApi::class)
     fun huePanelTest() {
 
-        interaction = composeTestRule.onNodeWithTag(testTag = "hue")
+        interaction = getNodeWithTag("hue")
         interaction.assertExists().assertIsDisplayed()
 
         /* Randomly tapping the huePanel for 5 seconds. */
         for (i in 0..99) {
             randomlyClick(interaction)
-            Thread.sleep(50)
+            sleep(50)
         }
     }
 
@@ -60,13 +60,13 @@ class TestComposeActivity : TestSuite() {
     @OptIn(ExperimentalTestApi::class)
     fun satValPanelTest() {
 
-        interaction = composeTestRule.onNodeWithTag(testTag = "sat_val")
+        interaction = getNodeWithTag("sat_val")
         interaction.assertExists().assertIsDisplayed()
 
         /* Randomly tapping the satValPanel for 5 seconds. */
         for (i in 0..99) {
             randomlyClick(interaction)
-            Thread.sleep(50)
+            sleep(50)
         }
     }
 
@@ -74,79 +74,79 @@ class TestComposeActivity : TestSuite() {
     @OptIn(ExperimentalTestApi::class)
     fun alphaPanelTest() {
 
-        interaction = composeTestRule.onNodeWithTag(testTag = "alpha")
+        interaction = getNodeWithTag("alpha")
         interaction.assertExists().assertIsDisplayed()
 
         /* Randomly tapping the alphaPanel for 5 seconds. */
         for (i in 0..99) {
             randomlyClick(interaction)
-            Thread.sleep(50)
+            sleep(50)
         }
     }
 
     @Test
     fun hexColorTest() {
-        interaction = composeTestRule.onNodeWithTag(testTag = "hex")
+        interaction = getNodeWithTag("hex")
         interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun oldColorTest() {
-        interaction = composeTestRule.onNodeWithTag(testTag = "old_color")
+        interaction = getNodeWithTag("old_color")
         interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun newColorTest() {
-        interaction = composeTestRule.onNodeWithTag(testTag = "new_color")
+        interaction = getNodeWithTag("new_color")
         interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueHueTest() {
-        interaction = composeTestRule.onNodeWithTag(testTag = "value_hue")
+        interaction = getNodeWithTag("value_hue")
         interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueSatTest() {
-        interaction = composeTestRule.onNodeWithTag(testTag = "value_sat")
+        interaction = getNodeWithTag("value_sat")
         interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueValTest() {
-        interaction = composeTestRule.onNodeWithTag(testTag = "value_val")
+        interaction = getNodeWithTag("value_val")
         interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueAlphaTest() {
-        interaction = composeTestRule.onNodeWithTag(testTag = "value_alpha")
+        interaction = getNodeWithTag("value_alpha")
         interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueBlueTest() {
-        interaction = composeTestRule.onNodeWithTag(testTag = "value_blue")
+        interaction = getNodeWithTag("value_blue")
         interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueRedTest() {
-        interaction = composeTestRule.onNodeWithTag(testTag = "value_red")
+        interaction = getNodeWithTag("value_red")
         interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueGreenTest() {
-        interaction = composeTestRule.onNodeWithTag(testTag = "value_green")
+        interaction = getNodeWithTag("value_green")
         interaction.assertExists().assertIsDisplayed()
     }
 
     @Override
     @ExperimentalTestApi
-    fun randomlyClick(interaction: SemanticsNodeInteraction) {
+    private fun randomlyClick(interaction: SemanticsNodeInteraction) {
         val rect = interaction.getBoundsInRoot()
         val rnd = Random()
         val coordinate = longArrayOf(
@@ -157,5 +157,9 @@ class TestComposeActivity : TestSuite() {
         interaction.performMouseInput {
             click(position)
         }
+    }
+
+    private fun getNodeWithTag(testTag: String): SemanticsNodeInteraction {
+        return composeTestRule.onNodeWithTag(testTag = testTag)
     }
 }
