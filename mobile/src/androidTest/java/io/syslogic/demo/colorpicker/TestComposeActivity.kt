@@ -1,93 +1,161 @@
 package io.syslogic.demo.colorpicker
 
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.click
+import androidx.compose.ui.test.getBoundsInRoot
+import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performMouseInput
 import androidx.compose.ui.test.printToLog
+import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 
 import io.syslogic.demo.colorpicker.activity.ComposeActivity
 
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import java.util.Random
 
 /**
- * Color-Picker Test Case
+ * Compose Activity Test Case
  *
  * @author Martin Zeitler
  */
-class TestComposeActivity {
+@RunWith(AndroidJUnit4::class)
+class TestComposeActivity : TestSuite() {
 
     @get:Rule
-    val composeTestRule = createAndroidComposeRule(ComposeActivity::class.java)
+    val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComposeActivity>, ComposeActivity> =
+        createAndroidComposeRule(ComposeActivity::class.java)
+
+    lateinit var interaction: SemanticsNodeInteraction
 
     @Test
     fun logTest() {
-        composeTestRule.onRoot().printToLog("TAG")
+        interaction = composeTestRule.onRoot()
+        interaction.printToLog("TAG")
     }
 
     @Test
+    @OptIn(ExperimentalTestApi::class)
     fun huePanelTest() {
-        composeTestRule.onNodeWithTag(testTag = "hue").assertIsDisplayed()
+
+        interaction = composeTestRule.onNodeWithTag(testTag = "hue")
+        interaction.assertExists().assertIsDisplayed()
+
+        /* Randomly tapping the huePanel for 5 seconds. */
+        for (i in 0..99) {
+            randomlyClick(interaction)
+            Thread.sleep(50)
+        }
     }
 
     @Test
-    fun satPanelTest() {
-        composeTestRule.onNodeWithTag(testTag = "sat_val").assertIsDisplayed()
+    @OptIn(ExperimentalTestApi::class)
+    fun satValPanelTest() {
+
+        interaction = composeTestRule.onNodeWithTag(testTag = "sat_val")
+        interaction.assertExists().assertIsDisplayed()
+
+        /* Randomly tapping the satValPanel for 5 seconds. */
+        for (i in 0..99) {
+            randomlyClick(interaction)
+            Thread.sleep(50)
+        }
     }
 
     @Test
+    @OptIn(ExperimentalTestApi::class)
     fun alphaPanelTest() {
-        composeTestRule.onNodeWithTag(testTag = "alpha").assertIsDisplayed()
+
+        interaction = composeTestRule.onNodeWithTag(testTag = "alpha")
+        interaction.assertExists().assertIsDisplayed()
+
+        /* Randomly tapping the alphaPanel for 5 seconds. */
+        for (i in 0..99) {
+            randomlyClick(interaction)
+            Thread.sleep(50)
+        }
     }
 
     @Test
     fun hexColorTest() {
-        composeTestRule.onNodeWithTag(testTag = "hex").assertIsDisplayed()
+        interaction = composeTestRule.onNodeWithTag(testTag = "hex")
+        interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun oldColorTest() {
-        composeTestRule.onNodeWithTag(testTag = "old_color").assertIsDisplayed()
+        interaction = composeTestRule.onNodeWithTag(testTag = "old_color")
+        interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun newColorTest() {
-        composeTestRule.onNodeWithTag(testTag = "new_color").assertIsDisplayed()
+        interaction = composeTestRule.onNodeWithTag(testTag = "new_color")
+        interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueHueTest() {
-        composeTestRule.onNodeWithTag(testTag = "value_hue").assertIsDisplayed()
+        interaction = composeTestRule.onNodeWithTag(testTag = "value_hue")
+        interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueSatTest() {
-        composeTestRule.onNodeWithTag(testTag = "value_sat").assertIsDisplayed()
+        interaction = composeTestRule.onNodeWithTag(testTag = "value_sat")
+        interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueValTest() {
-        composeTestRule.onNodeWithTag(testTag = "value_val").assertIsDisplayed()
+        interaction = composeTestRule.onNodeWithTag(testTag = "value_val")
+        interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueAlphaTest() {
-        composeTestRule.onNodeWithTag(testTag = "value_alpha").assertIsDisplayed()
+        interaction = composeTestRule.onNodeWithTag(testTag = "value_alpha")
+        interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueBlueTest() {
-        composeTestRule.onNodeWithTag(testTag = "value_blue").assertIsDisplayed()
+        interaction = composeTestRule.onNodeWithTag(testTag = "value_blue")
+        interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueRedTest() {
-        composeTestRule.onNodeWithTag(testTag = "value_red").assertIsDisplayed()
+        interaction = composeTestRule.onNodeWithTag(testTag = "value_red")
+        interaction.assertExists().assertIsDisplayed()
     }
 
     @Test
     fun valueGreenTest() {
-        composeTestRule.onNodeWithTag(testTag = "value_green").assertIsDisplayed()
+        interaction = composeTestRule.onNodeWithTag(testTag = "value_green")
+        interaction.assertExists().assertIsDisplayed()
+    }
+
+    @Override
+    @ExperimentalTestApi
+    fun randomlyClick(interaction: SemanticsNodeInteraction) {
+        val rect = interaction.getBoundsInRoot()
+        val rnd = Random()
+        val coordinate = longArrayOf(
+            ((rect.left.value + rnd.nextInt((rect.right.value - rect.left.value + 1).toInt())).toLong()),
+            ((rect.top.value + rnd.nextInt((rect.bottom.value - rect.top.value + 1).toInt())).toLong())
+        )
+        val position = Offset(coordinate[0].toFloat(), coordinate[1].toFloat())
+        interaction.performMouseInput {
+            click(position)
+        }
     }
 }

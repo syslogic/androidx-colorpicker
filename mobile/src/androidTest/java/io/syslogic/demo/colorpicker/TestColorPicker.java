@@ -9,8 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
-
 /**
  * Color-Picker Test Case
  *
@@ -21,7 +19,7 @@ public class TestColorPicker extends TestSuite {
 
     @Before
     public void startActivityFromHomeScreen() {
-        this.startMainActivity();
+        this.startActivity();
     }
 
     @Test

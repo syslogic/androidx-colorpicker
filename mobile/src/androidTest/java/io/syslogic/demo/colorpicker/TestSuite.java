@@ -1,7 +1,5 @@
 package io.syslogic.demo.colorpicker;
 
-import static org.hamcrest.core.IsNull.notNullValue;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +27,10 @@ import java.util.Random;
  * @author Martin Zeitler
  */
 @RunWith(org.junit.runners.Suite.class)
-@SuiteClasses({TestColorPicker.class})
+@SuiteClasses({
+        TestColorPicker.class,
+        TestComposeActivity.class
+})
 public class TestSuite {
 
     private static final int LAUNCH_TIMEOUT = 5000;
@@ -62,7 +63,7 @@ public class TestSuite {
     }
 
     /** launches the blueprint application */
-    void startMainActivity() {
+    void startActivity() {
 
         /* initialize UiDevice */
         this.mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
@@ -83,7 +84,7 @@ public class TestSuite {
         this.packageName = context.getPackageName().replace(".test", "");
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(this.packageName);
 
-        if(intent != null) {
+        if (intent != null) {
 
             intent.setComponent(new ComponentName(this.packageName, this.packageName + ".activity.MainActivity"));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
