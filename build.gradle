@@ -1,8 +1,8 @@
 // Root project build.gradle
 buildscript {
     ext {
-        version_name = '1.1.7'
-        version_code = 16
+        version_name = '1.1.8'
+        version_code = 17
         compile_sdk = 34
         target_sdk = 34
         min_sdk = 21
