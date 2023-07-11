@@ -12,6 +12,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performMouseInput
 import androidx.compose.ui.test.printToLog
+import androidx.compose.ui.unit.DpRect
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
@@ -147,13 +148,13 @@ class TestComposeActivity : TestSuite() {
     @Override
     @ExperimentalTestApi
     private fun randomlyClick(interaction: SemanticsNodeInteraction) {
-        val rect = interaction.getBoundsInRoot()
+        val rect: DpRect = interaction.getBoundsInRoot()
         val rnd = Random()
-        val coordinate = longArrayOf(
-            ((rect.left.value + rnd.nextInt((rect.right.value - rect.left.value + 1).toInt())).toLong()),
-            ((rect.top.value + rnd.nextInt((rect.bottom.value - rect.top.value + 1).toInt())).toLong())
+        val coordinate = floatArrayOf(
+            ((rect.left.value + rnd.nextInt((rect.right.value - rect.left.value + 1).toInt()))),
+            ((rect.top.value + rnd.nextInt((rect.bottom.value - rect.top.value + 1).toInt())))
         )
-        val position = Offset(coordinate[0].toFloat(), coordinate[1].toFloat())
+        val position = Offset(coordinate[0], coordinate[1])
         interaction.performMouseInput {
             click(position)
         }
