@@ -22,14 +22,13 @@ import org.junit.runners.Suite.SuiteClasses;
 import java.util.Random;
 
 /**
- * Application Test Suite
- *
+ * Test Suite
  * @author Martin Zeitler
  */
 @RunWith(org.junit.runners.Suite.class)
 @SuiteClasses({
         TestColorPicker.class,
-        TestComposeActivity.class
+        TestComposeContent.class
 })
 public class TestSuite {
 

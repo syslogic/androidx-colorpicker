@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 
 /**
  * Color-Picker Test Case
- *
  * @author Martin Zeitler
  */
 @RunWith(AndroidJUnit4.class)

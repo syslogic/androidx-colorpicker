@@ -12,6 +12,7 @@ android {
     defaultConfig {
         namespace "io.syslogic.demo.colorpicker"
         applicationId "io.syslogic.demo.colorpicker"
+        testBuildType "debug"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionCode version_code
         versionName version_name
@@ -91,8 +92,9 @@ dependencies {
     // https://mvnrepository.com/artifact/androidx.test/monitor
     debugImplementation "androidx.test:monitor:$test_monitor_version"
 
+    // Required for connected tests (ActivityInvoker).
     // https://mvnrepository.com/artifact/androidx.test.ext
-    androidTestImplementation "androidx.test.ext:junit:$test_junit_version"
+    debugImplementation "androidx.test.ext:junit:$test_junit_version"
 
     // https://mvnrepository.com/artifact/androidx.test
     // https://developer.android.com/jetpack/androidx/releases/test
@@ -119,7 +121,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
 
     // Needed for createComposeRule, but not createAndroidComposeRule:
-    // debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
 }
 
 // disable caching
