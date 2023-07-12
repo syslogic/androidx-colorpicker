@@ -39,6 +39,8 @@ class TestComposeContent : TestSuite() {
     @get:Rule
     var testRule: ComposeContentTestRule = createComposeRule()
 
+    private val logTag: String = TestComposeContent::class.java.simpleName
+
     private lateinit var interaction: SemanticsNodeInteraction
 
     @Before
@@ -51,9 +53,7 @@ class TestComposeContent : TestSuite() {
                 ) {
                     ColorPickerComponent(
                         initialColor = Color(0xFF444444.toInt()),
-                        onColorChanged = { _ ->
-                            // println("onColorChanged: $color")
-                        },
+                        onColorChanged = {},
                         showAlpha = true,
                         showHSV = true,
                         showARGB = true,
@@ -65,9 +65,9 @@ class TestComposeContent : TestSuite() {
     }
 
     @Test
-    fun logTest() {
+    fun printToLogTest() {
         interaction = testRule.onRoot()
-        interaction.printToLog("TAG")
+        interaction.printToLog(logTag)
     }
 
     /** Randomly tapping the huePanel. */
