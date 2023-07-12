@@ -15,19 +15,21 @@ import androidx.compose.ui.test.getBoundsInRoot
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performMouseInput
-import androidx.compose.ui.test.printToLog
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpRect
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import io.syslogic.colorpicker.compose.ColorPickerComponent
-import org.junit.Before
 
+import io.syslogic.colorpicker.compose.ColorPickerComponent
+
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 import java.util.Random
+
+import kotlin.math.roundToInt
 
 /**
  * Compose Content Test Case
@@ -38,10 +40,6 @@ class TestComposeContent : TestSuite() {
 
     @get:Rule
     var testRule: ComposeContentTestRule = createComposeRule()
-
-    private val logTag: String = TestComposeContent::class.java.simpleName
-
-    private lateinit var interaction: SemanticsNodeInteraction
 
     @Before
     fun setUp() {
@@ -62,124 +60,73 @@ class TestComposeContent : TestSuite() {
                 }
             }
         }
+        // testRule.onRoot().printToLog(logTag)
+        // testRule.onRoot().getBoundsInRoot()
     }
 
-    @Test
-    fun printToLogTest() {
-        interaction = testRule.onRoot()
-        interaction.printToLog(logTag)
-    }
-
-    /** Randomly tapping the huePanel. */
-    @Test
-    @OptIn(ExperimentalTestApi::class)
-    fun huePanelTest() {
-        interaction = getNodeWithTag("hue")
-        interaction.assertExists().assertIsDisplayed()
-        randomlyClick(interaction)
-    }
-
-    /** Randomly tapping the satValPanel . */
+    /** Randomly clicking the sat/val panel. */
     @Test
     @OptIn(ExperimentalTestApi::class)
     fun satValPanelTest() {
-        interaction = getNodeWithTag("sat_val")
-        interaction.assertExists().assertIsDisplayed()
-        randomlyClick(interaction)
+        randomlyClick(getNodeWithTag("sat_val"))
     }
 
-    /** Randomly tapping the alphaPanel. */
+    /** Randomly clicking the hue panel. */
+    @Test
+    @OptIn(ExperimentalTestApi::class)
+    fun huePanelTest() {
+        randomlyClick(getNodeWithTag("hue"))
+    }
+
+    /** Randomly clicking the alpha panel. */
     @Test
     @OptIn(ExperimentalTestApi::class)
     fun alphaPanelTest() {
-        interaction = getNodeWithTag("alpha")
-        interaction.assertExists().assertIsDisplayed()
-        randomlyClick(interaction)
+        randomlyClick(getNodeWithTag("alpha"))
     }
 
+    /** Testing if the elements are there. */
     @Test
-    fun hexColorTest() {
-        interaction = getNodeWithTag("hex")
-        interaction.assertExists().assertIsDisplayed()
+    fun basicTest() {
+        getNodeWithTag("sat_val").assertExists().assertIsDisplayed()
+        getNodeWithTag("hue").assertExists().assertIsDisplayed()
+        getNodeWithTag("alpha").assertExists().assertIsDisplayed()
+        getNodeWithTag("hex").assertExists().assertIsDisplayed()
+        getNodeWithTag("old_color").assertExists().assertIsDisplayed()
+        getNodeWithTag("new_color").assertExists().assertIsDisplayed()
+        getNodeWithTag("value_hue").assertExists().assertIsDisplayed()
+        getNodeWithTag("value_sat").assertExists().assertIsDisplayed()
+        getNodeWithTag("value_val").assertExists().assertIsDisplayed()
+        getNodeWithTag("value_alpha").assertExists().assertIsDisplayed()
+        getNodeWithTag("value_blue").assertExists().assertIsDisplayed()
+        getNodeWithTag("value_red").assertExists().assertIsDisplayed()
+        getNodeWithTag("value_green").assertExists().assertIsDisplayed()
     }
 
-    @Test
-    fun oldColorTest() {
-        interaction = getNodeWithTag("old_color")
-        interaction.assertExists().assertIsDisplayed()
-    }
+    /** Convert dp to px. */
+    private val Dp.px: Int get() = (this.value * getSystem().displayMetrics.density).roundToInt()
 
-    @Test
-    fun newColorTest() {
-        interaction = getNodeWithTag("new_color")
-        interaction.assertExists().assertIsDisplayed()
-    }
-
-    @Test
-    fun valueHueTest() {
-        interaction = getNodeWithTag("value_hue")
-        interaction.assertExists().assertIsDisplayed()
-    }
-
-    @Test
-    fun valueSatTest() {
-        interaction = getNodeWithTag("value_sat")
-        interaction.assertExists().assertIsDisplayed()
-    }
-
-    @Test
-    fun valueValTest() {
-        interaction = getNodeWithTag("value_val")
-        interaction.assertExists().assertIsDisplayed()
-    }
-
-    @Test
-    fun valueAlphaTest() {
-        interaction = getNodeWithTag("value_alpha")
-        interaction.assertExists().assertIsDisplayed()
-    }
-
-    @Test
-    fun valueBlueTest() {
-        interaction = getNodeWithTag("value_blue")
-        interaction.assertExists().assertIsDisplayed()
-    }
-
-    @Test
-    fun valueRedTest() {
-        interaction = getNodeWithTag("value_red")
-        interaction.assertExists().assertIsDisplayed()
-    }
-
-    @Test
-    fun valueGreenTest() {
-        interaction = getNodeWithTag("value_green")
-        interaction.assertExists().assertIsDisplayed()
-    }
-
+    /** Getter for interaction nodes. */
     private fun getNodeWithTag(testTag: String): SemanticsNodeInteraction {
         return testRule.onNodeWithTag(testTag = testTag)
     }
 
-    private val Dp.px: Int get() = (this.value / getSystem().displayMetrics.density).toInt()
-
-    /* Randomly click. */
+    /** Randomly click. */
     @ExperimentalTestApi
-    private fun randomlyClick(interaction: SemanticsNodeInteraction, count: Int = 100, ms: Int = 50) {
-        val rnd = Random()
-        val rect: DpRect = interaction.getBoundsInRoot()
-        println("DpRect >> x: " + rect.left.px + "px, y: " + rect.top.px + "px")
+    private fun randomlyClick(interaction: SemanticsNodeInteraction, count: Int = 250) {
         for (i in 0 until count) {
-            val coordinate = floatArrayOf(
-                (rect.left.px + rnd.nextInt(rect.right.px - rect.left.px + 1)).toFloat(),
-                (rect.top.px + rnd.nextInt(rect.bottom.px - rect.top.px + 1)).toFloat()
-            )
-            val position = Offset(coordinate[0], coordinate[1])
-            println("Offset >> x: " + position.x.toInt() + ", y: " + position.y.toInt())
-            interaction.performMouseInput {
-                click(position)
-            }
-            sleep(ms)
+            interaction.performMouseInput { click(getOffset(interaction)) }
+            sleep(20)
         }
+    }
+
+    /** Random offset. */
+    private fun getOffset(interaction: SemanticsNodeInteraction): Offset {
+        val rect: DpRect = interaction.getBoundsInRoot()
+        val boundX = rect.right.px - rect.left.px
+        val boundY = rect.bottom.px - rect.top.px
+        val x: Float = (Random().nextInt(boundX + 1)).toFloat() /* left */
+        val y: Float = (Random().nextInt(boundY + 1)).toFloat() /* top */
+        return Offset(x, y)
     }
 }
