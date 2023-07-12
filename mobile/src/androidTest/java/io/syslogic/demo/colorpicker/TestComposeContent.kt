@@ -163,7 +163,7 @@ class TestComposeContent : TestSuite() {
 
     private val Dp.px: Int get() = (this.value / getSystem().displayMetrics.density).toInt()
 
-    /* Randomly tapping. */
+    /* Randomly click. */
     @ExperimentalTestApi
     private fun randomlyClick(interaction: SemanticsNodeInteraction, count: Int = 100, ms: Int = 50) {
         val rnd = Random()
