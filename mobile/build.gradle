@@ -7,10 +7,10 @@ plugins {
 }
 
 android {
-
+    namespace "io.syslogic.demo.colorpicker"
+    buildToolsVersion build_tools_version
     compileSdk compile_sdk
     defaultConfig {
-        namespace "io.syslogic.demo.colorpicker"
         applicationId "io.syslogic.demo.colorpicker"
         testBuildType "debug"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

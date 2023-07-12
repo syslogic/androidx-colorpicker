@@ -1,6 +1,7 @@
 // Root project build.gradle
 buildscript {
     ext {
+        build_tools_version = '34.0.0'
         version_name = '1.1.8'
         version_code = 17
         compile_sdk = 34

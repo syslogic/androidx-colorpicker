@@ -7,9 +7,9 @@ plugins {
 }
 
 android {
-
-    compileSdk compile_sdk
     namespace 'io.syslogic.colorpicker'
+    buildToolsVersion build_tools_version
+    compileSdk compile_sdk
     defaultConfig {
         setProperty('archivesBaseName', 'colorpicker')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
