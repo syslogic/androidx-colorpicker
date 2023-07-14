@@ -11,12 +11,6 @@ The JitPack repository URL would be: `maven { url 'https://jitpack.io' }`
         implementation "io.syslogic:androidx-colorpicker:1.2.3"
     }
 
-Alternatively, one can also check out the repository and depend on the local `:library` module:
-
-    dependencies {
-        implementation project(path: ':library')
-    }
-
  ---
 
 The `:mobile` application module provides these usage examples:
