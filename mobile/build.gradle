@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace "io.syslogic.demo.colorpicker"
-    buildToolsVersion build_tools_version
+    buildToolsVersion = build_tools_version
     compileSdk compile_sdk
     defaultConfig {
         applicationId "io.syslogic.demo.colorpicker"
@@ -125,6 +125,6 @@ dependencies {
 }
 
 // disable caching
-configurations.all {
+configurations.configureEach {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }

@@ -7,7 +7,7 @@ buildscript {
         compile_sdk = 34
         target_sdk = 34
         build_tools_version = '34.0.0'
-        agp_version = '8.0.2'
+        agp_version = '8.1.0'
         kotlin_version = '1.8.22'
         kotlin_compiler_extension_version = '1.4.8'
         compose_activity_version = '1.7.2'
@@ -37,13 +37,15 @@ plugins {
 
 allprojects {
     gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        tasks.withType(JavaCompile).tap {
+            configureEach {
+                options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+            }
         }
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
     delete project.buildDir
 }
