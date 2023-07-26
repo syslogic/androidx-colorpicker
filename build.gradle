@@ -14,7 +14,7 @@ buildscript {
         compose_version = '1.4.3'
         material_version = '1.9.0'
         appcompat_version = '1.6.1'
-        preference_version = '1.2.0'
+        preference_version = '1.2.1'
         core_version = '1.10.1'
         nav_version = '2.6.0'
         junit_version = '4.13.2'
