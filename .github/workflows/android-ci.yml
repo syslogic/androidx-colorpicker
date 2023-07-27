@@ -55,6 +55,6 @@ jobs:
         id: retain-release-aab
         uses: actions/upload-artifact@v3
         with:
-          name: androidx-colorpicker
+          name: androidx-colorpicker-release-aar
           path: ./library/build/outputs/aar/colorpicker-release.aar
           retention-days: 14
