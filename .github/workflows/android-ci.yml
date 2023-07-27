@@ -51,9 +51,9 @@ jobs:
       - name: 🔨 Build with Gradle
         run: ./gradlew :library:assembleRelease
 
-      - name: 📦 Retain Artifacts (Debug AAR)
+      - name: 📦 Retain Artifacts (Release AAR)
         id: retain-release-aab
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: androidx-colorpicker
           path: ./library/build/outputs/aar/colorpicker-release.aar
