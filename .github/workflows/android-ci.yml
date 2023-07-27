@@ -35,7 +35,6 @@ jobs:
 
       - name: Download AWS Corretto
         if: steps.corretto-cache.outputs.cache-hit != 'true'
-        # run: wget https://corretto.aws/downloads/latest/amazon-corretto-17-x64-linux-jdk.tar.gz
         run: wget ${{ steps.get-latest-corretto-url.outputs.URL }}
 
       - name: ☕ Set up JDK 17
@@ -51,3 +50,11 @@ jobs:
 
       - name: 🔨 Build with Gradle
         run: ./gradlew :library:assembleRelease
+
+      - name: 📦 Retain Artifacts (Debug AAR)
+        id: retain-release-aab
+        uses: actions/upload-artifact@v2
+        with:
+          name: androidx-colorpicker
+          path: ./library/build/outputs/aar/colorpicker-release.aar
+          retention-days: 14
