@@ -11,11 +11,6 @@ on:
     paths-ignore:
       - '**/README.md'
       - '.run/**'
-
-env:
-  JDK_URL: https://corretto.aws/downloads/latest/amazon-corretto-17-x64-linux-jdk.tar.gz
-  JDK_FILE: ./amazon-corretto-17-x64-linux-jdk.tar.gz
-
 jobs:
   build:
     name: 🎉 Build
@@ -27,13 +22,13 @@ jobs:
 
       - name: Get latest Corretto URL
         id: get-latest-corretto-url
-        run: echo "{URL}={$(curl -LIs -o /dev/null -w %{url_effective} $JDK_URL)}" >> $GITHUB_OUTPUT
+        run: echo "{URL}={$(curl -LIs -o /dev/null -w %{url_effective} https://corretto.aws/downloads/latest/amazon-corretto-17-x64-linux-jdk.tar.gz)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
         id: corretto-cache
         name: Restore Corretto
         with:
-          path: $JDK_FILE
+          path: ./amazon-corretto-17-x64-linux-jdk.tar.gz
           key:  ${{ runner.os }}-corretto-${{ steps.get-latest-corretto-url.outputs.URL }}
 
       - name: Download AWS Corretto
@@ -46,7 +41,7 @@ jobs:
           distribution: jdkfile
           java-version: '17'
           architecture: x64
-          jdkFile: $JDK_FILE
+          jdkFile: ./amazon-corretto-17-x64-linux-jdk.tar.gz
 
       - name: 🔢 Grant execute permission for gradlew
         run: chmod +x gradlew
