@@ -34,7 +34,7 @@ jobs:
         name: Restore Corretto
         with:
           path: $JDK_FILE
-          key:  ${{ runner.os }}-corretto-${{ $GITHUB_OUTPUT.URL }}
+          key:  ${{ runner.os }}-corretto-${{ steps.get-latest-corretto-url.outputs.URL }}
 
       - name: Download AWS Corretto
         if: steps.corretto-cache.outputs.cache-hit != 'true'
