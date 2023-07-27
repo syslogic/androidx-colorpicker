@@ -22,9 +22,7 @@ jobs:
 
       - name: Get latest Corretto URL
         id: get-latest-corretto-url
-        run: |
-          JDK_URL=$(curl -LIs -o /dev/null -w %{url_effective} https://corretto.aws/downloads/latest/amazon-corretto-17-x64-linux-jdk.tar.gz)
-          echo "URL=$JDK_URL" >> $GITHUB_OUTPUT
+        run: echo "URL=$(curl -LIs -o /dev/null -w %{url_effective} https://corretto.aws/downloads/latest/amazon-corretto-17-x64-linux-jdk.tar.gz)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
         id: corretto-cache
