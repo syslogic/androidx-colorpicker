@@ -17,6 +17,8 @@ android {
         targetSdk target_sdk
         minSdk min_sdk
     }
+    
+    sourceSets.main.java.srcDirs = [ "src/main/java" ]
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -100,14 +102,15 @@ tasks.register('javadoc', Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     destinationDir = file("${project.buildDir}/outputs/javadoc/")
     configurations.implementation.setCanBeResolved(true)
+
     classpath = files(new File("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"))
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    android.getBootClasspath().forEach{classpath += fileTree(it) }
     classpath += fileTree(dir: "$buildDir/tmp/aarsToJars/")
     classpath += configurations.implementation
-    exclude "**/BuildConfig.java", "**/R.java"
+    exclude "**/BuildConfig.java", "**/R.java", "**/*.kt"
     failOnError false
 
-    // options.verbose()
+    options.verbose()
     // javadoc: warning - The code being documented uses modules but the packages
     // defined in https://developer.android.com/reference/ are in the unnamed module.
     options.links "https://docs.oracle.com/en/java/javase/17/docs/api/"
@@ -118,13 +121,15 @@ tasks.register('javadoc', Javadoc) {
     doFirst {
 
         // extract AAR files
-        configurations.implementation.filter { it.name.endsWith('.aar') }.each { aar ->
-            copy {
-                from zipTree(aar)
-                include "**/classes.jar"
-                into "$buildDir/tmp/aarsToJars/${aar.name.replace('.aar', '')}/"
-            }
-        }
+        configurations.implementation
+                .filter { it.name.endsWith('.aar') }
+                .each { aar ->
+                    copy {
+                        from zipTree(aar)
+                        include "**/classes.jar"
+                        into "$buildDir/tmp/aarsToJars/${aar.name.replace('.aar', '')}/"
+                    }
+                }
 
         // provide JAR, which contains the generated data-binding classes
         def aar_main = new File("$buildDir/intermediates/aar_main_jar")
