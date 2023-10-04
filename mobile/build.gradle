@@ -32,7 +32,7 @@ android {
     composeOptions {
         // See the "Compose to Kotlin Compatibility Map" for compatible versions:
         // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-        kotlinCompilerExtensionVersion kotlin_compiler_extension_version
+        kotlinCompilerExtensionVersion compose_compiler_version
     }
 
     buildFeatures {
@@ -121,7 +121,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
 
     // Needed for createComposeRule, but not createAndroidComposeRule:
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.3")
 }
 
 // disable caching
