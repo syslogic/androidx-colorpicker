@@ -121,6 +121,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$androidx_compose_version")
 
     // Needed for createComposeRule, but not createAndroidComposeRule:
+    //noinspection GradleDependency
     debugImplementation("androidx.compose.ui:ui-test-manifest:$androidx_compose_version")
 }
 
