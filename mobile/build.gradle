@@ -6,6 +6,10 @@ plugins {
     id 'kotlin-kapt'
 }
 
+base {
+    archivesName = 'colorpicker_demo_' + version_name
+}
+
 android {
     namespace "io.syslogic.demo.colorpicker"
     buildToolsVersion = build_tools_version

@@ -6,12 +6,15 @@ plugins {
     id 'maven-publish'
 }
 
+base {
+    archivesName = 'colorpicker_' + version_name
+}
+
 android {
     namespace 'io.syslogic.colorpicker'
     buildToolsVersion = build_tools_version
     compileSdk compile_sdk
     defaultConfig {
-        setProperty('archivesBaseName', 'colorpicker')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         consumerProguardFiles "${project.rootDir}/proguard/consumer.pro"
         targetSdk target_sdk
