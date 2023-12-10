@@ -29,8 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v3
       - name: 🔢 Set current tag
         id: vars
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
@@ -42,6 +40,9 @@ jobs:
           distribution: corretto
           java-version: '17'
           architecture: x64
+
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
 
       - name: 🔢 Grant execute permission for gradlew
         run: chmod +x gradlew
