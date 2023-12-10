@@ -3,6 +3,8 @@ name: 🤖 Android CI
 on:
   push:
     branches: [ master ]
+    tags:
+      - '*.*.*'
     paths-ignore:
       - '**/README.md'
       - 'screenshots/**'
@@ -12,6 +14,8 @@ on:
 
   pull_request:
     branches: [ master ]
+    tags:
+      - '*.*.*'
     paths-ignore:
       - '**/README.md'
       - 'screenshots/**'
@@ -27,6 +31,9 @@ jobs:
 
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
+      - name: Set output
+        id: vars
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
       #  https://github.com/actions/setup-java
       - name: ☕ Set up AWS Corretto JDK 17
@@ -44,9 +51,11 @@ jobs:
 
       # https://github.com/actions/upload-artifact
       - name: 📦 Retain Artifacts (Release AAR)
-        id: retain-release-aab
+        id: retain-release-aar
         uses: actions/upload-artifact@v3
+        env:
+          VERSION_TAG: ${{ steps.vars.outputs.tag }}
         with:
-          name: androidx-colorpicker-release-aar
-          path: ./library/build/outputs/aar/colorpicker-release.aar
+          name: androidx-colorpicker-aar
+          path: ./library/build/outputs/aar/colorpicker_${VERSION_TAG}-release.aar
           retention-days: 14
