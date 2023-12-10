@@ -4,6 +4,9 @@
     <string name="text_hexadecimal_value">Hex Value</string>
     <string name="text_select_color">Select Color</string>
 
+    <string name="text_label_old_color_panel">Old Color</string>
+    <string name="text_label_new_color_panel">New Color</string>
+
     <string name="text_label_hue">Hue:</string>
     <string name="text_label_sat">Sat:</string>
     <string name="text_label_val">Val:</string>
