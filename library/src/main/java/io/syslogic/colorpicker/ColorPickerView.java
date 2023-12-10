@@ -27,7 +27,6 @@ import java.util.Objects;
 
 /**
  * The Color-Picker {@link View} (refactored version).
- *
  * It displays a color picker to the user and allow them to select a color.
  * the slider for the alpha-channel can be enabled setAlphaSliderVisible(true).
  *
@@ -190,7 +189,7 @@ public class ColorPickerView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         if (mDrawingRect.width() <= 0 || mDrawingRect.height() <= 0) {
             return;
         }
