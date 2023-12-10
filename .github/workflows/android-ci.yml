@@ -31,7 +31,7 @@ jobs:
 
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
-      - name: Set output
+      - name: Set version tag
         id: vars
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
@@ -47,15 +47,15 @@ jobs:
         run: chmod +x gradlew
 
       - name: 🔨 Build with Gradle
+        env:
+          VERSION_TAG: ${{ steps.vars.outputs.tag }}
         run: ./gradlew :library:assembleRelease
 
       # https://github.com/actions/upload-artifact
       - name: 📦 Retain Artifacts (Release AAR)
         id: retain-release-aar
         uses: actions/upload-artifact@v3
-        env:
-          VERSION_TAG: ${{ steps.vars.outputs.tag }}
         with:
           name: androidx-colorpicker-aar
-          path: ./library/build/outputs/aar/colorpicker_${VERSION_TAG}-release.aar
+          path: ./library/build/outputs/aar/colorpicker_*-release.aar
           retention-days: 14
