@@ -58,11 +58,11 @@ fun ColorPickerComponent(
     val colPadding = dimensionResource(R.dimen.compose_col_padding)
 
     /* All the values are being initialized by the `initialColor`. */
-    var currentColor: Int by remember { mutableStateOf(initialColor.hashCode()) }
-    var currentAlpha: Float by remember { mutableStateOf(initialColor.alpha) }
-    var currentHue: Float by remember { mutableStateOf(getHSV(initialColor)[0]) }
-    var currentSat: Float by remember { mutableStateOf(getHSV(initialColor)[1]) }
-    var currentVal: Float by remember { mutableStateOf(getHSV(initialColor)[2]) }
+    var currentColor: Int by remember { mutableIntStateOf(initialColor.hashCode()) }
+    var currentAlpha: Float by remember { mutableFloatStateOf(initialColor.alpha) }
+    var currentHue: Float by remember { mutableFloatStateOf(getHSV(initialColor)[0]) }
+    var currentSat: Float by remember { mutableFloatStateOf(getHSV(initialColor)[1]) }
+    var currentVal: Float by remember { mutableFloatStateOf(getHSV(initialColor)[2]) }
 
     /* The measured position of the SatValPainter. */
     var offsetSatVal by remember { mutableStateOf(Offset.Zero) }
@@ -241,7 +241,7 @@ fun ColorPickerComponent(
 
             /* Sat/Val Panel */
             Image(
-                contentDescription = "Sat/Val by Hue",
+                contentDescription = stringResource(R.string.text_label_panel_sat_val),
                 contentScale = ContentScale.FillBounds,
                 painter = SatValPainter(Size(900F, 900F)).also {
                     it.setAlpha(currentAlpha)
@@ -285,7 +285,7 @@ fun ColorPickerComponent(
 
             /* Hue Panel */
             Image(
-                contentDescription = "Hue",
+                contentDescription = stringResource(R.string.text_label_panel_hue),
                 contentScale = ContentScale.FillBounds,
                 painter = HuePainter(Size(100F, 900F)).also {
                     it.setValue(currentHue)
@@ -330,7 +330,7 @@ fun ColorPickerComponent(
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        contentDescription = "Alpha Slider",
+                        contentDescription = stringResource(R.string.text_label_panel_alpha),
                         contentScale = ContentScale.FillBounds,
                         painter = AlphaPainter(Size(1014F, 80F)).also {
                             it.setAlphaByColor(currentColor)
@@ -377,7 +377,7 @@ fun ColorPickerComponent(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Hex Value: ${toARGB(currentColor)}",
+                        text = stringResource(R.string.text_label_panel_hex_value, toARGB(currentColor)),
                         modifier = Modifier.testTag("hex")
                     )
                 }
@@ -394,7 +394,7 @@ fun ColorPickerComponent(
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    contentDescription = "Old Color",
+                    contentDescription = stringResource(R.string.text_label_panel_old_color),
                     contentScale = ContentScale.FillBounds,
                     painter = ColorPainter(Size(422F, 120F)).also {
                         it.setValue(initialColor)
@@ -432,7 +432,7 @@ fun ColorPickerComponent(
             ) {
 
                 Image(
-                    contentDescription = "New Color",
+                    contentDescription = stringResource(R.string.text_label_panel_new_color),
                     contentScale = ContentScale.FillBounds,
                     painter = ColorPainter(Size(422F, 120F)).also {
                         it.setValue(currentColor)

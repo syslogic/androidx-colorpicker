@@ -17,7 +17,7 @@
 
         <io.syslogic.colorpicker.ColorPickerView
             android:id="@+id/color_picker_view"
-            android:contentDescription="@null"
+            android:contentDescription="@string/text_label_panel_sat_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layerType="hardware"
@@ -40,7 +40,7 @@
 
                 <io.syslogic.colorpicker.ColorPickerPanelView
                     android:id="@+id/old_color_panel"
-                    android:contentDescription="@string/text_label_old_color_panel"
+                    android:contentDescription="@string/text_label_panel_old_color"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
                     android:layout_weight="0.50"/>
@@ -55,7 +55,7 @@
 
                 <io.syslogic.colorpicker.ColorPickerPanelView
                     android:id="@+id/new_color_panel"
-                    android:contentDescription="@string/text_label_new_color_panel"
+                    android:contentDescription="@string/text_label_panel_new_color"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.50"/>
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|end"
-                android:hint="@string/text_hexadecimal_value"
+                android:hint="@string/hint_hexadecimal_value"
                 android:imeOptions="actionDone"
                 android:maxLength="7"
                 android:maxLines="1"

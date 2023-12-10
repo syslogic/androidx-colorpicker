@@ -25,7 +25,6 @@ import io.syslogic.colorpicker.databinding.DialogFragmentColorPickerBinding;
 
 /**
  * The Color-Picker {@link DialogFragment} accepts NavArgs and returns a FragmentResult.
- *
  * @author Martin Zeitler
  */
 public class ColorPickerDialogFragment extends DialogFragment implements

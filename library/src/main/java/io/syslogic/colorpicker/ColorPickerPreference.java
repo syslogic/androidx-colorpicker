@@ -25,8 +25,7 @@ import org.jetbrains.annotations.Contract;
 import java.util.Locale;
 
 /**
- * The Color-Picker {@link Preference}
- *
+ * The Color-Picker {@link Preference}.
  * @author Martin Zeitler
  */
 public class ColorPickerPreference extends Preference implements

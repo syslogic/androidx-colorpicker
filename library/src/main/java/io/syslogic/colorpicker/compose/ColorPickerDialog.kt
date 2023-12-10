@@ -45,7 +45,7 @@ fun ColorPickerDialog(
 ) {
 
     /* The value is being initialized by the `initialColor`. */
-    val currentColor: Int by remember { mutableStateOf(initialColor.hashCode()) }
+    val currentColor: Int by remember { mutableIntStateOf(initialColor.hashCode()) }
 
     Dialog(
         onDismissRequest = {

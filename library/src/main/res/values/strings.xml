@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="text_color_picker_dialog">Color Picker</string>
-    <string name="text_hexadecimal_value">Hex Value</string>
+    <string name="hint_hexadecimal_value">Hex Value</string>
     <string name="text_select_color">Select Color</string>
 
-    <string name="text_label_old_color_panel">Old Color</string>
-    <string name="text_label_new_color_panel">New Color</string>
+    <string name="text_label_panel_sat_val">Sat/Val by Hue</string>
+    <string name="text_label_panel_hue">Hue</string>
+    <string name="text_label_panel_alpha">Alpha Slider</string>
+    <string name="text_label_panel_hex_value">"Hex Value: %s</string>
+
+    <string name="text_label_panel_old_color">Old Color</string>
+    <string name="text_label_panel_new_color">New Color</string>
 
     <string name="text_label_hue">Hue:</string>
     <string name="text_label_sat">Sat:</string>

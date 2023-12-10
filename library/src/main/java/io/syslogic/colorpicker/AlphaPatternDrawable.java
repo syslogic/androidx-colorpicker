@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 
 /**
  * This drawable that draws a simple white and gray chessboard pattern.
- *
  * @author Martin Zeitler
  */
 public class AlphaPatternDrawable extends Drawable {

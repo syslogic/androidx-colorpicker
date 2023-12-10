@@ -1,7 +1,7 @@
 package io.syslogic.colorpicker;
 
 /**
- * ColorPickerDialogFragment Impl
+ * ColorPickerDialogFragment Impl.
  * Used to instance ColorPickerDialogFragmentImpl from ColorPickerPreference.
  * @author Martin Zeitler
  */
