@@ -33,10 +33,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: 🔢 Set version tag
-        id: vars
-        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-
       #  https://github.com/actions/setup-java
       - name: ☕ Set up AWS Corretto JDK 17
         uses: actions/setup-java@v3
@@ -48,15 +44,18 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
 
+      # GITHUB_REF may be "master".
+      - name: 🔢 Set version tag
+        id: vars
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
       - name: 🔢 Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: 🔨 Build with Gradle
         env:
           VERSION_TAG: ${{ steps.vars.outputs.tag }}
-        run: |
-          echo $VERSION_TAG
-          ./gradlew :library:assembleRelease
+        run: ./gradlew :library:assembleRelease
 
       # https://github.com/actions/upload-artifact
       - name: 📦 Retain Artifacts (Release AAR)
