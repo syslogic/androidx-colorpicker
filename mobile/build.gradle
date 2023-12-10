@@ -81,13 +81,14 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$androidx_navigation_version"
 
     // https://mvnrepository.com/artifact/androidx.compose
-    // https://developer.android.com/jetpack/androidx/releases/compose
-    debugImplementation "androidx.compose.ui:ui-tooling-preview:$androidx_compose_version"
-    implementation "androidx.activity:activity-compose:$androidx_compose_activity_version"
-    implementation "androidx.compose.foundation:foundation:$androidx_compose_version"
-    implementation "androidx.compose.material:material:$androidx_compose_version"
-    implementation "androidx.compose.runtime:runtime:$androidx_compose_version"
-    implementation "androidx.compose.ui:ui:$androidx_compose_version"
+    // https://developer.android.com/jetpack/compose/tooling#bom
+    implementation platform("androidx.compose:compose-bom:$androidx_compose_bom_version")
+    debugImplementation "androidx.compose.ui:ui-tooling-preview"
+    implementation "androidx.activity:activity-compose"
+    implementation "androidx.compose.foundation:foundation"
+    implementation "androidx.compose.material:material"
+    implementation "androidx.compose.runtime:runtime"
+    implementation "androidx.compose.ui:ui"
 
     // jUnit
     testImplementation "junit:junit:$junit_version"
@@ -122,11 +123,11 @@ dependencies {
     // androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$androidx_test_espresso_version"
 
     // Test rules and transitive dependencies:
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$androidx_compose_version")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 
     // Needed for createComposeRule, but not createAndroidComposeRule:
     //noinspection GradleDependency
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$androidx_compose_version")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
 
 // disable caching
