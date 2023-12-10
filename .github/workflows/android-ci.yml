@@ -31,7 +31,7 @@ jobs:
 
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
-      - name: Set version tag
+      - name: 🔢 Set current tag
         id: vars
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
