@@ -38,25 +38,43 @@ public class ColorPickerPreference extends Preference implements
 
     /** Debug Output */
     protected static final boolean mDebug = BuildConfig.DEBUG;
-    
+
     private int mCurrentValue = Color.BLACK;
     private boolean mShowAlphaSlider = false;
     private boolean mShowHexValue = false;
 
     private SharedPreferences prefs;
 
+    /**
+     * Constructor
+     * @param context the context.
+     */
     @SuppressWarnings("unused")
     public ColorPickerPreference(@NonNull Context context) {
         super(context);
         init(context, null);
     }
 
+    /**
+     * Constructor
+     * @param context the context.
+     * @param attrs view attributes.
+     */
     @SuppressWarnings("unused")
     public ColorPickerPreference(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
+    /**
+     * Constructor
+     * @param context the context.
+     * @param attrs view attributes.
+     * @param defStyle The default style to apply to this view.
+     *                 If 0, no style will be applied (beyond what is included in the theme).
+     *                 This may either be an attribute resource, whose value will be retrieved
+     *                 from the current theme, or an explicit style resource.
+     */
     @SuppressWarnings("unused")
     public ColorPickerPreference(@NonNull Context context, @NonNull AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);

@@ -34,10 +34,24 @@ public class ColorPickerPanelView extends View {
 
     private final float mDensity;
 
+    /**
+     * Constructor
+     * @param context the context.
+     * @param attrs view attributes.
+     */
     public ColorPickerPanelView(@NonNull Context context, @NonNull AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
+    /**
+     * Constructor
+     * @param context the context.
+     * @param attrs view attributes.
+     * @param defStyle The default style to apply to this view.
+     *                 If 0, no style will be applied (beyond what is included in the theme).
+     *                 This may either be an attribute resource, whose value will be retrieved
+     *                 from the current theme, or an explicit style resource.
+     */
     public ColorPickerPanelView(@NonNull Context context, @NonNull AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         BORDER_WIDTH_PX = getDimension(context, R.dimen.border_width_px);

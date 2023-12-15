@@ -96,7 +96,7 @@ public class ColorPickerView extends View {
      */
     private float mDrawingOffset;
 
-    /** Distance form the edges of the view of where we are allowed to draw. */
+    /** Distance from the edges of the view of where we are allowed to draw. */
     private RectF mDrawingRect;
 
     private RectF mSatRect;
@@ -107,14 +107,32 @@ public class ColorPickerView extends View {
 
     private Point mStartTouchPoint = null;
 
+    /**
+     * Constructor
+     * @param context the context.
+     */
     public ColorPickerView(@NonNull Context context) {
         this(context, null);
     }
 
+    /**
+     * Constructor
+     * @param context the context.
+     * @param attrs view attributes.
+     */
     public ColorPickerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
+    /**
+     * Constructor
+     * @param context the context.
+     * @param attrs view attributes.
+     * @param defStyle The default style to apply to this view.
+     *                 If 0, no style will be applied (beyond what is included in the theme).
+     *                 This may either be an attribute resource, whose value will be retrieved
+     *                 from the current theme, or an explicit style resource.
+     */
     public ColorPickerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
@@ -672,11 +690,13 @@ public class ColorPickerView extends View {
         }
     }
 
+    /** @return if the alpha-panel shall be shown. */
     @SuppressWarnings("unused")
     public boolean getAlphaSliderVisible() {
         return mShowAlphaPanel;
     }
 
+    /** @param color the color of the tracker painter. */
     @SuppressWarnings("unused")
     public void setSliderTrackerColor(int color) {
         mSliderTrackerColor = color;
@@ -684,6 +704,7 @@ public class ColorPickerView extends View {
         invalidate();
     }
 
+    /** @return the color of the tracker painter. */
     @SuppressWarnings("unused")
     public int getSliderTrackerColor() {
         return mSliderTrackerColor;

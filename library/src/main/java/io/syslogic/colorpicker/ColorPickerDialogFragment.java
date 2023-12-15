@@ -42,10 +42,15 @@ public class ColorPickerDialogFragment extends DialogFragment implements
      */
     DialogFragmentColorPickerBinding mDataBinding;
 
+    /** Constructor */
     public ColorPickerDialogFragment() {
         super();
     }
 
+    /**
+     * Default Constructor
+     * @param listener instance of {@link OnColorChangedListener}.
+     */
     public ColorPickerDialogFragment(@NonNull OnColorChangedListener listener) {
         super();
         this.listener = listener;
@@ -102,6 +107,7 @@ public class ColorPickerDialogFragment extends DialogFragment implements
         return this.mDataBinding.getRoot();
     }
 
+    /** @param color the initial color. */
     protected void setUp(int color) {
         this.mDataBinding.oldColorPanel.setColor(color);
         this.mDataBinding.newColorPanel.setColor(color);
@@ -170,6 +176,7 @@ public class ColorPickerDialogFragment extends DialogFragment implements
         this.mDataBinding.hexadecimalValue.setTextColor(mHexDefaultTextColor);
     }
 
+    /** @return the current integer color. */
     public int getColor() {
         return this.mDataBinding.colorPickerView.getColor();
     }
