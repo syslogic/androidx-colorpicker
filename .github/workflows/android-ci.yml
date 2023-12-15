@@ -60,7 +60,7 @@ jobs:
       # https://github.com/actions/upload-artifact
       - name: 📦 Retain Artifacts (Release AAR)
         id: retain-release-aar
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: androidx-colorpicker-aar
           path: ./library/build/outputs/aar/colorpicker_*-release.aar
