@@ -61,6 +61,11 @@ android {
         warningsAsErrors true
         abortOnError false
         showAll false
+
+        // TODO: Cannot invoke "org.jetbrains.uast.kotlin.KotlinUastResolveProviderService
+        //  .getBindingContext(org.jetbrains.kotlin.psi.KtElement)" because "service" is null.
+        disable "MutableCollectionMutableState"
+        disable "AutoboxingStateCreation"
     }
 
     packagingOptions {
@@ -104,7 +109,6 @@ dependencies {
 }
 
 
-// TODO: replace deprecated project.buildDir.
 tasks.register('javadoc', Javadoc) {it ->
 
     title = "Color Picker ${android.defaultConfig.versionName} API"
