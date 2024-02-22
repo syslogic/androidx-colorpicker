@@ -7,7 +7,7 @@ buildscript {
         compile_sdk = 34
         target_sdk = 34
         build_tools_version = '34.0.0'
-        android_gradle_plugin_version = '8.2.1'
+        android_gradle_plugin_version = '8.2.2'
         material_version = '1.11.0'
         junit_version = '4.13.2'
         kotlin_version = '1.9.21'
@@ -17,14 +17,14 @@ buildscript {
         androidx_core_version = '1.12.0'
         androidx_appcompat_version = '1.6.1'
         androidx_preference_version = '1.2.1'
-        androidx_navigation_version = '2.7.6'
+        androidx_navigation_version = '2.7.7'
 
         androidx_test_junit_version = '1.1.5'
         androidx_test_core_version = '1.5.0'
         androidx_test_monitor_version = '1.6.1'
         androidx_test_runner_version = '1.5.2'
         androidx_test_rules_version = '1.5.0'
-        androidx_test_uiautomator_version = '2.2.0'
+        androidx_test_uiautomator_version = '2.3.0'
         androidx_test_espresso_version = '3.5.1'
     }
 }
