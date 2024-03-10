@@ -7,7 +7,7 @@ buildscript {
         compile_sdk = 34
         target_sdk = 34
         build_tools_version = '34.0.0'
-        android_gradle_plugin_version = '8.2.2'
+        android_gradle_plugin_version = '8.3.0'
         material_version = '1.11.0'
         junit_version = '4.13.2'
 
