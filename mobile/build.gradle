@@ -123,7 +123,7 @@ dependencies {
     // androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$androidx_test_espresso_version"
 
     // Test rules and transitive dependencies:
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.6.2"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.6.3"
 
     // Needed for createComposeRule, but not createAndroidComposeRule:
     //noinspection GradleDependency
