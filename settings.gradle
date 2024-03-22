@@ -17,6 +17,11 @@ dependencyResolutionManagement {
         mavenLocal()
         maven { url 'https://jitpack.io' }
     }
+    versionCatalogs {
+        libs {
+            from(files("libs.versions.toml"))
+        }
+    }
 }
 
 rootProject.name = "ColorPicker"
