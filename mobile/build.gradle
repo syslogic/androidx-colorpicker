@@ -83,11 +83,17 @@ dependencies {
     // https://mvnrepository.com/artifact/androidx.compose
     // https://developer.android.com/jetpack/compose/tooling#bom
     implementation platform(libs.androidx.compose.bom)
+    //noinspection UseTomlInstead
     debugImplementation "androidx.compose.ui:ui-tooling-preview"
+    //noinspection UseTomlInstead
     implementation "androidx.activity:activity-compose"
+    //noinspection UseTomlInstead
     implementation "androidx.compose.foundation:foundation"
+    //noinspection UseTomlInstead
     implementation "androidx.compose.material:material"
+    //noinspection UseTomlInstead
     implementation "androidx.compose.runtime:runtime"
+    //noinspection UseTomlInstead
     implementation "androidx.compose.ui:ui"
 
     // jUnit
@@ -113,20 +119,20 @@ dependencies {
     // Espresso
     androidTestImplementation libs.androidx.espresso.core
     androidTestImplementation libs.androidx.espresso.web
-    // androidTestImplementation "androidx.test.espresso:espresso-contrib:${libs.versions.androidx.test.espresso.get()}"
-    // androidTestImplementation "androidx.test.espresso:espresso-intents:${libs.versions.androidx.test.espresso.get()}"
-    // androidTestImplementation "androidx.test.espresso:espresso-accessibility:${libs.versions.androidx.test.espresso.get()}"
-    // androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:${libs.versions.androidx.test.espresso.get()}"
+    // androidTestImplementation libs.androidx.espresso.idling.concurrent
+    // androidTestImplementation libs.androidx.espresso.accessibility
+    // androidTestImplementation libs.androidx.espresso.contrib
+    // androidTestImplementation libs.androidx.espresso.intents
 
     // The following dependency can be either "implementation" or "androidTestImplementation",
     // depending on whether you want it to appear on your APK's compile classpath or the test APK classpath.
-    // androidTestImplementation "androidx.test.espresso:espresso-idling-resource:${libs.versions.androidx.test.espresso.get()}"
+    // androidTestImplementation libs.androidx.espresso.idling.resource
 
     // Test rules and transitive dependencies:
     androidTestImplementation libs.androidx.compose.uitest
 
     // Needed for createComposeRule, but not createAndroidComposeRule:
-    //noinspection GradleDependency
+    //noinspection UseTomlInstead,GradleDependency
     debugImplementation "androidx.compose.ui:ui-test-manifest"
 }
 

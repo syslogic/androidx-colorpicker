@@ -1,0 +1,52 @@
+[versions]
+android_gradle_plugin     = '8.3.1'
+material_design           = '1.11.0'
+junit                     = '4.13.2'
+kotlin                    = '1.9.23'
+kotlin_compiler_extension = '1.5.11'
+androidx_compose_bom      = '2024.03.00'
+androidx_compose_uitest   = '1.6.4'
+androidx_core             = '1.12.0'
+androidx_appcompat        = '1.6.1'
+androidx_navigation       = '2.7.7'
+androidx_preference       = '1.2.1'
+androidx_test_junit       = '1.1.5'
+androidx_test_core        = '1.5.0'
+androidx_test_rules       = '1.5.0'
+androidx_test_runner      = '1.5.2'
+androidx_test_monitor     = '1.6.1'
+androidx_test_espresso    = '3.5.1'
+androidx_test_uiautomator = '2.3.0'
+
+[plugins]
+android_application                 = { id = "com.android.application", version.ref = "android_gradle_plugin" }
+android_library                     = { id = "com.android.library", version.ref = "android_gradle_plugin" }
+androidx_navigation_safeargs        = { id = "androidx.navigation.safeargs", version.ref = "androidx_navigation" }
+kotlin_android                      = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+[libraries]
+kotlin_stdlib                       = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+material_design                     = { module = "com.google.android.material:material", version.ref = "material_design" }
+junit                               = { module = "junit:junit", version.ref = "junit" }
+androidx_core_ktx                   = { module = "androidx.core:core-ktx", version.ref = "androidx_core" }
+androidx_appcompat                  = { module = "androidx.appcompat:appcompat", version.ref = "androidx_appcompat" }
+androidx_compose_bom                = { module = "androidx.compose:compose-bom", version.ref = "androidx_compose_bom" }
+androidx_compose_uitest             = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx_compose_uitest" }
+androidx_preference_ktx             = { module = "androidx.preference:preference-ktx", version.ref = "androidx_preference" }
+androidx_navigation_testing         = { module = "androidx.navigation:navigation-testing", version.ref = "androidx_navigation" }
+androidx_navigation_runtime_ktx     = { module = "androidx.navigation:navigation-runtime-ktx", version.ref = "androidx_navigation" }
+androidx_navigation_fragment_ktx    = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx_navigation" }
+androidx_navigation_ui_ktx          = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx_navigation" }
+androidx_test_monitor               = { module = "androidx.test:monitor", version.ref = "androidx_test_monitor" }
+androidx_test_junit                 = { module = "androidx.test.ext:junit", version.ref = "androidx_test_junit" }
+androidx_test_core                  = { module = "androidx.test:core", version.ref = "androidx_test_core" }
+androidx_test_rules                 = { module = "androidx.test:rules", version.ref = "androidx_test_rules" }
+androidx_test_runner                = { module = "androidx.test:runner", version.ref = "androidx_test_runner" }
+androidx_test_uiautomator           = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidx_test_uiautomator" }
+androidx_espresso_core              = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx_test_espresso" }
+androidx_espresso_web               = { module = "androidx.test.espresso:espresso-web", version.ref = "androidx_test_espresso" }
+androidx_espresso_idling_resource   = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "androidx_test_espresso" }
+androidx_espresso_idling_concurrent = { module = "androidx.test.espresso.idling:idling-concurrent", version.ref = "androidx_test_espresso" }
+androidx_espresso_contrib           = { module = "androidx.test.espresso:espresso-contrib", version.ref = "androidx_test_espresso" }
+androidx_espresso_intents           = { module = "androidx.test.espresso:espresso-intents", version.ref = "androidx_test_espresso" }
+androidx_espresso_accessibility     = { module = "androidx.test.espresso:espresso-accessibility", version.ref = "androidx_test_espresso" }

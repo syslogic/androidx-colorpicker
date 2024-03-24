@@ -94,12 +94,17 @@ dependencies {
     implementation platform(libs.androidx.compose.bom)
     // implementation "androidx.compose.material:material-icons-core"
     // implementation "androidx.compose.material:material-icons-extended"
+    //noinspection UseTomlInstead
     implementation "androidx.compose.foundation:foundation"
+    //noinspection UseTomlInstead
     implementation "androidx.compose.material:material"
+    //noinspection UseTomlInstead
     implementation "androidx.compose.ui:ui"
 
     /* Composable Preview */
+    //noinspection UseTomlInstead
     debugImplementation "androidx.customview:customview-poolingcontainer"
+    //noinspection UseTomlInstead
     debugImplementation "androidx.compose.ui:ui-tooling"
 }
 
