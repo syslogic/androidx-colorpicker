@@ -45,8 +45,8 @@ androidx_test_runner                = { module = "androidx.test:runner", version
 androidx_test_uiautomator           = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidx_test_uiautomator" }
 androidx_espresso_core              = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx_test_espresso" }
 androidx_espresso_web               = { module = "androidx.test.espresso:espresso-web", version.ref = "androidx_test_espresso" }
-androidx_espresso_idling_resource   = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "androidx_test_espresso" }
-androidx_espresso_idling_concurrent = { module = "androidx.test.espresso.idling:idling-concurrent", version.ref = "androidx_test_espresso" }
-androidx_espresso_contrib           = { module = "androidx.test.espresso:espresso-contrib", version.ref = "androidx_test_espresso" }
-androidx_espresso_intents           = { module = "androidx.test.espresso:espresso-intents", version.ref = "androidx_test_espresso" }
-androidx_espresso_accessibility     = { module = "androidx.test.espresso:espresso-accessibility", version.ref = "androidx_test_espresso" }
+# androidx_espresso_idling_resource   = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "androidx_test_espresso" }
+# androidx_espresso_idling_concurrent = { module = "androidx.test.espresso.idling:idling-concurrent", version.ref = "androidx_test_espresso" }
+# androidx_espresso_contrib           = { module = "androidx.test.espresso:espresso-contrib", version.ref = "androidx_test_espresso" }
+# androidx_espresso_intents           = { module = "androidx.test.espresso:espresso-intents", version.ref = "androidx_test_espresso" }
+# androidx_espresso_accessibility     = { module = "androidx.test.espresso:espresso-accessibility", version.ref = "androidx_test_espresso" }
