@@ -127,10 +127,7 @@ public class TestSuite {
     }
 
     void sleep(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        try {Thread.sleep(ms);}
+        catch (InterruptedException ignore) {}
     }
 }

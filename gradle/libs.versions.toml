@@ -1,12 +1,12 @@
 [versions]
 android_gradle_plugin     = '8.3.2'
-material_design           = '1.11.0'
+material_design           = '1.12.0'
 junit                     = '4.13.2'
 kotlin                    = '1.9.23'
 kotlin_compiler_extension = '1.5.11'
-androidx_compose_bom      = '2024.04.00'
-androidx_compose_uitest   = '1.6.5'
-androidx_core             = '1.12.0'
+androidx_compose_bom      = '2024.05.00'
+androidx_compose_uitest   = '1.6.7'
+androidx_core             = '1.13.1'
 androidx_appcompat        = '1.6.1'
 androidx_navigation       = '2.7.7'
 androidx_preference       = '1.2.1'
@@ -50,3 +50,7 @@ androidx_espresso_web               = { module = "androidx.test.espresso:espress
 # androidx_espresso_contrib           = { module = "androidx.test.espresso:espresso-contrib", version.ref = "androidx_test_espresso" }
 # androidx_espresso_intents           = { module = "androidx.test.espresso:espresso-intents", version.ref = "androidx_test_espresso" }
 # androidx_espresso_accessibility     = { module = "androidx.test.espresso:espresso-accessibility", version.ref = "androidx_test_espresso" }
+
+[bundles]
+androidx_test                     = ["androidx_test_junit", "androidx_test_core", "androidx_test_rules", "androidx_test_runner", "androidx_test_uiautomator"]
+androidx_espresso                 = ["androidx_espresso_core", "androidx_espresso_web"]
