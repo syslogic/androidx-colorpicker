@@ -29,8 +29,7 @@ import java.util.Locale;
  * @author Martin Zeitler
  */
 public class ColorPickerPreference extends Preference implements
-        Preference.OnPreferenceChangeListener,
-        Preference.OnPreferenceClickListener,
+        Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener,
         OnColorChangedListener {
 
     /** {@link Log} Tag */
@@ -90,9 +89,7 @@ public class ColorPickerPreference extends Preference implements
 
         this.prefs = PreferenceManager.getDefaultSharedPreferences(context);
         this.mCurrentValue = this.prefs.getInt(this.getKey(), this.mCurrentValue);
-        if(mDebug) {
-            Log.d(LOG_TAG, String.format("%s: %s", this.getKey(), convertToARGB(this.mCurrentValue)));
-        }
+        if (mDebug) {Log.d(LOG_TAG, this.getKey() + ": " + convertToARGB(this.mCurrentValue));}
         this.setOnPreferenceClickListener(this);
     }
 
@@ -105,11 +102,9 @@ public class ColorPickerPreference extends Preference implements
     @NonNull
     @Override
     protected Object onGetDefaultValue(@NonNull TypedArray a, int index) {
-        int colorInt;
         String mHexDefaultValue = a.getString(index);
         if (mHexDefaultValue != null && mHexDefaultValue.startsWith("#")) {
-            colorInt = convertToColorInt(mHexDefaultValue);
-            return colorInt;
+            return convertToColorInt(mHexDefaultValue);
         } else {
             return a.getColor(index, this.mCurrentValue);
         }
@@ -160,7 +155,7 @@ public class ColorPickerPreference extends Preference implements
         try {
             this.onPreferenceChange(this, color);
         } catch (NullPointerException e) {
-            if(mDebug) {Log.e(LOG_TAG, String.format("%s", e.getMessage()));}
+            if(mDebug) {Log.e(LOG_TAG, "NullPointerException: " + e.getMessage());}
         }
     }
 
@@ -185,7 +180,7 @@ public class ColorPickerPreference extends Preference implements
     }
 
     /**
-     *  String.format("#%1$02X", color)
+     * String.format("#%1$02X", color)
      *
      * @param color the color value to convert.
      */
@@ -226,7 +221,9 @@ public class ColorPickerPreference extends Preference implements
      * @param argb the ARGB string to convert.
      */
     static int convertToColorInt(@NonNull String argb) {
-        if (! argb.startsWith("#")) {argb = String.format("#%s", argb);}
+        if (! argb.startsWith("#")) {
+            argb = String.format("#%s", argb);
+        }
         return Color.parseColor(argb);
     }
 

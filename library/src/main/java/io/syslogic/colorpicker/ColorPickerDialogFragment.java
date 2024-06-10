@@ -28,9 +28,7 @@ import io.syslogic.colorpicker.databinding.DialogFragmentColorPickerBinding;
  * @author Martin Zeitler
  */
 public class ColorPickerDialogFragment extends DialogFragment implements
-        ViewTreeObserver.OnGlobalLayoutListener,
-        OnColorChangedListener,
-        View.OnClickListener {
+        ViewTreeObserver.OnGlobalLayoutListener, OnColorChangedListener, View.OnClickListener {
 
     private OnColorChangedListener listener = null;
     private ColorStateList mHexDefaultTextColor;

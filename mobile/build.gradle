@@ -1,9 +1,10 @@
 // Module :mobile
 plugins {
-    id 'com.android.application'
-    id 'androidx.navigation.safeargs'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.androidx.navigation.safeargs)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose.compiler)
 }
 
 base {
@@ -33,16 +34,19 @@ android {
         jvmTarget = 17
     }
 
-    composeOptions {
-        // See the "Compose to Kotlin Compatibility Map" for compatible versions:
-        // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-        kotlinCompilerExtensionVersion libs.versions.kotlin.compiler.extension.get()
-    }
-
     buildFeatures {
         buildConfig true
         dataBinding true
         compose true
+    }
+
+    composeOptions {
+    }
+
+    composeCompiler {
+        enableStrongSkippingMode = true
+        reportsDestination = layout.buildDirectory.dir("compose_compiler")
+        stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
     }
 
     buildTypes {

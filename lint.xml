@@ -3,7 +3,10 @@
     <issue id="InvalidPackage">
         <ignore regexp="kotlinx.coroutines.debug.AgentPremain"/>
     </issue>
-    <issue id="GradleDependency">
-        <ignore regexp="is available: .*alpha|beta"/>
+    <issue id="AndroidGradlePluginVersion">
+        <ignore path="gradle/libs.versions.toml"/>
+    </issue>
+    <issue id="StringFormatTrivial">
+        <ignore regexp="io.syslogic.colorpicker.ColorPickerPreference"/>
     </issue>
 </lint>
