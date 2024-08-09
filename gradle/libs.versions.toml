@@ -1,27 +1,28 @@
 [versions]
-android_gradle_plugin     = '8.3.2'
+android_gradle_plugin     = '8.5.2'
 material_design           = '1.12.0'
 junit                     = '4.13.2'
 kotlin                    = '2.0.0'
-kotlin_compiler_extension = '1.5.11'
-androidx_compose_bom      = '2024.05.00'
-androidx_compose_uitest   = '1.6.7'
+# devtools_ksp            = "2.0.0-1.0.23"
+androidx_compose_bom      = '2024.06.00'
+androidx_compose_uitest   = '1.6.8'
 androidx_core             = '1.13.1'
 androidx_appcompat        = '1.7.0'
 androidx_navigation       = '2.7.7'
 androidx_preference       = '1.2.1'
-androidx_test_junit       = '1.1.5'
-androidx_test_core        = '1.5.0'
-androidx_test_rules       = '1.5.0'
-androidx_test_runner      = '1.5.2'
-androidx_test_monitor     = '1.6.1'
-androidx_test_espresso    = '3.5.1'
+androidx_test_junit       = '1.2.1'
+androidx_test_core        = '1.6.1'
+androidx_test_rules       = '1.6.1'
+androidx_test_runner      = '1.6.1'
+androidx_test_monitor     = '1.7.1'
+androidx_test_espresso    = '3.6.1'
 androidx_test_uiautomator = '2.3.0'
 
 [plugins]
 android_application                 = { id = "com.android.application", version.ref = "android_gradle_plugin" }
 android_library                     = { id = "com.android.library", version.ref = "android_gradle_plugin" }
 androidx_navigation_safeargs        = { id = "androidx.navigation.safeargs", version.ref = "androidx_navigation" }
+# devtools_ksp                      = { id = "com.google.devtools.ksp", version.ref = "devtools_ksp" }
 kotlin_compose_compiler             = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin_android                      = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin_kapt                         = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }

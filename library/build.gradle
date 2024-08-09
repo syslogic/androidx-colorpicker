@@ -1,9 +1,10 @@
 // Module :library
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose.compiler)
+    // alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.kotlin.kapt)
     id 'maven-publish'
 }
 
@@ -13,7 +14,7 @@ base {
 
 android {
     namespace 'io.syslogic.colorpicker'
-    buildToolsVersion = '34.0.0'
+    buildToolsVersion = '35.0.0'
     compileSdk compile_sdk
     defaultConfig {
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'

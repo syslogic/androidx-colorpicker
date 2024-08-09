@@ -1,11 +1,11 @@
 // Root project build.gradle
 buildscript {
     ext {
-        version_code = 27
-        version_name = '1.2.7'
+        version_code = 28
+        version_name = '1.2.8'
         min_sdk = 21
-        compile_sdk = 34
-        target_sdk = 34
+        compile_sdk = 35
+        target_sdk = 35
     }
 }
 
@@ -15,6 +15,7 @@ plugins {
     alias(libs.plugins.androidx.navigation.safeargs) apply false
     alias(libs.plugins.kotlin.compose.compiler) apply false
     alias(libs.plugins.kotlin.android) apply false
+    // alias(libs.plugins.devtools.ksp) apply false
     alias(libs.plugins.kotlin.kapt) apply false
 }
 
