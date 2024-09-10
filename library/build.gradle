@@ -88,33 +88,22 @@ android {
 
 dependencies {
 
+    implementation libs.kotlin.stdlib
     implementation libs.material.design
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
     implementation libs.androidx.preference.ktx
-    implementation libs.kotlin.stdlib
 
     // https://mvnrepository.com/artifact/androidx.compose
     // https://developer.android.com/jetpack/compose/tooling#bom
     implementation platform(libs.androidx.compose.bom)
-    // implementation "androidx.compose.material:material-icons-core"
-    // implementation "androidx.compose.material:material-icons-extended"
-    //noinspection UseTomlInstead
-    implementation "androidx.compose.foundation:foundation"
-    //noinspection UseTomlInstead
-    implementation "androidx.compose.material:material"
-    //noinspection UseTomlInstead
-    implementation "androidx.compose.ui:ui"
+    implementation libs.bundles.androidx.compose.lib
 
     /* Composable Preview */
-    //noinspection UseTomlInstead
-    debugImplementation "androidx.customview:customview-poolingcontainer"
-    //noinspection UseTomlInstead
-    debugImplementation "androidx.compose.ui:ui-tooling"
+    debugImplementation libs.bundles.androidx.compose.tooling
 }
 
-
-tasks.register('javadoc', Javadoc) {it ->
+tasks.register('javadoc', Javadoc) { it ->
 
     title = "Color Picker ${android.defaultConfig.versionName} API"
     source = android.sourceSets.main.java.srcDirs

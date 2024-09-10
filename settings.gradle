@@ -12,7 +12,13 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("androidx.*")
+                includeGroupByRegex("com\\.(android|google).*")
+                excludeGroupByRegex("org\\.jetbrains.*")
+            }
+        }
         mavenCentral()
         mavenLocal()
         maven { url 'https://jitpack.io' }

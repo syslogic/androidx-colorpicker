@@ -2,7 +2,7 @@
 android_gradle_plugin     = '8.6.0'
 material_design           = '1.12.0'
 junit                     = '4.13.2'
-kotlin                    = '2.0.0'
+kotlin                    = '2.0.20'
 # devtools_ksp            = "2.0.0-1.0.23"
 androidx_compose_bom      = '2024.09.00'
 androidx_compose_uitest   = '1.7.0'
@@ -35,6 +35,15 @@ androidx_core_ktx                   = { module = "androidx.core:core-ktx", versi
 androidx_appcompat                  = { module = "androidx.appcompat:appcompat", version.ref = "androidx_appcompat" }
 androidx_compose_bom                = { module = "androidx.compose:compose-bom", version.ref = "androidx_compose_bom" }
 androidx_compose_uitest             = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx_compose_uitest" }
+androidx_compose_foundation         = { module = "androidx.compose.foundation:foundation" }
+androidx_compose_material           = { module = "androidx.compose.material:material" }
+androidx_compose_ui                 = { module = "androidx.compose.ui:ui" }
+androidx_compose_activity           = { module = "androidx.activity:activity-compose" }
+androidx_compose_runtime            = { module = "androidx.compose.runtime:runtime" }
+androidx_compose_ui_tooling         = { module = "androidx.compose.ui:ui-tooling" }
+androidx_customview_poolingcontainer = { module = "androidx.customview:customview-poolingcontainer" }
+# androidx_compose_material_icons_core = { module = "androidx.compose.material:material-icons-core" }
+# androidx_compose_material_icons_extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx_preference_ktx             = { module = "androidx.preference:preference-ktx", version.ref = "androidx_preference" }
 androidx_navigation_testing         = { module = "androidx.navigation:navigation-testing", version.ref = "androidx_navigation" }
 androidx_navigation_runtime_ktx     = { module = "androidx.navigation:navigation-runtime-ktx", version.ref = "androidx_navigation" }
@@ -55,5 +64,8 @@ androidx_espresso_web               = { module = "androidx.test.espresso:espress
 # androidx_espresso_accessibility     = { module = "androidx.test.espresso:espresso-accessibility", version.ref = "androidx_test_espresso" }
 
 [bundles]
+androidx_compose_lib              = ["androidx_compose_foundation", "androidx_compose_material", "androidx_compose_ui"]
+androidx_compose_app              = ["androidx_compose_foundation", "androidx_compose_material", "androidx_compose_ui", "androidx_compose_activity", "androidx_compose_runtime"]
+androidx_compose_tooling          = ["androidx_compose_ui_tooling", "androidx_customview_poolingcontainer"]
 androidx_test                     = ["androidx_test_junit", "androidx_test_core", "androidx_test_rules", "androidx_test_runner", "androidx_test_uiautomator"]
 androidx_espresso                 = ["androidx_espresso_core", "androidx_espresso_web"]

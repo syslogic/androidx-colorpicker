@@ -88,18 +88,7 @@ dependencies {
     // https://mvnrepository.com/artifact/androidx.compose
     // https://developer.android.com/jetpack/compose/tooling#bom
     implementation platform(libs.androidx.compose.bom)
-    //noinspection UseTomlInstead
-    debugImplementation "androidx.compose.ui:ui-tooling-preview"
-    //noinspection UseTomlInstead
-    implementation "androidx.activity:activity-compose"
-    //noinspection UseTomlInstead
-    implementation "androidx.compose.foundation:foundation"
-    //noinspection UseTomlInstead
-    implementation "androidx.compose.material:material"
-    //noinspection UseTomlInstead
-    implementation "androidx.compose.runtime:runtime"
-    //noinspection UseTomlInstead
-    implementation "androidx.compose.ui:ui"
+    implementation libs.bundles.androidx.compose.app
 
     // jUnit
     testImplementation libs.junit
@@ -107,6 +96,9 @@ dependencies {
     // Required for connected tests.
     // https://mvnrepository.com/artifact/androidx.test/monitor
     debugImplementation libs.androidx.test.monitor
+
+    /* Composable Preview */
+    debugImplementation libs.androidx.compose.ui.tooling
 
     // https://mvnrepository.com/artifact/androidx.test.ext
     androidTestImplementation libs.bundles.androidx.test
