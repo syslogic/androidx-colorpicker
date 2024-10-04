@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
  */
 @Deprecated("kept for reference")
 @RunWith(AndroidJUnit4::class)
-class TestComposeActivity : TestSuite() {
+class TestComposeActivity {
 
     @get:Rule
     val testRule: AndroidComposeTestRule<ActivityScenarioRule<ComposeActivity>, ComposeActivity> =
