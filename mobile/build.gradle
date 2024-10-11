@@ -9,7 +9,8 @@ plugins {
 }
 
 base {
-    archivesName = "colorpicker_demo_${libs.versions.app.version.name.get()}"
+    String versionName = libs.versions.app.version.name.get()
+    archivesName = "colorpicker_demo_$versionName"
 }
 
 android {
@@ -25,6 +26,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testBuildType "debug"
     }
+
     kotlinOptions {
         jvmTarget = 17
     }
