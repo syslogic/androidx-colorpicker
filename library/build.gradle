@@ -5,22 +5,22 @@ plugins {
     alias(libs.plugins.kotlin.compose.compiler)
     // alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.kotlin.kapt)
-    id 'maven-publish'
+    id "maven-publish"
 }
 
 base {
-    archivesName = 'colorpicker_' + version_name
+    archivesName = "colorpicker_${libs.versions.app.version.name.get()}"
 }
 
 android {
-    namespace 'io.syslogic.colorpicker'
-    buildToolsVersion = '35.0.0'
-    compileSdk compile_sdk
+    namespace "io.syslogic.colorpicker"
+    buildToolsVersion = libs.versions.android.build.tools.get()
+    compileSdk Integer.parseInt(libs.versions.android.compile.sdk.get())
     defaultConfig {
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-        consumerProguardFiles "${project.rootDir}/proguard/consumer.pro"
-        targetSdk target_sdk
-        minSdk min_sdk
+        minSdk Integer.parseInt(libs.versions.android.min.sdk.get())
+        targetSdk Integer.parseInt(libs.versions.android.target.sdk.get())
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "${project.getProjectDir().absolutePath}/consumer.pro"
     }
 
     sourceSets.main.java.srcDirs = [ "src/main/java" ]
@@ -34,12 +34,6 @@ android {
         jvmTarget = 17
     }
 
-    buildFeatures {
-        buildConfig true
-        dataBinding true
-        compose true
-    }
-
     composeOptions {
     }
 
@@ -47,6 +41,12 @@ android {
         enableStrongSkippingMode = true
         reportsDestination = layout.buildDirectory.dir("compose_compiler")
         stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
+    }
+
+    buildFeatures {
+        buildConfig true
+        dataBinding true
+        compose true
     }
 
     buildTypes {
@@ -74,12 +74,14 @@ android {
     }
 
     packagingOptions {
-        resources.pickFirsts.add('META-INF/LGPL2.1')
-        resources.pickFirsts.add('META-INF/AL2.0')
+        resources.pickFirsts.add("META-INF/LGPL2.1")
+        resources.pickFirsts.add("META-INF/AL2.0")
+        // Unable to strip the following libraries, packaging them as they are:
+        jniLibs.keepDebugSymbols.add("**/libandroidx.graphics.path.so")
     }
 
     publishing {
-        singleVariant('release') {
+        singleVariant("release") {
             withSourcesJar()
             withJavadocJar()
         }
@@ -103,7 +105,7 @@ dependencies {
     debugImplementation libs.bundles.androidx.compose.tooling
 }
 
-tasks.register('javadoc', Javadoc) { it ->
+tasks.register("javadoc", Javadoc) { it ->
 
     title = "Color Picker ${android.defaultConfig.versionName} API"
     source = android.sourceSets.main.java.srcDirs
@@ -129,12 +131,12 @@ tasks.register('javadoc', Javadoc) { it ->
 
         // extract AAR files
         configurations.implementation
-                .filter { it.name.endsWith('.aar') }
+                .filter { it.name.endsWith(".aar") }
                 .each { aar ->
                     copy {
                         from zipTree(aar)
                         include "**/classes.jar"
-                        into project.file("build/tmp/aarsToJars/${aar.name.replace('.aar', '')}/")
+                        into project.file("build/tmp/aarsToJars/${aar.name.replace(".aar", "")}/")
                     }
                 }
 
@@ -154,15 +156,15 @@ javadoc.onlyIf {
     project.file("build/intermediates/aar_main_jar").exists()
 }
 
-tasks.register('javadocJar', Jar) {
+tasks.register("javadocJar", Jar) {
     dependsOn javadoc
-    archiveClassifier.set('javadoc')
+    archiveClassifier.set("javadoc")
     from javadoc.destinationDir
 }
 
-tasks.register('sourcesJar', Jar) {
+tasks.register("sourcesJar", Jar) {
     from android.sourceSets.main.java.srcDirs
-    archiveClassifier.set('sources')
+    archiveClassifier.set("sources")
 }
 
 artifacts {
@@ -170,20 +172,20 @@ artifacts {
     archives sourcesJar
 }
 
-group = 'io.syslogic'
-version = version_name
+group   = "io.syslogic"
+version = libs.versions.app.version.name.get()
 
 afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
                 groupId = group
-                artifactId = 'androidx-colorpicker'
-                from components.getByName('release')
-                version = version_name
+                artifactId = "androidx-colorpicker"
+                from components.getByName("release")
+                version = libs.versions.app.version.name.get()
                 pom {
-                    name = 'Color Picker'
-                    description = 'A simple color-picker library for Android'
+                    name = "Color Picker"
+                    description = "A simple color-picker library for Android"
                     url = "https://github.com/syslogic/${artifactId}"
                     scm {
                         connection = "scm:git:git://github.com/syslogic/${artifactId}.git"
