@@ -7,18 +7,19 @@ android_target_sdk        = '35'
 android_min_sdk           = '21'
 
 # Gradle Plugins
-android_gradle_plugin     = '8.7.0'
+android_gradle_plugin     = '8.7.1'
 material_design           = '1.12.0'
 junit                     = '4.13.2'
 kotlin                    = '2.0.21'
-# devtools_ksp            = "2.0.20-1.0.25"
-androidx_compose_bom      = '2024.09.03'
-androidx_compose_uitest   = '1.7.3'
+
+androidx_compose_bom      = '2024.10.00'
+androidx_compose_uitest   = '1.7.4'
 androidx_core             = '1.13.1'
 androidx_appcompat        = '1.7.0'
-androidx_navigation       = '2.8.2'
+androidx_navigation       = '2.8.3'
 androidx_preference       = '1.2.1'
-androidx_test_junit       = '1.2.1'
+
+androidx_test_ext_junit   = '1.2.1'
 androidx_test_core        = '1.6.1'
 androidx_test_rules       = '1.6.1'
 androidx_test_runner      = '1.6.2'
@@ -27,10 +28,9 @@ androidx_test_espresso    = '3.6.1'
 androidx_test_uiautomator = '2.3.0'
 
 [plugins]
+androidx_navigation_safeargs        = { id = "androidx.navigation.safeargs", version.ref = "androidx_navigation" }
 android_application                 = { id = "com.android.application", version.ref = "android_gradle_plugin" }
 android_library                     = { id = "com.android.library", version.ref = "android_gradle_plugin" }
-androidx_navigation_safeargs        = { id = "androidx.navigation.safeargs", version.ref = "androidx_navigation" }
-# devtools_ksp                      = { id = "com.google.devtools.ksp", version.ref = "devtools_ksp" }
 kotlin_compose_compiler             = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin_android                      = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin_kapt                         = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
@@ -58,22 +58,22 @@ androidx_navigation_runtime_ktx     = { module = "androidx.navigation:navigation
 androidx_navigation_fragment_ktx    = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx_navigation" }
 androidx_navigation_ui_ktx          = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx_navigation" }
 androidx_test_monitor               = { module = "androidx.test:monitor", version.ref = "androidx_test_monitor" }
-androidx_test_junit                 = { module = "androidx.test.ext:junit", version.ref = "androidx_test_junit" }
+androidx_test_ext_junit             = { module = "androidx.test.ext:junit", version.ref = "androidx_test_ext_junit" }
 androidx_test_core                  = { module = "androidx.test:core", version.ref = "androidx_test_core" }
 androidx_test_rules                 = { module = "androidx.test:rules", version.ref = "androidx_test_rules" }
 androidx_test_runner                = { module = "androidx.test:runner", version.ref = "androidx_test_runner" }
 androidx_test_uiautomator           = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidx_test_uiautomator" }
 androidx_espresso_core              = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx_test_espresso" }
 androidx_espresso_web               = { module = "androidx.test.espresso:espresso-web", version.ref = "androidx_test_espresso" }
+# androidx_espresso_accessibility     = { module = "androidx.test.espresso:espresso-accessibility", version.ref = "androidx_test_espresso" }
 # androidx_espresso_idling_resource   = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "androidx_test_espresso" }
 # androidx_espresso_idling_concurrent = { module = "androidx.test.espresso.idling:idling-concurrent", version.ref = "androidx_test_espresso" }
 # androidx_espresso_contrib           = { module = "androidx.test.espresso:espresso-contrib", version.ref = "androidx_test_espresso" }
 # androidx_espresso_intents           = { module = "androidx.test.espresso:espresso-intents", version.ref = "androidx_test_espresso" }
-# androidx_espresso_accessibility     = { module = "androidx.test.espresso:espresso-accessibility", version.ref = "androidx_test_espresso" }
 
 [bundles]
+androidx_compose_tooling          = ["androidx_compose_ui_tooling", "androidx_customview_poolingcontainer"]
 androidx_compose_lib              = ["androidx_compose_foundation", "androidx_compose_material", "androidx_compose_ui", "androidx_compose_material_icons_core"]
 androidx_compose_app              = ["androidx_compose_foundation", "androidx_compose_material", "androidx_compose_ui", "androidx_compose_activity", "androidx_compose_runtime"]
-androidx_compose_tooling          = ["androidx_compose_ui_tooling", "androidx_customview_poolingcontainer"]
-androidx_test                     = ["androidx_test_junit", "androidx_test_core", "androidx_test_rules", "androidx_test_runner", "androidx_test_uiautomator"]
+androidx_test                     = ["androidx_test_ext_junit", "androidx_test_core", "androidx_test_rules", "androidx_test_runner", "androidx_test_uiautomator"]
 androidx_espresso                 = ["androidx_espresso_core", "androidx_espresso_web"]
