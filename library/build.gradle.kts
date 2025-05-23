@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 // Module :library
 plugins {
     alias(libs.plugins.android.library)
@@ -9,6 +11,7 @@ plugins {
 
 kotlin {
     compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
         freeCompilerArgs.addAll(
             listOf("-Xlint:unchecked", "-Xlint:deprecation")
         )
@@ -23,6 +26,7 @@ android {
     namespace = "io.syslogic.colorpicker"
     buildToolsVersion = libs.versions.android.build.tools.get()
     compileSdk = Integer.parseInt(libs.versions.android.compile.sdk.get())
+
     defaultConfig {
         minSdk = Integer.parseInt(libs.versions.android.min.sdk.get())
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -40,10 +44,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
     }
 
     composeCompiler {
@@ -121,8 +121,8 @@ val javadoc by tasks.registering(Javadoc::class) {
     source = android.sourceSets.getByName("main").java.getSourceFiles()
     configurations["implementation"].isCanBeResolved = true
 
-    android.bootClasspath.forEach { classpath += fileTree(it) }
     classpath = files(File("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"))
+    android.bootClasspath.forEach { classpath += fileTree(it) }
     classpath += fileTree(project.file("build/tmp/aarsToJars/").absolutePath)
     classpath += configurations.implementation.get() as FileCollection
     isFailOnError = false
@@ -136,7 +136,7 @@ val javadoc by tasks.registering(Javadoc::class) {
     (options as StandardJavadocDocletOptions).linkSource(true)
     (options as StandardJavadocDocletOptions).author(true)
 
-    setDestinationDir(project.file("build/outputs/javadoc"))
+    destinationDir = project.file("build/outputs/javadoc")
     exclude("**/BuildConfig.java", "**/R.java", "**/*.kt")
 
     doFirst {
@@ -145,7 +145,6 @@ val javadoc by tasks.registering(Javadoc::class) {
         configurations["implementation"].files
             .filter { it.name.endsWith(".aar") }
             .forEach { aar: File ->
-                // println(aar.name)
                 copy {
                     from(zipTree(aar))
                     include("**/classes.jar")
