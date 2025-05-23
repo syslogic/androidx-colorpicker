@@ -23,12 +23,13 @@ android {
     namespace = "io.syslogic.demo.colorpicker"
     buildToolsVersion = libs.versions.android.build.tools.get()
     compileSdk = Integer.parseInt(libs.versions.android.compile.sdk.get())
+
     defaultConfig {
+        applicationId = "io.syslogic.demo.colorpicker"
         minSdk = Integer.parseInt(libs.versions.android.min.sdk.get())
         targetSdk = Integer.parseInt(libs.versions.android.target.sdk.get())
         versionCode = Integer.parseInt(libs.versions.app.version.code.get())
         versionName = libs.versions.app.version.name.get()
-        applicationId = "io.syslogic.demo.colorpicker"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testBuildType = "debug"
     }
