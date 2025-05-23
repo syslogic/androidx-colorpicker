@@ -8,17 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt) apply false
 }
 
-allprojects {
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile).tap {
-            configureEach {
-                options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-            }
-        }
-    }
-}
-
-tasks.register('clean', Delete) {
-    delete rootProject.fileTree('build')
-    delete project.fileTree('build')
+tasks.register<Delete>("clean") {
+    delete(rootProject.fileTree("build"))
+    delete(project.fileTree("build"))
 }

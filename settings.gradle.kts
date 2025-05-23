@@ -9,6 +9,7 @@ pluginManagement {
     }
 }
 
+@Suppress("UnstableApiUsage")
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
@@ -21,15 +22,17 @@ dependencyResolutionManagement {
         }
         mavenCentral()
         mavenLocal()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url = uri("https://jitpack.io")
+        }
     }
 }
 
 rootProject.name = "ColorPicker"
 
-include ":library"
+include(":library")
 
 /* JitPack: exclude module. */
-if (! System.env.JITPACK) {
-    include ":mobile"
+if (System.getenv("JITPACK") == null) {
+    include(":mobile")
 }
