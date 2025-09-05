@@ -9,17 +9,14 @@ plugins {
     id("maven-publish")
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
-        freeCompilerArgs.addAll(
-            listOf("-Xlint:unchecked", "-Xlint:deprecation")
-        )
-    }
-}
-
 base {
     archivesName = "colorpicker_${libs.versions.app.version.name.get()}"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 android {
@@ -189,12 +186,9 @@ afterEvaluate {
         publications {
             register("release", MavenPublication::class) {
                 from(components.getByName("release"))
-
                 groupId = group as String?
                 artifactId = "androidx-colorpicker"
                 version = libs.versions.app.version.name.get()
-
-
                 pom {
                     name = "Color Picker"
                     description = "A simple color-picker library for Android"
