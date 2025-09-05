@@ -25,7 +25,6 @@ import java.util.Random;
  * Test Suite
  * @author Martin Zeitler
  */
-@RunWith(org.junit.runners.Suite.class)
 @SuiteClasses({
         TestColorPicker.class,
         TestComposeContent.class

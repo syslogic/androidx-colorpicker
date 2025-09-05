@@ -9,17 +9,14 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
-        freeCompilerArgs.addAll(
-            listOf("-Xlint:unchecked", "-Xlint:deprecation")
-        )
-    }
-}
-
 base {
     archivesName = "colorpicker_demo_${libs.versions.app.version.name.get()}"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 android {
@@ -92,18 +89,21 @@ dependencies {
 
     implementation(libs.material.design)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.appcompat)
 
-    androidTestImplementation(libs.androidx.navigation.testing)
-    implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
+    // androidTestImplementation(libs.androidx.navigation.testing)
+    // implementation(libs.androidx.navigation.fragment.ktx)
+    // implementation(libs.androidx.navigation.runtime.ktx)
+    // implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.bundles.androidx.navigation3)
 
     // https://mvnrepository.com/artifact/androidx.compose
     // https://developer.android.com/jetpack/compose/tooling#bom
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.androidx.compose.app)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     // jUnit
     testImplementation(libs.junit)
@@ -128,8 +128,7 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.uitest)
 
     // Needed for createComposeRule, but not createAndroidComposeRule:
-    //noinspection UseTomlInstead,GradleDependency
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    debugImplementation(libs.androidx.compose.uitest.manifest)
 }
 
 // disable caching
