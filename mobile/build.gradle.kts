@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 // Module :mobile
 plugins {
@@ -9,17 +10,20 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
 }
 
+base {
+    archivesName = "colorpicker_demo_${libs.versions.app.version.name.get()}"
+}
+
 kotlin {
     compilerOptions {
         jvmTarget = JvmTarget.JVM_17
-        freeCompilerArgs.addAll(
-            listOf("-Xlint:unchecked", "-Xlint:deprecation")
-        )
     }
 }
 
-base {
-    archivesName = "colorpicker_demo_${libs.versions.app.version.name.get()}"
+tasks.withType<KotlinJvmCompile>().configureEach {
+    compilerOptions {
+        // freeCompilerArgs.addAll("-Xlint:unchecked", "-Xlint:deprecation")
+    }
 }
 
 android {

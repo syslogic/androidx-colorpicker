@@ -1,4 +1,6 @@
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 // Module :library
 plugins {
@@ -12,9 +14,12 @@ plugins {
 kotlin {
     compilerOptions {
         jvmTarget = JvmTarget.JVM_17
-        freeCompilerArgs.addAll(
-            listOf("-Xlint:unchecked", "-Xlint:deprecation")
-        )
+    }
+}
+
+tasks.withType<KotlinJvmCompile>().configureEach {
+    compilerOptions {
+        // freeCompilerArgs.addAll("-Xlint:unchecked", "-Xlint:deprecation")
     }
 }
 
