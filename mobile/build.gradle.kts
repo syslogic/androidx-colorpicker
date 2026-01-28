@@ -5,8 +5,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.androidx.navigation.safeargs)
     alias(libs.plugins.kotlin.compose.compiler)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.builtin.kotlin)
+    alias(libs.plugins.legacy.kapt)
 }
 
 base {
@@ -14,30 +14,31 @@ base {
 }
 
 kotlin {
+    jvmToolchain(17)
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    // stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
+    // enableStrongSkippingMode = true
+}
+
 android {
-    namespace = "io.syslogic.demo.colorpicker"
+    namespace = "io.syslogic.colorpicker.demo"
     buildToolsVersion = libs.versions.android.build.tools.get()
     compileSdk = Integer.parseInt(libs.versions.android.compile.sdk.get())
 
     defaultConfig {
-        applicationId = "io.syslogic.demo.colorpicker"
+        applicationId = "io.syslogic.colorpicker.demo"
         minSdk = Integer.parseInt(libs.versions.android.min.sdk.get())
         targetSdk = Integer.parseInt(libs.versions.android.target.sdk.get())
         versionCode = Integer.parseInt(libs.versions.app.version.code.get())
         versionName = libs.versions.app.version.name.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testBuildType = "debug"
-    }
-
-    composeCompiler {
-        reportsDestination = layout.buildDirectory.dir("compose_compiler")
-        // stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
-        // enableStrongSkippingMode = true
     }
 
     compileOptions {
@@ -62,9 +63,7 @@ android {
 
     sourceSets {
         getByName("main") {
-            java {
-                srcDir("src/main/java")
-            }
+            java.directories.add("src/main/java")
         }
     }
 
@@ -85,7 +84,8 @@ dependencies {
 
     // Use either Jitpack repository or project module :library (local).
     // implementation "io.syslogic:androidx-colorpicker:$version_name"
-    implementation(project(path = ":library"))
+    implementation(project(path = ":compose"))
+    implementation(project(path = ":legacy"))
 
     implementation(libs.material.design)
     implementation(libs.androidx.core.ktx)

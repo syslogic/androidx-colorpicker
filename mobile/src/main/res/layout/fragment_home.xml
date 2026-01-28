@@ -2,7 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.MainActivity">
+    tools:context="io.syslogic.compose.demo.colorpicker.activity.MainActivity">
 
     <data>
         <variable name="color_code_01" type="Integer"/>

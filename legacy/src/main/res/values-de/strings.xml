@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_color_picker_dialog">Farbauswahl</string>
+    <string name="hint_hexadecimal_value">Hex Wert</string>
+    <string name="text_select_color">Wähle eine Farbe</string>
+
+    <string name="text_label_panel_sat_val">Sättigungswert nach Farbton</string>
+    <string name="text_label_panel_hue">Farbwert</string>
+    <string name="text_label_panel_alpha">Alpha Wert</string>
+    <string name="text_label_panel_hex_value">"Hex Wert: %s</string>
+
+    <string name="text_label_panel_old_color">Bisher</string>
+    <string name="text_label_panel_new_color">Auswahl</string>
+
+    <string name="text_label_hue">Farbwert:</string>
+    <string name="text_label_sat">Farbsättigung:</string>
+    <string name="text_label_val">Helligkeit:</string>
+    <string name="text_label_alpha">Alpha:</string>
+    <string name="text_label_red">Rot:</string>
+    <string name="text_label_green">Grün:</string>
+    <string name="text_label_Blue">Blau:</string>
+
+</resources>

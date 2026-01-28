@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="io.syslogic.demo.colorpicker.fragment.HomeFragment"
+        android:name="io.syslogic.colorpicker.demo.fragment.HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_mainFragment_to_preferencesFragment"
@@ -20,11 +20,11 @@
 
     <fragment
         android:id="@+id/preferencesFragment"
-        android:name="io.syslogic.demo.colorpicker.fragment.PreferencesFragment"/>
+        android:name="io.syslogic.colorpicker.demo.fragment.PreferencesFragment"/>
 
     <dialog
         android:id="@+id/colorPickerDialogFragment"
-        android:name="io.syslogic.demo.colorpicker.fragment.ColorPickerDialogFragmentImpl">
+        android:name="io.syslogic.colorpicker.demo.fragment.ColorPickerDialogFragmentImpl">
 
         <argument app:argType="integer" android:name="initialColor" android:defaultValue="-16777216"/>
         <argument app:argType="boolean" android:name="alphaSlider" android:defaultValue="false"/>

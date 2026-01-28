@@ -6,13 +6,13 @@
     <PreferenceCategory
         app:title="@string/text_color_picker_preference">
 
-        <io.syslogic.colorpicker.ColorPickerPreference
+        <io.syslogic.compose.legacy.ColorPickerPreference
             android:title="@string/text_select_color"
             android:icon="@drawable/ic_baseline_invert_colors"
             android:defaultValue="#FFFFFFFF"
             android:key="color_code_01"/>
 
-        <io.syslogic.colorpicker.ColorPickerPreference
+        <io.syslogic.compose.legacy.ColorPickerPreference
             android:title="@string/text_select_color"
             android:icon="@drawable/ic_baseline_invert_colors"
             android:defaultValue="#FF000000"
