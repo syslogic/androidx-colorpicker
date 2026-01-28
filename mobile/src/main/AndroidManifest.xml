@@ -11,7 +11,7 @@
 
         <activity
             android:label="@string/label_main_activity"
-            android:name=".activity.MainActivity"
+            android:name="io.syslogic.colorpicker.demo.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
 
         <activity
             android:label="@string/label_compose_activity"
-            android:name=".activity.ComposeActivity"
+            android:name="io.syslogic.colorpicker.demo.activity.ComposeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

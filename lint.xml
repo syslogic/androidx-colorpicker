@@ -7,6 +7,6 @@
         <ignore path="gradle/libs.versions.toml"/>
     </issue>
     <issue id="StringFormatTrivial">
-        <ignore regexp="io.syslogic.colorpicker.ColorPickerPreference"/>
+        <ignore regexp="io.syslogic.compose.legacy.ColorPickerPreference"/>
     </issue>
 </lint>

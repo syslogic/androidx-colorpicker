@@ -3,7 +3,7 @@
     <module name="ColorPicker.mobile.androidTest" />
     <option name="TESTING_TYPE" value="2" />
     <option name="METHOD_NAME" value="colorPickerTest" />
-    <option name="CLASS_NAME" value="io.syslogic.demo.colorpicker.TestColorPicker" />
+    <option name="CLASS_NAME" value="io.syslogic.compose.demo.colorpicker.TestColorPicker" />
     <option name="PACKAGE_NAME" value="" />
     <option name="TEST_NAME_REGEX" value="" />
     <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />

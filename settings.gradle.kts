@@ -13,24 +13,16 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
-        google {
-            content {
-                includeGroupByRegex("androidx.*")
-                includeGroupByRegex("com\\.(android|google).*")
-                excludeGroupByRegex("org\\.jetbrains.*")
-            }
-        }
+        google()
         mavenCentral()
+        maven(uri("https://jitpack.io"))
         mavenLocal()
-        maven {
-            url = uri("https://jitpack.io")
-        }
     }
 }
 
 rootProject.name = "ColorPicker"
 
-include(":library")
+include(":legacy", ":compose")
 
 /* JitPack: exclude module. */
 if (System.getenv("JITPACK") == null) {

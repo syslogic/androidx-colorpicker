@@ -55,13 +55,22 @@ jobs:
       - name: 🔨 Build with Gradle
         env:
           VERSION_TAG: ${{ steps.vars.outputs.tag }}
-        run: ./gradlew :library:assembleRelease
+        run: ./gradlew :legacy:assembleRelease :compose:assembleRelease
 
       # https://github.com/actions/upload-artifact
       - name: 📦 Retain Artifacts (Release AAR)
-        id: retain-release-aar
+        id: retain-compose-release-aar
         uses: actions/upload-artifact@v4
         with:
-          name: androidx-colorpicker-aar
-          path: ./library/build/outputs/aar/colorpicker_*-release.aar
+          name: androidx-colorpicker-compose-aar
+          path: ./compose/build/outputs/aar/colorpicker_*-release.aar
+          retention-days: 14
+
+      # https://github.com/actions/upload-artifact
+      - name: 📦 Retain Artifacts (Release AAR)
+        id: retain-legacy-release-aar
+        uses: actions/upload-artifact@v4
+        with:
+          name: androidx-colorpicker-legacy-aar
+          path: ./legacy/build/outputs/aar/colorpicker_*-release.aar
           retention-days: 14

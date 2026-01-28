@@ -25,13 +25,14 @@ class ColorPickerDialogFragmentImpl extends ColorPickerDialogFragment {
 ````
 
 Then define `ColorPickerDialogFragmentImpl` as navigation destination in [`nav_graph.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/navigation/nav_graph.xml):
+
 ````xml
-<dialog
-    android:id="@+id/colorPickerDialogFragment"
-    android:name="io.syslogic.demo.colorpicker.fragment.ColorPickerDialogFragmentImpl">
-    <argument app:argType="integer" android:name="initialColor" android:defaultValue="-16777216"/>
-    <argument app:argType="boolean" android:name="alphaSlider" android:defaultValue="false"/>
-    <argument app:argType="boolean" android:name="hexValue" android:defaultValue="false"/>
+
+<dialog android:id="@+id/colorPickerDialogFragment"
+    android:name="io.syslogic.compose.demo.fragment.colorpicker.ColorPickerDialogFragmentImpl">
+    <argument app:argType="integer" android:name="initialColor" android:defaultValue="-16777216" />
+    <argument app:argType="boolean" android:name="alphaSlider" android:defaultValue="false" />
+    <argument app:argType="boolean" android:name="hexValue" android:defaultValue="false" />
 </dialog>
 ````
 Screenshot `ColorPickerDialogFragment`:
@@ -41,7 +42,7 @@ Screenshot `ColorPickerDialogFragment`:
 b) [`ColorPickerPreference`](https://github.com/syslogic/androidx-colorpicker/blob/master/library/src/main/java/io/syslogic/colorpicker/ColorPickerPreference.java)
 can be added as XML node; into eg. [`preferences.xml`](https://github.com/syslogic/androidx-colorpicker/blob/master/mobile/src/main/res/xml/preferences.xml):
 ````xml
-<io.syslogic.colorpicker.ColorPickerPreference
+<io.syslogic.colorpicker.legacy.ColorPickerPreference
     android:title="@string/text_select_color"
     android:icon="@drawable/ic_baseline_invert_colors"
     android:defaultValue="@string/value_default_color"

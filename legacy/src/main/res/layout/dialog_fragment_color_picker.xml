@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable name="showHexValue" type="boolean"/>
+        <variable name="showAlphaSlider" type="boolean"/>
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout_dialog_color_picker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <io.syslogic.compose.legacy.ColorPickerView
+            android:id="@+id/color_picker_view"
+            android:contentDescription="@string/text_label_panel_sat_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layerType="hardware"
+            android:tag="portrait"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/touch_controls"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:padding="4dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+
+                android:layout_height="42dp"
+                android:layout_marginBottom="12dp">
+
+                <io.syslogic.compose.legacy.ColorPickerPanelView
+                    android:id="@+id/old_color_panel"
+                    android:contentDescription="@string/text_label_panel_old_color"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.50"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_double_arrow"
+                    android:layout_marginRight="@dimen/margin_double_arrow"
+                    android:src="@drawable/ic_baseline_keyboard_double_arrow_right_24"
+                    android:gravity="center"/>
+
+                <io.syslogic.compose.legacy.ColorPickerPanelView
+                    android:id="@+id/new_color_panel"
+                    android:contentDescription="@string/text_label_panel_new_color"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.50"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/hexadecimal_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
+                android:hint="@string/hint_hexadecimal_value"
+                android:imeOptions="actionDone"
+                android:maxLength="7"
+                android:maxLines="1"
+                android:inputType="textCapCharacters"
+                android:textAlignment="textEnd"
+                android:visibility="@{ showHexValue ? View.VISIBLE : View.GONE }"
+                tools:visibility="visible"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

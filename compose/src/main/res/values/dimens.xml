@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ColorPickerComponent -->
+    <dimen name="compose_row_padding">2dp</dimen>
+    <dimen name="compose_col_padding">2dp</dimen>
+    <dimen name="compose_hsv_label_min_width">44dp</dimen>
+    <dimen name="compose_hsv_label_padding_end">4dp</dimen>
+    <dimen name="compose_argb_value_min_width">30dp</dimen>
+
+    <!-- ColorPickerDialog -->
+    <dimen name="compose_dialog_border_radius">4dp</dimen>
+    <dimen name="compose_dialog_column_padding">6dp</dimen>
+    <dimen name="compose_dialog_spacer_height">8dp</dimen>
+    <dimen name="compose_dialog_close_icon_size">24dp</dimen>
+    <dimen name="compose_dialog_title_font_size">22dp</dimen>
+    <dimen name="compose_dialog_title_padding">2dp</dimen>
+
+</resources>
