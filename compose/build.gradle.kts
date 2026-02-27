@@ -1,4 +1,5 @@
 import com.android.build.api.dsl.LibraryExtension
+import org.gradle.kotlin.dsl.assign
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 // Module :library
@@ -27,7 +28,6 @@ composeCompiler {
 
 configure<LibraryExtension> {
     namespace = "io.syslogic.colorpicker.compose"
-    buildToolsVersion = libs.versions.android.build.tools.get()
     compileSdk = Integer.parseInt(libs.versions.android.compile.sdk.get())
 
     defaultConfig {
@@ -193,6 +193,19 @@ afterEvaluate {
                         connection = "scm:git:git://github.com/syslogic/androidx-colorpicker.git"
                         developerConnection = "scm:git:ssh://github.com/syslogic/androidx-colorpicker.git"
                         url = "https://github.com/syslogic/androidx-colorpicker/"
+                    }
+                    developers {
+                        developer {
+                            // name = githubDev
+                            // email = githubEmail
+                            // id = githubHandle
+                        }
+                    }
+                    licenses {
+                        license {
+                            name = "MIT License"
+                            url = "http://www.opensource.org/licenses/mit-license.php"
+                        }
                     }
                 }
             }

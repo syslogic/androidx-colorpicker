@@ -22,7 +22,6 @@ kotlin {
 
 configure<LibraryExtension> {
     namespace = "io.syslogic.colorpicker.legacy"
-    buildToolsVersion = libs.versions.android.build.tools.get()
     compileSdk = Integer.parseInt(libs.versions.android.compile.sdk.get())
 
     defaultConfig {
@@ -179,6 +178,19 @@ afterEvaluate {
                         connection = "scm:git:git://github.com/syslogic/androidx-colorpicker.git"
                         developerConnection = "scm:git:ssh://github.com/syslogic/androidx-colorpicker.git"
                         url = "https://github.com/syslogic/androidx-colorpicker/"
+                    }
+                    developers {
+                        developer {
+                            // name = githubDev
+                            // email = githubEmail
+                            // id = githubHandle
+                        }
+                    }
+                    licenses {
+                        license {
+                            name = "MIT License"
+                            url = "http://www.opensource.org/licenses/mit-license.php"
+                        }
                     }
                 }
             }

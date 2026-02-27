@@ -29,7 +29,6 @@ composeCompiler {
 
 configure<ApplicationExtension> {
     namespace = "io.syslogic.colorpicker.demo"
-    buildToolsVersion = libs.versions.android.build.tools.get()
     compileSdk = Integer.parseInt(libs.versions.android.compile.sdk.get())
 
     defaultConfig {
