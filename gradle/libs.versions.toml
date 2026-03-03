@@ -16,7 +16,7 @@ junit                                 = "4.13.2"
 android_gradle_plugin                 = "9.0.1"
 material_design                       = "1.13.0"
 
-androidx_compose_bom                  = "2026.02.00"
+androidx_compose_bom                  = "2026.02.01"
 androidx_compose_uitest               = "1.10.4"
 androidx_customview_poolingcontainer  = "1.1.0"
 

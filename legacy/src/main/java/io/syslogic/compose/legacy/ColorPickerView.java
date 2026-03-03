@@ -25,8 +25,6 @@ import androidx.annotation.StringRes;
 
 import java.util.Objects;
 
-import io.syslogic.colorpicker.legacy.R;
-
 /**
  * The Color-Picker {@link View} (refactored version).
  * It displays a color picker to the user and allow them to select a color.
@@ -144,12 +142,12 @@ public class ColorPickerView extends View {
 
         this.mDensity = getDisplayDensity(context);
 
-        BORDER_WIDTH_PX               = getDimension(context, R.dimen.border_width_px);
-        PALETTE_CIRCLE_TRACKER_RADIUS = mDensity * getDimension(context, R.dimen.palette_circle_tracker_radius);
-        RECTANGLE_TRACKER_OFFSET      = mDensity * getDimension(context, R.dimen.rectangle_tracker_offset);
-        HUE_PANEL_WIDTH               = mDensity * getDimension(context, R.dimen.hue_panel_width);
-        ALPHA_PANEL_HEIGHT            = mDensity * getDimension(context, R.dimen.alpha_panel_height);
-        PANEL_SPACING                 = mDensity * getDimension(context, R.dimen.panel_spacing);
+        BORDER_WIDTH_PX               = getDimension(context, io.syslogic.colorpicker.legacy.R.dimen.border_width_px);
+        PALETTE_CIRCLE_TRACKER_RADIUS = mDensity * getDimension(context, io.syslogic.colorpicker.legacy.R.dimen.palette_circle_tracker_radius);
+        RECTANGLE_TRACKER_OFFSET      = mDensity * getDimension(context, io.syslogic.colorpicker.legacy.R.dimen.rectangle_tracker_offset);
+        HUE_PANEL_WIDTH               = mDensity * getDimension(context, io.syslogic.colorpicker.legacy.R.dimen.hue_panel_width);
+        ALPHA_PANEL_HEIGHT            = mDensity * getDimension(context, io.syslogic.colorpicker.legacy.R.dimen.alpha_panel_height);
+        PANEL_SPACING                 = mDensity * getDimension(context, io.syslogic.colorpicker.legacy.R.dimen.panel_spacing);
 
         this.mDrawingOffset = this.calculateRequiredOffset();
         this.setFocusableInTouchMode(true);

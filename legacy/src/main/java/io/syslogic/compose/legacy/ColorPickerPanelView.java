@@ -10,11 +10,10 @@ import android.view.View;
 import androidx.annotation.DimenRes;
 import androidx.annotation.NonNull;
 
-import io.syslogic.colorpicker.legacy.R;
 
 /**
  * The Color-Picker Panel {@link View}.
- * This class draws a panel which which will be filled with a color which can be set.
+ * This class draws a panel which will be filled with a color which can be set.
  * It can be used to show the currently selected color which you will get from the {@link ColorPickerView}.
  * @author Martin Zeitler
  */
@@ -56,7 +55,7 @@ public class ColorPickerPanelView extends View {
      */
     public ColorPickerPanelView(@NonNull Context context, @NonNull AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        BORDER_WIDTH_PX = getDimension(context, R.dimen.border_width_px);
+        BORDER_WIDTH_PX = getDimension(context, io.syslogic.colorpicker.legacy.R.dimen.border_width_px);
         this.mDensity = getDisplayDensity(context);
         this.mBorderPaint = new Paint();
         this.mColorPaint = new Paint();

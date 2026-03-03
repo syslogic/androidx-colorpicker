@@ -108,72 +108,6 @@ dependencies {
     debugImplementation(libs.bundles.androidx.compose.tooling)
 }
 
-val javadoc by tasks.registering(Javadoc::class) {
-
-    onlyIf {
-        project.file("build/intermediates/aar_main_jar").exists()
-    }
-
-    title = "Color Picker ${libs.versions.app.version.name.get()} API"
-    source = android.sourceSets.getByName("main").java.getSourceFiles()
-    configurations["implementation"].isCanBeResolved = true
-
-    // classpath = files(File("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"))
-    // android.bootClasspath.forEach { classpath += fileTree(it) }
-    // classpath += fileTree(project.file("build/tmp/aarsToJars/").absolutePath)
-    // classpath += configurations.implementation.get() as FileCollection
-    isFailOnError = false
-
-    options.verbose()
-    (options as StandardJavadocDocletOptions).links("https://docs.oracle.com/en/java/javase/17/docs/api/")
-    // (options as StandardJavadocDocletOptions).linksOffline("https://developer.android.com/reference", "${android.sdkDirectory}/docs/reference")
-    (options as StandardJavadocDocletOptions).linkSource(true)
-    (options as StandardJavadocDocletOptions).author(true)
-
-    destinationDir = project.file("build/outputs/javadoc")
-    exclude("**/BuildConfig.java", "**/R.java", "**/*.kt")
-
-    doFirst {
-
-        // extract AAR files
-        configurations["implementation"].files
-            .filter { it.name.endsWith(".aar") }
-            .forEach { aar: File ->
-                copy {
-                    from(zipTree(aar))
-                    include("**/classes.jar")
-                    into(project.file("build/tmp/aarsToJars/${aar.name.replace(".aar", "")}/"))
-                }
-            }
-
-        // provide JAR, which contains the generated data-binding classes
-        val aarMain = project.file("build/intermediates/aar_main_jar")
-        if (aarMain.exists()) {
-            copy {
-                from(aarMain)
-                include("**/classes.jar")
-                into(project.file("build/tmp/aarsToJars/aar_main_jar/"))
-            }
-        }
-    }
-}
-
-val sourcesJar by tasks.registering(Jar::class) {
-    from(android.sourceSets.named("main").get().java.srcDirs)
-    archiveClassifier.set("sources")
-}
-
-val javadocJar by tasks.registering(Jar::class) {
-    dependsOn(javadoc.get())
-    from(javadoc.get().destinationDir)
-    archiveClassifier.set("javadoc")
-}
-
-artifacts {
-    archives(javadocJar.get())
-    archives(sourcesJar.get())
-}
-
 group   = "io.syslogic"
 version = libs.versions.app.version.name.get()
 
@@ -186,7 +120,7 @@ afterEvaluate {
                 artifactId = "colorpicker-compose"
                 version = libs.versions.app.version.name.get()
                 pom {
-                    name = "Color Picker"
+                    name = "Color Picker Compose"
                     description = "A simple color-picker library for Android"
                     url = "https://github.com/syslogic/androidx-colorpicker"
                     scm {

@@ -21,7 +21,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.DialogFragment;
 
-import io.syslogic.colorpicker.legacy.R;
 import io.syslogic.colorpicker.legacy.databinding.DialogFragmentColorPickerBinding;
 
 /**
@@ -186,7 +185,7 @@ public class ColorPickerDialogFragment extends DialogFragment implements
      */
     @Override
     public void onClick(@NonNull View view) {
-        if (view.getId() == R.id.new_color_panel) {
+        if (view.getId() == io.syslogic.colorpicker.legacy.R.id.new_color_panel) {
             Bundle bundle = new Bundle();
             bundle.putInt("color", this.mDataBinding.newColorPanel.getColor());
             getParentFragmentManager().setFragmentResult("colorpicker", bundle);

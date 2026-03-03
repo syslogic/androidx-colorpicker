@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.AndroidSourceSet
 import com.android.build.api.dsl.LibraryExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -49,7 +50,7 @@ configure<LibraryExtension> {
 
     buildTypes {
         debug {
-            // it breaks the data-binding, eg. when running ./gradlew :library:publishToMavenLocal
+            // it breaks the data-binding, e.g. when running ./gradlew :library:publishToMavenLocal
             enableAndroidTestCoverage = false
             isMinifyEnabled = false
         }
@@ -93,35 +94,62 @@ dependencies {
     implementation(libs.androidx.preference.ktx)
 }
 
-val javadoc by tasks.registering(Javadoc::class) {
+// Gradle 9.0 deprecation fix
+val implCls: Configuration by configurations.creating {
+    extendsFrom(configurations.getByName("implementation"))
+    isCanBeResolved = true
+}
 
+val javadocs by tasks.registering(Javadoc::class) {
+
+    title = "Color Picker ${libs.versions.app.version.name.get()} API"
+    group = "documentation"
+    setExcludes(listOf("**/BuildConfig.java", "**/R.java", "**/*.kt"))
+    destinationDir = project.file("build/outputs/javadoc")
+    isFailOnError = false
+
+    val sdkComponents = androidComponents::sdkComponents.get()
+    val bootClasspath: List<RegularFile> = sdkComponents.bootClasspath.get()
+    val sdkDirectory: Directory? = sdkComponents.sdkDirectory.get()
+
+    println("sdkDirectory: $sdkDirectory")
+    bootClasspath.forEach { println("bootClasspath: ${it.asFile.name}") }
+
+    val compileSdk = project.extensions.getByType<LibraryExtension>().compileSdk
+    println("compileSdk: $compileSdk")
+
+    // val sourceSets: NamedDomainObjectContainer<out AndroidSourceSet> = project.extensions.getByType<LibraryExtension>().sourceSets
+    // sourceSets.forEach { println("sourceSet: ${it.name}") }
+
+    // source = android.sourceSets["main"].java.getSourceFiles()
+    source = fileTree(projectDir.absolutePath + "/src/main/java")
+    source.files.forEach { println("source file: ${it.name}") }
+
+
+    classpath = files(File("${sdkDirectory}/platforms/${compileSdk}/android.jar"))
+    classpath += implCls as FileCollection
+    bootClasspath.forEach { classpath += fileTree(it) }
+    classpath += fileTree(project.file("build/tmp/aarsToJars/").absolutePath)
+
+    options {
+        this as StandardJavadocDocletOptions
+        outputLevel = JavadocOutputLevel.VERBOSE
+        links("https://docs.oracle.com/en/java/javase/17/docs/api")
+        links("https://developer.android.com/reference")
+        linkSource(false)
+        author(true)
+    }
+
+    /*
     onlyIf {
         project.file("build/intermediates/aar_main_jar").exists()
     }
-
-    title = "Color Picker ${libs.versions.app.version.name.get()} API"
-    source = android.sourceSets.getByName("main").java.getSourceFiles()
-    configurations["implementation"].isCanBeResolved = true
-
-    // classpath = files(File("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"))
-    // android.bootClasspath.forEach { classpath += fileTree(it) }
-    // classpath += fileTree(project.file("build/tmp/aarsToJars/").absolutePath)
-    // classpath += configurations.implementation.get() as FileCollection
-    isFailOnError = false
-
-    options.verbose()
-    (options as StandardJavadocDocletOptions).links("https://docs.oracle.com/en/java/javase/17/docs/api/")
-    // (options as StandardJavadocDocletOptions).linksOffline("https://developer.android.com/reference", "${android.sdkDirectory}/docs/reference")
-    (options as StandardJavadocDocletOptions).linkSource(true)
-    (options as StandardJavadocDocletOptions).author(true)
-
-    destinationDir = project.file("build/outputs/javadoc")
-    exclude("**/BuildConfig.java", "**/R.java", "**/*.kt")
+    */
 
     doFirst {
 
         // extract AAR files
-        configurations["implementation"].files
+        implCls.files
             .filter { it.name.endsWith(".aar") }
             .forEach { aar: File ->
                 copy {
@@ -144,22 +172,31 @@ val javadoc by tasks.registering(Javadoc::class) {
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
-    from(android.sourceSets.named("main").get().java.srcDirs)
+    from(projectDir.absolutePath + "/src/main/java")
     archiveClassifier.set("sources")
 }
 
 val javadocJar by tasks.registering(Jar::class) {
-    dependsOn(javadoc.get())
-    from(javadoc.get().destinationDir)
+    dependsOn(javadocs.get())
+    from(javadocs.get().destinationDir)
     archiveClassifier.set("javadoc")
 }
 
-artifacts {
-    archives(javadocJar.get())
-    archives(sourcesJar.get())
+// Gradle 9.1 deprecation fix
+configurations {
+    @Suppress("UnstableApiUsage")
+    consumable("jars") {
+        outgoing.artifact(javadocJar)
+        outgoing.artifact(sourcesJar)
+    }
 }
 
-group   = "io.syslogic"
+tasks.named("assemble") {
+    dependsOn(javadocJar)
+    dependsOn(sourcesJar)
+}
+
+group = "io.syslogic"
 version = libs.versions.app.version.name.get()
 
 afterEvaluate {
@@ -171,7 +208,7 @@ afterEvaluate {
                 artifactId = "colorpicker-legacy"
                 version = libs.versions.app.version.name.get()
                 pom {
-                    name = "Color Picker"
+                    name = "Color Picker Legacy"
                     description = "A simple color-picker library for Android"
                     url = "https://github.com/syslogic/androidx-colorpicker"
                     scm {
