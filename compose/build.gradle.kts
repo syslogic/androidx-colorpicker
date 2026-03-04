@@ -1,8 +1,8 @@
+// Module :compose
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-// Module :library
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose.compiler)
@@ -12,6 +12,10 @@ plugins {
     alias(libs.plugins.dokka.javadoc)
     id("maven-publish")
 }
+
+@Suppress("PropertyName") val GITHUB_DEV: String by project
+@Suppress("PropertyName") val GITHUB_EMAIL: String by project
+@Suppress("PropertyName") val GITHUB_HANDLE: String by project
 
 base {
     archivesName = "colorpicker_compose_${libs.versions.app.version.name.get()}"
@@ -231,9 +235,9 @@ afterEvaluate {
                     }
                     developers {
                         developer {
-                            // name = githubDev
-                            // email = githubEmail
-                            // id = githubHandle
+                            name = GITHUB_DEV
+                            email = GITHUB_EMAIL
+                            id = GITHUB_HANDLE
                         }
                     }
                     licenses {

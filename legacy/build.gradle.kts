@@ -1,14 +1,17 @@
-import com.android.build.api.dsl.AndroidSourceSet
+// Module :legacy
 import com.android.build.api.dsl.LibraryExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-// Module :library
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.builtin.kotlin)
     alias(libs.plugins.legacy.kapt)
     id("maven-publish")
 }
+
+@Suppress("PropertyName") val GITHUB_DEV: String by project
+@Suppress("PropertyName") val GITHUB_EMAIL: String by project
+@Suppress("PropertyName") val GITHUB_HANDLE: String by project
 
 base {
     archivesName = "colorpicker_legacy_${libs.versions.app.version.name.get()}"
@@ -217,9 +220,9 @@ afterEvaluate {
                     }
                     developers {
                         developer {
-                            // name = githubDev
-                            // email = githubEmail
-                            // id = githubHandle
+                            name = GITHUB_DEV
+                            email = GITHUB_EMAIL
+                            id = GITHUB_HANDLE
                         }
                     }
                     licenses {
