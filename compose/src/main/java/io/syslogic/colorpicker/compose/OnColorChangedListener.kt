@@ -1,7 +1,7 @@
 package io.syslogic.colorpicker.compose
 
 /**
- * OnColorChangedListener.
+ * OnColorChangedListener
  * @author Martin Zeitler
  */
 interface OnColorChangedListener {

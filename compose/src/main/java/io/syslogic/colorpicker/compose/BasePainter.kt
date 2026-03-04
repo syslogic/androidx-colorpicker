@@ -15,7 +15,6 @@ import kotlin.properties.Delegates
 
 /**
  * Jetpack Compose Base Painter
- *
  * @author Martin Zeitler
  */
 abstract class BasePainter(override val intrinsicSize: Size) : Painter() {

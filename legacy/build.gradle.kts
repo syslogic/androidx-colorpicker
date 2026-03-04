@@ -125,7 +125,6 @@ val javadocs by tasks.registering(Javadoc::class) {
     source = fileTree(projectDir.absolutePath + "/src/main/java")
     source.files.forEach { println("source file: ${it.name}") }
 
-
     classpath = files(File("${sdkDirectory}/platforms/${compileSdk}/android.jar"))
     classpath += implCls as FileCollection
     bootClasspath.forEach { classpath += fileTree(it) }

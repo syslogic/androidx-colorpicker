@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.painter.Painter
 
 /**
  * Jetpack Compose Hue Painter
- *
  * @author Martin Zeitler
  */
 class HuePainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {

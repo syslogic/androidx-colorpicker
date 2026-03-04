@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.kotlin.compose.compiler) apply false
     alias(libs.plugins.builtin.kotlin) apply false
     alias(libs.plugins.legacy.kapt) apply false
+    alias(libs.plugins.dokka.javadoc) apply false
+    alias(libs.plugins.dokka.html) apply false
 }
 
 tasks.register<Delete>("clean") {

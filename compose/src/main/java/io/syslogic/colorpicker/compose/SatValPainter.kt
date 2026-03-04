@@ -10,12 +10,11 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.LinearGradientShader
 import androidx.compose.ui.graphics.TileMode
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.drawscope.DrawScope
 
 /**
  * Jetpack Compose Sat/Val Painter
- *
  * @author Martin Zeitler
  */
 class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
@@ -24,7 +23,7 @@ class SatValPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
 
     /**
      * Implementation of drawing logic for instances of [Painter].
-     * This is invoked internally within [draw] after the positioning and configuring the [Painter].
+     * This is invoked internally within [DrawScope.onDraw] after the positioning and configuring the [Painter].
      */
     override fun DrawScope.onDraw() {
         setCanvas(drawContext, density)

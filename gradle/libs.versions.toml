@@ -12,10 +12,11 @@ android_min_sdk                       = "23"
 
 # Gradle Plugins
 kotlin                                = "2.3.10"
-junit                                 = "4.13.2"
-android_gradle_plugin                 = "9.0.1"
-material_design                       = "1.13.0"
+android_gradle_plugin                 = "9.1.0"
 
+junit                                 = "4.13.2"
+dokka                                 = "2.1.0"
+material_design                       = "1.13.0"
 androidx_compose_bom                  = "2026.02.01"
 androidx_compose_uitest               = "1.10.4"
 androidx_customview_poolingcontainer  = "1.1.0"
@@ -41,9 +42,12 @@ android_library                       = { id = "com.android.library", version.re
 kotlin_compose_compiler               = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 builtin_kotlin                        = { id = "com.android.built-in-kotlin", version.ref = "android_gradle_plugin" }
 legacy_kapt                           = { id = "com.android.legacy-kapt", version.ref = "android_gradle_plugin" }
+dokka_javadoc                         = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
+dokka_html                            = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 
 [libraries]
 kotlin_stdlib                         = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+dokka_android_documentation_plugin    = { module = "org.jetbrains.dokka:android-documentation-plugin", version.ref = "dokka" }
 material_design                       = { module = "com.google.android.material:material", version.ref = "material_design" }
 junit                                 = { module = "junit:junit", version.ref = "junit" }
 androidx_core_ktx                     = { module = "androidx.core:core-ktx", version.ref = "androidx_core" }

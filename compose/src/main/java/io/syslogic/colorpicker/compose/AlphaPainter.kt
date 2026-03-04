@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.painter.Painter
 
 /**
  * Jetpack Compose Alpha Painter
- *
  * @author Martin Zeitler
  */
 class AlphaPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {

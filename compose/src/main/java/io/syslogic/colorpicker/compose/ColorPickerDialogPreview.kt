@@ -9,7 +9,6 @@ import androidx.compose.ui.tooling.preview.Preview
 
 /**
  * ColorPickerDialog Preview
- *
  * @author Martin Zeitler
  */
 @Preview(

@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.painter.Painter
 
 /**
  * Jetpack Compose Color Painter
- *
  * @author Martin Zeitler
  */
 class ColorPainter(intrinsicSize: Size) : BasePainter(intrinsicSize) {
