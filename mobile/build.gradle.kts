@@ -62,8 +62,9 @@ configure<ApplicationExtension> {
         }
     }
 
+    @Suppress("UnstableApiUsage")
     sourceSets {
-        getByName("main") {
+        named("main") {
             java.directories.add("src/main/java")
         }
     }

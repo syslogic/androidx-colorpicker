@@ -43,8 +43,9 @@ configure<LibraryExtension> {
         consumerProguardFiles(rootProject.file("consumer.pro").absolutePath)
     }
 
+    @Suppress("UnstableApiUsage")
     sourceSets {
-        getByName("main") {
+        named("main") {
             java.directories.add("src/main/java")
         }
     }
@@ -118,6 +119,12 @@ dependencies {
     dokkaPlugin(libs.dokka.android.documentation.plugin)
 }
 
+// Gradle 9.0 deprecation fix
+val implCls: Configuration by configurations.creating {
+    extendsFrom(configurations.getByName("implementation"))
+    isCanBeResolved = true
+}
+
 // Dokka generation
 dokka {
 
@@ -129,6 +136,7 @@ dokka {
 
         sourceRoots.from(
             files(File("${sdkDirectory}/platforms/${compileSdk}/android.jar")),
+            fileTree(project.file("build/tmp/aarsToJars").absolutePath),
             "${projectDir.absolutePath}/src/main/java"
         )
 
@@ -155,6 +163,31 @@ dokka {
             moduleName.set(project.name)
             moduleVersion.set(project.version.toString())
             outputDirectory.set(layout.buildDirectory.dir("dokka/html"))
+        }
+    }
+}
+
+val extractAar by tasks.registering(DefaultTask::class) {
+    doFirst {
+        // extract AAR files
+        implCls.files
+            .filter { it.name.endsWith(".aar") }
+            .forEach { aar: File ->
+                copy {
+                    from(zipTree(aar))
+                    include("**/classes.jar")
+                    into(project.file("build/tmp/aarsToJars/${aar.name.replace(".aar", "")}/"))
+                }
+            }
+
+        // provide JAR, which contains the generated data-binding classes
+        val aarMain = project.file("build/intermediates/aar_main_jar")
+        if (aarMain.exists()) {
+            copy {
+                from(aarMain)
+                include("**/classes.jar")
+                into(project.file("build/tmp/aarsToJars/aar_main_jar/"))
+            }
         }
     }
 }
@@ -189,6 +222,7 @@ val dokkaCleanHtml by tasks.registering(Delete::class) {
 
 tasks.dokkaGeneratePublicationJavadoc.dependsOn(dokkaCleanJavadoc)
 tasks.dokkaGeneratePublicationHtml.dependsOn(dokkaCleanHtml)
+tasks.dokkaGenerate.dependsOn(extractAar)
 
 val dokkaClean by tasks.registering {
     group = "dokka"

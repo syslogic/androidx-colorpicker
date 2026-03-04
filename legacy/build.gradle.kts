@@ -34,8 +34,9 @@ configure<LibraryExtension> {
         consumerProguardFiles(rootProject.file("consumer.pro").absolutePath)
     }
 
+    @Suppress("UnstableApiUsage")
     sourceSets {
-        getByName("main") {
+        named("main") {
             java.directories.add("src/main/java")
         }
     }
