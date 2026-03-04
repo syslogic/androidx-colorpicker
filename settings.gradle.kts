@@ -27,6 +27,7 @@ dependencyResolutionManagement {
 rootProject.name = "ColorPicker"
 
 include(":legacy", ":compose")
+// include(":fusedlibrary")
 
 /* JitPack: exclude module. */
 if (System.getenv("JITPACK") == null) {

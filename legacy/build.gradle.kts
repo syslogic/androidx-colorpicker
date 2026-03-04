@@ -4,8 +4,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.builtin.kotlin)
-    alias(libs.plugins.legacy.kapt)
+    alias(libs.plugins.kotlin.android)
+    // alias(libs.plugins.builtin.kotlin)
     id("maven-publish")
 }
 

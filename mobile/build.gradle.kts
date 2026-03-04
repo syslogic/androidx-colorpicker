@@ -6,8 +6,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.androidx.navigation.safeargs)
     alias(libs.plugins.kotlin.compose.compiler)
-    alias(libs.plugins.builtin.kotlin)
-    alias(libs.plugins.legacy.kapt)
+    alias(libs.plugins.kotlin.android)
+    // alias(libs.plugins.builtin.kotlin)
+    // alias(libs.plugins.legacy.kapt)
 }
 
 base {

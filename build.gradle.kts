@@ -2,10 +2,12 @@
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.fusedlibrary) apply false
     alias(libs.plugins.androidx.navigation.safeargs) apply false
     alias(libs.plugins.kotlin.compose.compiler) apply false
-    alias(libs.plugins.builtin.kotlin) apply false
-    alias(libs.plugins.legacy.kapt) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    // alias(libs.plugins.builtin.kotlin) apply false
+    // alias(libs.plugins.legacy.kapt) apply false
     alias(libs.plugins.dokka.javadoc) apply false
     alias(libs.plugins.dokka.html) apply false
 }
