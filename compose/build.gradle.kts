@@ -6,8 +6,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose.compiler)
-    alias(libs.plugins.builtin.kotlin)
-    alias(libs.plugins.legacy.kapt)
+    alias(libs.plugins.kotlin.android)
+    // alias(libs.plugins.builtin.kotlin)
+    // alias(libs.plugins.legacy.kapt)
     alias(libs.plugins.dokka.html)
     alias(libs.plugins.dokka.javadoc)
     id("maven-publish")
@@ -120,7 +121,7 @@ dependencies {
 // Dokka generation
 dokka {
 
-    dokkaSourceSets.create("main") {
+    dokkaSourceSets.named("main") {
 
         val sdkComponents = androidComponents::sdkComponents.get()
         val sdkDirectory: Directory? = sdkComponents.sdkDirectory.get()
